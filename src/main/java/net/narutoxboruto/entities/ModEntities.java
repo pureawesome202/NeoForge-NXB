@@ -4,8 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.narutoxboruto.entities.throwables.Kunai;
-import net.narutoxboruto.entities.throwables.Shuriken;
+import net.narutoxboruto.entities.throwables.*;
 import net.narutoxboruto.main.Main;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -21,20 +20,18 @@ public class ModEntities {
 
     public static final DeferredHolder<EntityType<?>, EntityType<Shuriken>> SHURIKEN = registerEntity("shuriken", Shuriken::new, MobCategory.MISC, 0.5F, 0.5F);
 
-    // public static final RegistrySupplier<EntityType<ExplosiveKunai>> EXPLOSIVE_KUNAI = registerEntity("explosive_kunai", ExplosiveKunai::new, MobCategory.MISC,
-            //         0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<ExplosiveKunai>> EXPLOSIVE_KUNAI = registerEntity("explosive_kunai", ExplosiveKunai::new, MobCategory.MISC,
+                    0.5F, 0.5F);
 
-    // public static final RegistrySupplier<EntityType<PoisonSenbon>> POISON_SENBON = registerEntity("poison_senbon", PoisonSenbon::new, MobCategory.MISC,
-            //         0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<PoisonSenbon>> POISON_SENBON = registerEntity("poison_senbon", PoisonSenbon::new, MobCategory.MISC,
+                     0.5F, 0.5F);
 
-    // public static final RegistrySupplier<EntityType<Senbon>> SENBON = registerEntity("senbon", Senbon::new, MobCategory.MISC,
-            //         0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<Senbon>> SENBON = registerEntity("senbon", Senbon::new, MobCategory.MISC,
+                    0.5F, 0.5F);
 
-    // public static final RegistrySupplier<EntityType<Shuriken>> SHURIKEN = registerEntity("shuriken", Shuriken::new, MobCategory.MISC,
-            //         0.5F, 0.5F);
 
-    // public static final RegistrySupplier<EntityType<ThrownFumaShuriken>> FUMA_SHURIKEN = registerEntity("fuma_shuriken", ThrownFumaShuriken::new, MobCategory.MISC,
-            //         0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrownFumaShuriken>> FUMA_SHURIKEN = registerEntity("fuma_shuriken", ThrownFumaShuriken::new, MobCategory.MISC,
+                     0.5F, 0.5F);
 
 
 

@@ -2,7 +2,6 @@ package net.narutoxboruto.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.narutoxboruto.client.renderer.ThrowableWeaponRenderer;
 import net.narutoxboruto.entities.throwables.AbstractThrowableWeapon;
 import org.joml.AxisAngle4f;
 import org.joml.Quaternionf;

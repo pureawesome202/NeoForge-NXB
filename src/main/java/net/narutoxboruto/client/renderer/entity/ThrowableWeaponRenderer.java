@@ -1,4 +1,4 @@
-package net.narutoxboruto.client.renderer;
+package net.narutoxboruto.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

@@ -2,5 +2,9 @@
   "itemGroup.throwable": "Throwables",
 
   "item.narutoxboruto.shuriken": "Shuriken",
-  "item.narutoxboruto.kunai": "Kunai"
+  "item.narutoxboruto.kunai": "Kunai",
+  "item.narutoxboruto.explosive_kunai": "Explosive Kunai",
+  "item.narutoxboruto.fuma_shuriken": "Fuma Shuriken",
+  "item.narutoxboruto.senbon": "Senbon",
+  "item.narutoxboruto.poison_senbon": "Poison Senbon"
 }

@@ -1,9 +1,7 @@
 package net.narutoxboruto.main;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.narutoxboruto.client.renderer.ThrowableWeaponRenderer;
-import net.narutoxboruto.client.renderer.entity.ShurikenRenderer;
+import net.narutoxboruto.client.renderer.entity.*;
 import net.narutoxboruto.entities.ModEntities;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -34,10 +32,10 @@ public class MainClient {
 
             EntityRenderers.register(ModEntities.SHURIKEN.get(), ShurikenRenderer::new);
             EntityRenderers.register(ModEntities.KUNAI.get(), ThrowableWeaponRenderer::new);
-           // EntityRenderers.register(ModEntities.EXPLOSIVE_KUNAI.get(), ThrowableWeaponRenderer::new);
-           // EntityRenderers.register(ModEntities.POISON_SENBON.get(), PoisonSenbonRenderer::new);
-           // EntityRenderers.register(ModEntities.SENBON.get(), SenbonRenderer::new);
-          //  EntityRenderers.register(ModEntities.FUMA_SHURIKEN.get(), FumaShurikenRenderer::new);
+            EntityRenderers.register(ModEntities.EXPLOSIVE_KUNAI.get(), ThrowableWeaponRenderer::new);
+            EntityRenderers.register(ModEntities.POISON_SENBON.get(), PoisonSenbonRenderer::new);
+            EntityRenderers.register(ModEntities.SENBON.get(), SenbonRenderer::new);
+            EntityRenderers.register(ModEntities.FUMA_SHURIKEN.get(), FumaShurikenRenderer::new);
         });
     }
 }
