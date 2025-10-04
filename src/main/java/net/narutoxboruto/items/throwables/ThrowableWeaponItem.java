@@ -24,7 +24,7 @@ public class ThrowableWeaponItem extends Item implements PreventSlow {
 
     public ThrowableWeaponItem(Properties props, String name) {
         super(props);
-        this.name = name;
+        this.name = String.valueOf(name);
     }
 
     public static float getPowerForTime(ServerPlayer player, int charge) {

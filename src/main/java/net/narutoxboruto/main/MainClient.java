@@ -1,6 +1,10 @@
 package net.narutoxboruto.main;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.narutoxboruto.client.renderer.ThrowableWeaponRenderer;
+import net.narutoxboruto.client.renderer.entity.ShurikenRenderer;
+import net.narutoxboruto.entities.ModEntities;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -25,7 +29,15 @@ public class MainClient {
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
         // Some client setup code
-        Main.LOGGER.info("HELLO FROM CLIENT SETUP");
-        Main.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        event.enqueueWork(() -> {
+            // your client-only entity renderers, packet receivers, etc.
+
+            EntityRenderers.register(ModEntities.SHURIKEN.get(), ShurikenRenderer::new);
+            EntityRenderers.register(ModEntities.KUNAI.get(), ThrowableWeaponRenderer::new);
+           // EntityRenderers.register(ModEntities.EXPLOSIVE_KUNAI.get(), ThrowableWeaponRenderer::new);
+           // EntityRenderers.register(ModEntities.POISON_SENBON.get(), PoisonSenbonRenderer::new);
+           // EntityRenderers.register(ModEntities.SENBON.get(), SenbonRenderer::new);
+          //  EntityRenderers.register(ModEntities.FUMA_SHURIKEN.get(), FumaShurikenRenderer::new);
+        });
     }
 }

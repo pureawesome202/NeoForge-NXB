@@ -17,11 +17,10 @@ public class ModEntities {
             DeferredRegister.create(Registries.ENTITY_TYPE, Main.MOD_ID);
 
     // Register your kunai entity:cite[1]
-    public static final DeferredHolder<EntityType<?>, EntityType<Kunai>> KUNAI =
-            registerEntity("kunai", Kunai::new, MobCategory.MISC, 0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<Kunai>> KUNAI = registerEntity("kunai", Kunai::new, MobCategory.MISC, 0.5F, 0.5F);
 
-    public static final DeferredHolder<EntityType<?>, EntityType<Shuriken>> SHURIKEN =
-            registerEntity("shuriken", Shuriken::new, MobCategory.MISC, 0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<Shuriken>> SHURIKEN = registerEntity("shuriken", Shuriken::new, MobCategory.MISC, 0.5F, 0.5F);
+
     // public static final RegistrySupplier<EntityType<ExplosiveKunai>> EXPLOSIVE_KUNAI = registerEntity("explosive_kunai", ExplosiveKunai::new, MobCategory.MISC,
             //         0.5F, 0.5F);
 
@@ -40,16 +39,9 @@ public class ModEntities {
 
 
     public static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerEntity(
-            String name,
-            EntityType.EntityFactory<T> factory,
-            MobCategory category,
-            float width,
-            float height) {
+            String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height) {
 
-        return MOD_ENTITIES.register(name, () ->
-                EntityType.Builder.of(factory, category)
-                        .sized(width, height)
-                        .build(name) // In 1.21.1, this should be a ResourceLocation
+        return MOD_ENTITIES.register(name, () -> EntityType.Builder.of(factory, category).sized(width, height).build(name) // In 1.21.1, this should be a ResourceLocation
         );
     }
 

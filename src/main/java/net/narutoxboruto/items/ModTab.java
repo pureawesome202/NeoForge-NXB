@@ -24,7 +24,7 @@ public class ModTab {
            .icon(() -> SHURIKEN.get().getDefaultInstance())
            .displayItems((parameters, output) -> {
                output.accept(SHURIKEN.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-              // output.accept(KUNAI.get());
+               output.accept(KUNAI.get());
            }).build());
 
     public static void register(IEventBus eventBus) {CREATIVE_MODE_TAB.register(eventBus);}
