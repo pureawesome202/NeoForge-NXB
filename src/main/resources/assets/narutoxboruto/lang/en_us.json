@@ -1,10 +1,13 @@
 {
   "itemGroup.throwable": "Throwables",
+  "ItemGroup.swords": "Swords",
 
   "item.narutoxboruto.shuriken": "Shuriken",
   "item.narutoxboruto.kunai": "Kunai",
   "item.narutoxboruto.explosive_kunai": "Explosive Kunai",
   "item.narutoxboruto.fuma_shuriken": "Fuma Shuriken",
   "item.narutoxboruto.senbon": "Senbon",
-  "item.narutoxboruto.poison_senbon": "Poison Senbon"
+  "item.narutoxboruto.poison_senbon": "Poison Senbon",
+
+  "item.narutoxboruto.samehada": "Samehada"
 }

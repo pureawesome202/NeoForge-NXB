@@ -2,12 +2,13 @@ package net.narutoxboruto.items;
 
 
 import net.minecraft.world.item.Item;
-import net.narutoxboruto.entities.throwables.ThrownFumaShuriken;
+import net.narutoxboruto.items.swords.Samehada;
 import net.narutoxboruto.items.throwables.FumaShurikenItem;
 import net.narutoxboruto.items.throwables.ThrowableWeaponItem;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
 
 import static net.narutoxboruto.main.Main.MOD_ID;
 
@@ -28,6 +29,9 @@ public class ModItems {
 
     public static final DeferredItem<Item> FUMA_SHURIKEN = ITEMS.register("fuma_shuriken", () -> new FumaShurikenItem(new Item.Properties().stacksTo(1),"fuma_shuriken"));
 
+    public static final DeferredItem<Item> SAMEHADA = ITEMS.register("samehada", () -> new Samehada(16, -3.5F, new Item.Properties().stacksTo(1)));
+
     public static void register(IEventBus eventBus) {
-       ITEMS.register(eventBus); }
+       ITEMS.register(eventBus);
+    }
 }

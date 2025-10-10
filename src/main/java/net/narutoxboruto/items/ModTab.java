@@ -8,8 +8,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static net.narutoxboruto.items.ModItems.KUNAI;
-import static net.narutoxboruto.items.ModItems.SHURIKEN;
+import static net.narutoxboruto.items.ModItems.*;
 import static net.narutoxboruto.main.Main.MOD_ID;
 
 public class ModTab {
@@ -30,6 +29,14 @@ public class ModTab {
                output.accept(ModItems.POISON_SENBON.get());
                output.accept(ModItems.FUMA_SHURIKEN.get());
            }).build());
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SWORDS = CREATIVE_MODE_TAB.register("swords", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.swords")) //The language key for the title of your CreativeModeTab
+            .withTabsBefore(CreativeModeTabs.COMBAT)
+            .icon(() -> SAMEHADA.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+                output.accept(SAMEHADA.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+            }).build());
 
     public static void register(IEventBus eventBus) {CREATIVE_MODE_TAB.register(eventBus);}
 }

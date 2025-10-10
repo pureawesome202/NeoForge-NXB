@@ -63,7 +63,7 @@ public class ThrownFumaShuriken extends AbstractThrowableWeapon {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(ID_LOYALTY, (byte) 2);  // Default loyalty level
-        builder.define(ID_FOIL, false);        // No enchantment glow by default
+        builder.define(ID_FOIL, false);  // No enchantment glow by default
     }
 
     /**
