@@ -14,11 +14,28 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public class ClientEvents {
 
     @EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT)
     public static class ClientForgeEvents {
+
+        private static int keyPressTime = 0;
+        private static boolean iskeyHeldDown = false;
+
+        @SubscribeEvent
+        public static void clientTicker(PlayerTickEvent.Post event) {
+            // This event is now only fired on the logical side that the listener is registered for
+            if (iskeyHeldDown) {
+                keyPressTime++;
+            } else {
+                keyPressTime = 0;
+            }
+        }
+    }
+
+
 
         @SubscribeEvent
         public static void specialActionKeybind(InputEvent.Key event) {
@@ -35,14 +52,13 @@ public class ClientEvents {
         }
 
 
-    }
     @EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT)
     public static class ClientModBusEvents {
+
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
-            //event.register(ModKeyBinds.OPEN_GUI);
-            //event.register(ModKeyBinds.CHAKRA_CONTROL);
             event.register(ModKeyBinds.SPECIAL_ACTION);
         }
     }
 }
+
