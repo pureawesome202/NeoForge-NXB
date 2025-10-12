@@ -13,8 +13,15 @@ public class FumaShurikenRenderer <T extends AbstractThrowableWeapon> extends Th
     @Override
     protected void setupRotations(T pEntity, float pPartialTicks, PoseStack pMatrixStack) {
         float spin = pEntity.getFumaSpin(pPartialTicks);
-        super.setupRotations(pEntity, pPartialTicks, pMatrixStack);
-        pMatrixStack.mulPose(com.mojang.math.Axis.ZP.rotation(spin));
-        pMatrixStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(90));
+
+        // Start with basic entity rotations
+        pMatrixStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-pEntity.getYRot()));
+        pMatrixStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(pEntity.getXRot()));
+
+        // Spin horizontally around the Y axis
+        pMatrixStack.mulPose(com.mojang.math.Axis.YP.rotation(spin));
+
+        // Rotate to make shuriken lay flat
+        pMatrixStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(0));
     }
 }
