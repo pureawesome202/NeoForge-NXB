@@ -12,6 +12,7 @@ import net.narutoxboruto.util.ModKeyBinds;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -37,19 +38,21 @@ public class ClientEvents {
 
 
 
-        @SubscribeEvent
-        public static void specialActionKeybind(InputEvent.Key event) {
-            Minecraft minecraft = Minecraft.getInstance();
-            LocalPlayer player = minecraft.player;
-            if (player != null) {
-                ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
-                if (ModKeyBinds.SPECIAL_ACTION.consumeClick()) {
-                    if (itemStack.getItem() instanceof AbstractAbilitySword) {
-                        ModPacketHandler.sendToServer(new ToggleSwordAbility());
-                    }
-                }
+    @SubscribeEvent
+    public static void specialActionKeybind(ClientTickEvent.Post event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+
+        if (player == null) return;
+
+        // Check for key press using consumeClick()
+        while (ModKeyBinds.SPECIAL_ACTION.consumeClick()) {
+            ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+            if (itemStack.getItem() instanceof AbstractAbilitySword) {
+                ModPacketHandler.sendToServer(new ToggleSwordAbility());
             }
         }
+    }
 
 
     @EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT)

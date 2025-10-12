@@ -1,14 +1,14 @@
 package net.narutoxboruto.items.swords;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemCooldowns;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.*;
+import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.info.ChakraAttachment;
 import net.narutoxboruto.capabilities.info.Chakra;
 import net.narutoxboruto.networking.ModPacketHandler;
 
@@ -16,46 +16,46 @@ public class AbstractAbilitySword extends SwordItem implements Vanishable {
    public boolean isActive = false;
    protected int cooldown;
 
-    public AbstractAbilitySword(float pAttackSpeedModifier, Item.Properties pProperties) {
-        super(SwordCustomTiers.GENERAL, pProperties);
-        this.cooldown = (int) (20 / (4 + pAttackSpeedModifier));
+    public AbstractAbilitySword(Tier tier, Item.Properties pProperties) {
+        // The parent SwordItem constructor now only needs the tier and properties
+        super(tier, pProperties);
+        // You can calculate cooldown based on the tier's speed if needed
+        this.cooldown = (int) (20 / (4 + tier.getSpeed()));
     }
 
-   public int getChakraCost() {
-       return 1;
-   }
+    public int getChakraCost() {
+        return 1;
+    }
 
-   public void toggleAbility(Player pPlayer) {
-       if (!pPlayer.level().isClientSide) {
-           this.isActive = !this.isActive;
-           String s = this.isActive ? "activate" : "deactivate";
-           pPlayer.displayClientMessage(Component.translatable("sword_ability." + s, this.getDescription()), true);
-       }
-   }
+    public void toggleAbility(Player pPlayer) {
+        if (!pPlayer.level().isClientSide) {
+            this.isActive = !this.isActive;
+            String s = this.isActive ? "activate" : "deactivate";
+            pPlayer.displayClientMessage(Component.translatable("sword_ability." + s, this.getDescription()), true);
+        }
+    }
 
-   protected void doSpecialAbility(LivingEntity pTarget, ServerPlayer serverPlayer) {
-   }
-
-   protected void doSpecialAbility(ServerPlayer serverPlayer){
-   }
+    protected void doSpecialAbility(LivingEntity pTarget, ServerPlayer serverPlayer) {
+    }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        // Damage the sword
-        stack.hurtAndBreak(1, attacker, (EquipmentSlot.MAINHAND));
+    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
+        pStack.hurtAndBreak(1, pAttacker, EquipmentSlot.MAINHAND);
 
-        if (attacker instanceof ServerPlayer serverPlayer && this.isActive && !serverPlayer.level().isClientSide) {
+        if (pAttacker instanceof ServerPlayer serverPlayer && this.isActive && pAttacker.level() instanceof ServerLevel) {
             ItemCooldowns cooldowns = serverPlayer.getCooldowns();
 
-            // Access Chakra attachment directly
-            Chakra chakra = serverPlayer.getData(ModPacketHandler.CHAKRA);
+            //Get the chakra attachment from the player
+            ChakraAttachment chakra = serverPlayer.getData(MainAttachment.CHAKRA);
 
-            if (!cooldowns.isOnCooldown(stack.getItem()) && chakra.getValue() >= getChakraCost()) {
-                doSpecialAbility(target, serverPlayer);
-                chakra.subValue(getChakraCost(), serverPlayer);
+            if (!cooldowns.isOnCooldown(pStack.getItem()) && chakra.getValue() >= getChakraCost()) {
+                doSpecialAbility(pTarget, serverPlayer);
+                //Subtract the cost using the attachment
+                chakra.subValue(getChakraCost());
+                //Sync the updated data to the client
+                serverPlayer.syncData(MainAttachment.CHAKRA); // New in NeoForge 1.21
+                cooldowns.addCooldown(this, cooldown);
             }
-
-            cooldowns.addCooldown(this, cooldown);
         }
         return true;
     }

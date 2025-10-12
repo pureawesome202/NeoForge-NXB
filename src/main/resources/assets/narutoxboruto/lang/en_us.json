@@ -1,6 +1,6 @@
 {
   "itemGroup.throwable": "Throwables",
-  "ItemGroup.swords": "Swords",
+  "itemGroup.swords": "Swords",
 
   "item.narutoxboruto.shuriken": "Shuriken",
   "item.narutoxboruto.kunai": "Kunai",
@@ -9,5 +9,9 @@
   "item.narutoxboruto.senbon": "Senbon",
   "item.narutoxboruto.poison_senbon": "Poison Senbon",
 
-  "item.narutoxboruto.samehada": "Samehada"
+  "item.narutoxboruto.samehada": "Samehada",
+  "sword_ability.activate": "%s ability activated",
+  "sword_ability.deactivate": "%s ability deactivated",
+  "samehada.no_chakra": "No chakra left",
+  "samehada.chakra_amount": "%s chakra in storage."
 }

@@ -1,5 +1,6 @@
 package net.narutoxboruto.main;
 
+import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.entities.ModEntities;
 import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.items.ModTab;
@@ -17,6 +18,9 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+
+import static net.narutoxboruto.attachments.MainAttachment.ATTACHMENT_TYPES;
+
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Main.MOD_ID)
 public class Main {
@@ -34,6 +38,7 @@ public class Main {
         ModTab.register(modEventBus);
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);
+        ATTACHMENT_TYPES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Main) to respond directly to events.

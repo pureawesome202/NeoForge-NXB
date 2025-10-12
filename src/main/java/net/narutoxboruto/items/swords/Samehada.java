@@ -1,7 +1,6 @@
 package net.narutoxboruto.items.swords;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -12,11 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.narutoxboruto.capabilities.info.Chakra;
-import net.narutoxboruto.capabilities.info.MaxChakra;
-import net.narutoxboruto.networking.ModPacketHandler;
+import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.info.ChakraAttachment;
+import net.narutoxboruto.attachments.info.MaxChakraAttachment;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class Samehada extends AbstractAbilitySword {
@@ -24,12 +22,13 @@ public class Samehada extends AbstractAbilitySword {
     private int chakraDiff;
     private int swordChakra;
 
-    public Samehada(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
-        super(pAttackDamageModifier, pProperties);
+    public Samehada(Properties pProperties) {
+        // Simply pass the properties, which now contain the attributes
+        super(SwordCustomTiers.SAMEHADA, pProperties);
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable TooltipContext context, List<Component> components, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> components, TooltipFlag flag) {
         components.add(Component.literal("Req: 300 Ken").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(stack, context, components, flag);
     }
@@ -39,48 +38,49 @@ public class Samehada extends AbstractAbilitySword {
         return 0;
     }
 
-
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            doSpecialAbility(player, serverPlayer);
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+        if (pPlayer instanceof ServerPlayer serverPlayer) {
+            doSpecialAbility(pPlayer, serverPlayer);
         }
-        return InteractionResultHolder.pass(player.getItemInHand(hand));
+        return InteractionResultHolder.pass(pPlayer.getItemInHand(pHand));
     }
 
-    /**
-     * Calculates how much chakra can be absorbed.
-     */
-    public void abilityChakra(LivingEntity entity) {
-        if (entity instanceof ServerPlayer serverPlayer) {
-            Chakra chakra = serverPlayer.getData(ModPacketHandler.CHAKRA);
-            MaxChakra maxChakra = serverPlayer.getData(ModPacketHandler.MAX_CHAKRA);
+    public void abilityChakra(LivingEntity pPlayer) {
+        if (pPlayer instanceof ServerPlayer serverPlayer) {
+            // Use attachment system instead of capabilities
+            ChakraAttachment chakra = serverPlayer.getData(MainAttachment.CHAKRA);
+            MaxChakraAttachment maxChakra = serverPlayer.getData(MainAttachment.MAX_CHAKRA);
+
             this.chakraDiff = maxChakra.getValue() - chakra.getValue();
         }
     }
 
     @Override
-    protected void doSpecialAbility(LivingEntity target, ServerPlayer serverPlayer) {
-        abilityChakra(target);
-        if (target instanceof ServerPlayer && swordChakra > 0) {
-            Chakra chakra = serverPlayer.getData(ModPacketHandler.CHAKRA);
-            chakra.addValue(swordChakra, serverPlayer.getData(ModPacketHandler.MAX_CHAKRA).getValue(), serverPlayer);
+    protected void doSpecialAbility(LivingEntity pTarget, ServerPlayer serverPlayer) {
+        abilityChakra(pTarget);
+        if (pTarget instanceof ServerPlayer && swordChakra > 0) {
+            // Use attachment system instead of capabilities
+            ChakraAttachment targetChakra = ((ServerPlayer) pTarget).getData(MainAttachment.CHAKRA);
+            targetChakra.addValue(swordChakra, ((ServerPlayer) pTarget).getData(MainAttachment.MAX_CHAKRA).getValue(), (ServerPlayer) pTarget);
             swordChakra = Math.max(swordChakra - this.chakraDiff, 0);
         }
         serverPlayer.sendSystemMessage(Component.translatable("samehada.chakra_amount", swordChakra));
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target instanceof ServerPlayer serverPlayer) {
-            Chakra chakra = serverPlayer.getData(ModPacketHandler.CHAKRA);
+    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
+        if (pTarget instanceof ServerPlayer serverPlayer) {
+            // Use attachment system instead of capabilities
+            ChakraAttachment targetChakra = serverPlayer.getData(MainAttachment.CHAKRA);
             if (swordChakra >= MAX_SWORD_CHAKRA) {
-                chakra.subValue(3, serverPlayer);
+                targetChakra.subValue(3, serverPlayer);
             }
             swordChakra = Math.min(swordChakra + 3, MAX_SWORD_CHAKRA);
         }
         swordChakra = Math.min(swordChakra + 3, MAX_SWORD_CHAKRA);
-        stack.hurtAndBreak(1, attacker, (EquipmentSlot.MAINHAND));
+
+        pStack.hurtAndBreak(1, pAttacker, EquipmentSlot.MAINHAND);
         return true;
     }
 }
