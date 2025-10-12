@@ -148,26 +148,16 @@ public class ThrownFumaShuriken extends AbstractThrowableWeapon {
      */
     @Override
     protected void onHitEntity(EntityHitResult hitResult) {
-        super.onHitEntity(hitResult);
+        // Remove the dealtDamage check here to allow normal collision
         Entity target = hitResult.getEntity();
         float damage = 8.0F;
 
-        // 1.21.1-compatible damage source
         Entity owner = this.getOwner();
         DamageSource damageSource = this.damageSources().trident(this, owner != null ? owner : this);
 
-        // Damage calculation
-        if (owner instanceof LivingEntity livingOwner) {
-            AttributeInstance damageAttribute = livingOwner.getAttribute(Attributes.ATTACK_DAMAGE);
-            if (damageAttribute != null) {
-                damage += (float) damageAttribute.getValue();
-            }
-            if (isCritical()) {
-                damage *= 1.5F;
-            }
-        }
-
+        // Your damage calculation
         boolean wasHurt = target.hurt(damageSource, damage);
+
         if (wasHurt) {
             if (target.getType() == EntityType.ENDERMAN) {
                 return;
@@ -176,18 +166,20 @@ public class ThrownFumaShuriken extends AbstractThrowableWeapon {
             if (target instanceof LivingEntity livingTarget) {
                 // Apply knockback manually
                 if (owner instanceof LivingEntity) {
-                    int knockback = 0; // Add enchantment-based knockback if needed
+                    int knockback = 0;
                     livingTarget.knockback(knockback * 0.5F,
                             owner.getX() - target.getX(),
                             owner.getZ() - target.getZ());
                 }
-
-                // Fire damage events
                 this.doPostHurtEffects(livingTarget);
             }
+
+            // Set dealtDamage ONLY when damage was actually dealt
+            this.dealtDamage = true;
         }
 
-        this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
+        // Adjust physics instead of completely killing momentum
+        this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
         this.playSound(SoundEvents.TRIDENT_HIT, 1.0F, 1.0F);
     }
 
