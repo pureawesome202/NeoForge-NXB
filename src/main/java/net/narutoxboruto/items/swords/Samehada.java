@@ -8,14 +8,11 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.attachments.info.ChakraAttachment;
 import net.narutoxboruto.attachments.info.MaxChakraAttachment;
-
-import java.util.List;
 
 public class Samehada extends AbstractAbilitySword {
     private static final int MAX_SWORD_CHAKRA = 250;
@@ -23,15 +20,14 @@ public class Samehada extends AbstractAbilitySword {
     private int swordChakra;
 
     public Samehada(Properties pProperties) {
-        // Simply pass the properties, which now contain the attributes
         super(SwordCustomTiers.SAMEHADA, pProperties);
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> components, TooltipFlag flag) {
-        components.add(Component.literal("Req: 300 Ken").withStyle(ChatFormatting.GOLD));
-        super.appendHoverText(stack, context, components, flag);
-    }
+  //  @Override
+  //  public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> components, TooltipFlag flag) {
+  //      components.add(Component.literal("Req: 300 Ken").withStyle(ChatFormatting.GOLD));
+  //      super.appendHoverText(stack, context, components, flag);
+  //  }
 
     @Override
     public int getChakraCost() {

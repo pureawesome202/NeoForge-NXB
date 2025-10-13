@@ -35,7 +35,8 @@ public class ModTab {
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> SAMEHADA.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
-                output.accept(SAMEHADA.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                output.accept(SAMEHADA.get());
+                output.accept(KUBIKIRIBOCHO.get());
             }).build());
 
     public static void register(IEventBus eventBus) {CREATIVE_MODE_TAB.register(eventBus);}

@@ -9,9 +9,12 @@
   "item.narutoxboruto.senbon": "Senbon",
   "item.narutoxboruto.poison_senbon": "Poison Senbon",
 
-  "item.narutoxboruto.samehada": "Samehada",
   "sword_ability.activate": "%s ability activated",
   "sword_ability.deactivate": "%s ability deactivated",
+
+  "item.narutoxboruto.samehada": "Samehada",
   "samehada.no_chakra": "No chakra left",
-  "samehada.chakra_amount": "%s chakra in storage."
+  "samehada.chakra_amount": "%s chakra in storage.",
+
+  "item.narutoxboruto.kubikiribocho": "Kubikiribocho"
 }

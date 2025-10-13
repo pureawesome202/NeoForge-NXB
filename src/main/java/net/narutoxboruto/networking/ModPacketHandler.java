@@ -7,7 +7,6 @@ import net.narutoxboruto.capabilities.info.MaxChakra;
 import net.narutoxboruto.networking.info.SyncChakra;
 import net.narutoxboruto.networking.info.SyncMaxChakra;
 import net.narutoxboruto.networking.misc.ToggleSwordAbility;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.network.PacketDistributor;
