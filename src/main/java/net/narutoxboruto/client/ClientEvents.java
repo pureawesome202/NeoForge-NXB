@@ -12,31 +12,24 @@ import net.narutoxboruto.util.ModKeyBinds;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
+@EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT)
 public class ClientEvents {
+    private static int keyPressTime = 0;
+    private static boolean iskeyHeldDown = false;
 
-    @EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT)
-    public static class ClientForgeEvents {
-
-        private static int keyPressTime = 0;
-        private static boolean iskeyHeldDown = false;
-
-        @SubscribeEvent
-        public static void clientTicker(PlayerTickEvent.Post event) {
-            // This event is now only fired on the logical side that the listener is registered for
-            if (iskeyHeldDown) {
-                keyPressTime++;
-            } else {
-                keyPressTime = 0;
-            }
+    @SubscribeEvent
+    public static void clientTicker(PlayerTickEvent.Post event) {
+        if (iskeyHeldDown) {
+            keyPressTime++;
+        } else {
+            keyPressTime = 0;
         }
     }
-
-
 
     @SubscribeEvent
     public static void specialActionKeybind(ClientTickEvent.Post event) {
@@ -45,19 +38,17 @@ public class ClientEvents {
 
         if (player == null) return;
 
-        // Check for key press using consumeClick()
-        while (ModKeyBinds.SPECIAL_ACTION.consumeClick()) {
+        // Use if instead of while to avoid consuming multiple clicks
+        if (ModKeyBinds.SPECIAL_ACTION.consumeClick()) {
             ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
             if (itemStack.getItem() instanceof AbstractAbilitySword) {
                 ModPacketHandler.sendToServer(new ToggleSwordAbility());
+                System.out.println("R key pressed and packet sent!"); // Debug line
             }
         }
     }
 
-
-    @EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT)
     public static class ClientModBusEvents {
-
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
             event.register(ModKeyBinds.SPECIAL_ACTION);

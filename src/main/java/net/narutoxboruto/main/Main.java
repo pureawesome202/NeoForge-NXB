@@ -4,6 +4,7 @@ import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.entities.ModEntities;
 import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.items.ModTab;
+import net.narutoxboruto.networking.ModPacketHandler;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -39,6 +40,7 @@ public class Main {
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);
         ATTACHMENT_TYPES.register(modEventBus);
+        modEventBus.register(ModPacketHandler.class);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Main) to respond directly to events.

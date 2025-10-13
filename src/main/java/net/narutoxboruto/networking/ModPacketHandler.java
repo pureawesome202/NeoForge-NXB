@@ -7,6 +7,7 @@ import net.narutoxboruto.capabilities.info.MaxChakra;
 import net.narutoxboruto.networking.info.SyncChakra;
 import net.narutoxboruto.networking.info.SyncMaxChakra;
 import net.narutoxboruto.networking.misc.ToggleSwordAbility;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -22,7 +23,9 @@ public class ModPacketHandler {
         // Register the SyncChakra packet to be sent from server to client
         registrar.playToClient(SyncChakra.TYPE, SyncChakra.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToClient(SyncMaxChakra.TYPE, SyncMaxChakra.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToClient(ToggleSwordAbility.TYPE, ToggleSwordAbility.STREAM_CODEC, (payload, context) -> payload.handle(context));
+
+        // Fixed ToggleSwordAbility registration
+        registrar.playToServer(ToggleSwordAbility.TYPE, ToggleSwordAbility.STREAM_CODEC, (payload, context) -> payload.handle(context));
 
     }
     public static final AttachmentType<Chakra> CHAKRA = AttachmentType.builder(Chakra::new).build();

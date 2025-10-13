@@ -14,22 +14,26 @@ public class ToggleSwordAbility implements CustomPacketPayload {
 
     public static final Type<ToggleSwordAbility> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("narutoxboruto", "toggle_sword_ability"));
 
-    public static final StreamCodec<FriendlyByteBuf, ToggleSwordAbility> STREAM_CODEC = StreamCodec.of((buf, value) -> {}, buf -> new ToggleSwordAbility());
+    public static final StreamCodec<FriendlyByteBuf, ToggleSwordAbility> STREAM_CODEC = StreamCodec.ofMember(ToggleSwordAbility::toBytes, ToggleSwordAbility::new);
 
     public ToggleSwordAbility() {
+        // Empty constructor for creation
     }
 
+    // Proper deserialization constructor
     public ToggleSwordAbility(FriendlyByteBuf buf) {
+        // Add any data reading here if your packet needs to send data
     }
 
+    // Proper serialization method
     public void toBytes(FriendlyByteBuf buf) {
+        // Add any data writing here if your packet needs to send data
     }
 
     public void handle(IPayloadContext context) {
         context.enqueueWork(() -> {
             ServerPlayer serverPlayer = (ServerPlayer) context.player();
-            ((AbstractAbilitySword) serverPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem()).toggleAbility(
-                    serverPlayer);
+            ((AbstractAbilitySword) serverPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem()).toggleAbility(serverPlayer);
         });
     }
 
