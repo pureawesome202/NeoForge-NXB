@@ -3,9 +3,7 @@ package net.narutoxboruto.items;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
-import net.narutoxboruto.items.swords.Kubikiribocho;
-import net.narutoxboruto.items.swords.Samehada;
-import net.narutoxboruto.items.swords.SwordCustomTiers;
+import net.narutoxboruto.items.swords.*;
 import net.narutoxboruto.items.throwables.FumaShurikenItem;
 import net.narutoxboruto.items.throwables.ThrowableWeaponItem;
 import net.neoforged.bus.api.IEventBus;
@@ -36,6 +34,9 @@ public class ModItems {
 
     public static final DeferredItem<Item> KUBIKIRIBOCHO = ITEMS.register("kubikiribocho", () -> new Kubikiribocho(new Item.Properties().stacksTo(1).attributes(SwordItem.createAttributes(SwordCustomTiers.KUBIKIRIBOCHO, 6, -3f))));
 
+    public static final DeferredItem<Item> SHIBUKI = ITEMS.register("shibuki", () -> new Shibuki(new Item.Properties().stacksTo(1).attributes(SwordItem.createAttributes(SwordCustomTiers.SHIBUKI, 2, -2f))));
+
+    public static final DeferredItem<Item> NUIBARI = ITEMS.register("nuibari", () -> new Nuibari(new Item.Properties().stacksTo(1).attributes(SwordItem.createAttributes(SwordCustomTiers.NUIBARI, 2, -1.5f))));
 
     public static void register(IEventBus eventBus) {
        ITEMS.register(eventBus);

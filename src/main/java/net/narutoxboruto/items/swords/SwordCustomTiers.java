@@ -12,10 +12,10 @@ import java.util.function.Supplier;
 public enum SwordCustomTiers implements Tier {
     GENERAL(0, 1561, -4.0F, -1.0F, 0, () -> Ingredient.EMPTY),
     SAMEHADA(0, 1561, -7.5F, 15.0F, 0, () -> Ingredient.EMPTY),
-    // SHIBUKI(),
+    SHIBUKI(0, 1561, -4.5F, 12.0F, 0, () -> Ingredient.EMPTY),
     // KIBA(),
-     KUBIKIRIBOCHO(0, 1561, -9.5F, 17.0F, 0, () -> Ingredient.EMPTY);
-    // NUIBARI(),
+    KUBIKIRIBOCHO(0, 1561, -9.5F, 17.0F, 0, () -> Ingredient.EMPTY),
+    NUIBARI(0, 1561, -3.5F, 7.0F, 0, () -> Ingredient.EMPTY);
     // HIRAMEKAREI(),
     // KABUTOWARI()
 
