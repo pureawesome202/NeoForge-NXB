@@ -5,6 +5,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.narutoxboruto.networking.ModPacketHandler;
 import net.narutoxboruto.networking.info.SyncChakra;
 
+import static net.narutoxboruto.client.PlayerData.maxChakra;
+
 public class Chakra {
     private int value;
 
@@ -16,7 +18,7 @@ public class Chakra {
         this.value = value;
     }
 
-    public void addValue(int add, int maxChakra, ServerPlayer serverPlayer) {
+    public void addValue(int add, ServerPlayer serverPlayer) {
         this.value = Math.min(this.value + add, maxChakra);
         this.syncValue(serverPlayer);
     }

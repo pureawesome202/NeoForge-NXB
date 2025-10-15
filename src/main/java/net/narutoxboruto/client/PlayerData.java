@@ -3,7 +3,9 @@ package net.narutoxboruto.client;
 public class PlayerData {
 
     //INFO
-    private static int chakra, maxChakra, shinobi_points;
+    private static int chakra;
+    public static int maxChakra;
+    private static int shinobi_points;
    // private static String clan, affiliation, rank, releaseList;
    // private static boolean chakraControl, narutoRun;
    // //STATS
@@ -26,6 +28,9 @@ public class PlayerData {
         return maxChakra;
     }
 
-    public static void setMaxChakra(int maxChakra) {PlayerData.maxChakra = maxChakra;}
+    public static int setMaxChakra(int maxChakra) {
+        PlayerData.maxChakra = maxChakra;
+        return maxChakra;
+    }
 
 }

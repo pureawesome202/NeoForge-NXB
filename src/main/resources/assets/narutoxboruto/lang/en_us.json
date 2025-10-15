@@ -8,15 +8,16 @@
   "item.narutoxboruto.fuma_shuriken": "Fuma Shuriken",
   "item.narutoxboruto.senbon": "Senbon",
   "item.narutoxboruto.poison_senbon": "Poison Senbon",
-
+  "item.narutoxboruto.samehada": "Samehada",
+  "item.narutoxboruto.kubikiribocho": "Kubikiribocho",
+  "item.narutoxboruto.shibuki": "Shibuki",
   "sword_ability.activate": "%s ability activated",
   "sword_ability.deactivate": "%s ability deactivated",
 
-  "item.narutoxboruto.samehada": "Samehada",
   "samehada.no_chakra": "No chakra left",
   "samehada.chakra_amount": "%s chakra in storage.",
 
-  "item.narutoxboruto.kubikiribocho": "Kubikiribocho",
-
-  "item.narutoxboruto.shibuki": "Shibuki"
+  "key.category.narutoxboruto": "Naruto x Boruto",
+  "key.category.chakra_recharge": "Chakra Recharge",
+  "key.category.special_action": "Special Action"
 }

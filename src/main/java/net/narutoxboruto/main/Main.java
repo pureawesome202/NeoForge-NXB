@@ -1,10 +1,13 @@
 package net.narutoxboruto.main;
 
 import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.client.overlay.ModHudOverlays;
 import net.narutoxboruto.entities.ModEntities;
 import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.items.ModTab;
 import net.narutoxboruto.networking.ModPacketHandler;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -30,8 +33,6 @@ public class Main {
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 
-  // public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder()
-  //         .alwaysEdible().nutrition(1).saturationModifier(2f).build()));
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -41,16 +42,16 @@ public class Main {
         ModEntities.register(modEventBus);
         ATTACHMENT_TYPES.register(modEventBus);
         modEventBus.register(ModPacketHandler.class);
-
-        // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (Main) to respond directly to events.
-        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
+        NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderGuiEvent.Post.class, this::onRenderGui);
         NeoForge.EVENT_BUS.register(this);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
-
+    private void onRenderGui(RenderGuiEvent.Post event) {
+        // Copy the render code here or call static method
+        ModHudOverlays.onRenderGui(event);
+    }
     private void commonSetup(FMLCommonSetupEvent event) {
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");

@@ -30,7 +30,7 @@ public class SyncMaxChakra implements CustomPacketPayload {
 
     public void handle(IPayloadContext context) {
         context.enqueueWork(() -> {
-            PlayerData.setMaxChakra(maxChakra);
+            PlayerData.setMaxChakra(10);
         });
     }
 

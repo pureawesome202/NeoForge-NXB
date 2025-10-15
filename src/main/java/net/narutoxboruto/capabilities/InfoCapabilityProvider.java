@@ -1,59 +1,69 @@
 package net.narutoxboruto.capabilities;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.narutoxboruto.capabilities.info.Chakra;
 import net.narutoxboruto.capabilities.info.MaxChakra;
-import net.neoforged.neoforge.capabilities.EntityCapability;
+import net.narutoxboruto.networking.info.SyncChakra;
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.attachment.IAttachmentSerializer;
 import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.common.util.Lazy;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
-
-import javax.annotation.Nullable;
 
 public class InfoCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static final EntityCapability<Chakra, Void> CHAKRA = EntityCapability.createVoid(ResourceLocation.fromNamespaceAndPath("narutoxboruto", "chakra"), Chakra.class);
+    public static final AttachmentType<Chakra> CHAKRA = AttachmentType.builder(Chakra::new).serialize((Codec<Chakra>) SyncChakra.STREAM_CODEC).build();
+    public static final AttachmentType<MaxChakra> MAX_CHAKRA = AttachmentType.builder(MaxChakra::new).serialize((IAttachmentSerializer<?, MaxChakra>) SyncChakra.STREAM_CODEC).build();
 
-    public static final EntityCapability<Chakra, Void> MAX_CHAKRA = EntityCapability.createVoid(ResourceLocation.fromNamespaceAndPath("narutoxboruto", "max_chakra"), Chakra.class);
+    private Chakra chakra = new Chakra();
+    private MaxChakra max_chakra = new MaxChakra();
 
-    private final Chakra chakra = new Chakra();
+    private final Lazy<Chakra> lazyChakra = Lazy.of(this::createChakra);
+    private final Lazy<MaxChakra> lazyMaxChakra = Lazy.of(this::createMaxChakra);
 
-    private final MaxChakra maxChakra = new MaxChakra();
-
-    @Override
-    public @UnknownNullability CompoundTag serializeNBT(HolderLookup.Provider provider) {
-        CompoundTag nbt = new CompoundTag();
-        CompoundTag chakraTag = new CompoundTag();
-        CompoundTag maxTag = new CompoundTag();
-
-        chakra.saveNBTData(chakraTag);
-        maxChakra.saveNBTData(maxTag);
-
-        nbt.put("chakraData", chakraTag);
-        nbt.put("maxChakraData", maxTag);
-        return nbt;
+    private Chakra createChakra() {
+        if (this.chakra == null) {
+            this.chakra = new Chakra();
+        }
+        return this.chakra;
     }
 
-    @Override
-    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        if (nbt.contains("chakraData")) {
-            chakra.loadNBTData(nbt.getCompound("chakraData"));
+    private MaxChakra createMaxChakra() {
+        if (this.max_chakra == null) {
+            this.max_chakra = new MaxChakra();
         }
-        if (nbt.contains("maxChakraData")) {
-            maxChakra.loadNBTData(nbt.getCompound("maxChakraData"));
-        }
+        return this.max_chakra;
     }
 
     @Override
     public @Nullable Object getCapability(Object cap, Object context) {
         if (cap == CHAKRA) {
-            return chakra;
+            return lazyChakra.get();
         }
         if (cap == MAX_CHAKRA) {
-            return maxChakra;
+            return lazyMaxChakra.get();
         }
         return null;
     }
+
+    @Override
+    public @UnknownNullability CompoundTag serializeNBT(HolderLookup.Provider provider) {
+        CompoundTag nbt = new CompoundTag();
+        createChakra().saveNBTData(nbt);
+        createMaxChakra().saveNBTData(nbt);
+
+        return nbt;
+    }
+
+    @Override
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+        createChakra().saveNBTData(nbt);
+        createMaxChakra().saveNBTData(nbt);
+    }
+
+
 }

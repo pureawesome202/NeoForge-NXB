@@ -41,4 +41,8 @@ public class ChakraAttachment implements INBTSerializable<CompoundTag> {
     public void subValue(int sub, ServerPlayer serverPlayer) {
         this.value = Math.max(this.value - sub, 0);
     }
+
+    public void addValue(int add) {
+        addValue(add);
+    }
 }
