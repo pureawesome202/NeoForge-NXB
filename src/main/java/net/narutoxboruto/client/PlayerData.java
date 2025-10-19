@@ -6,7 +6,7 @@ public class PlayerData {
     private static int chakra;
     public static int maxChakra;
     private static int shinobi_points;
-   // private static String clan, affiliation, rank, releaseList;
+    private static String clan, affiliation, rank, releaseList;
    // private static boolean chakraControl, narutoRun;
    // //STATS
    // private static int taijutsu, ninjutsu, genjutsu, kenjutsu, kinjutsu, medical, senjutsu, shurikenjutsu, speed, summoning;
@@ -28,9 +28,46 @@ public class PlayerData {
         return maxChakra;
     }
 
-    public static int setMaxChakra(int maxChakra) {
-        PlayerData.maxChakra = maxChakra;
-        return maxChakra;
+    public static int setMaxChakra(int maxChakra) {PlayerData.maxChakra = maxChakra; return maxChakra;}
+
+    public static int getShinobiPoints() {
+        return shinobi_points;
+    }
+
+    public static void setShinobi_points(int shinobi_points) {
+        PlayerData.shinobi_points = shinobi_points;
+    }
+
+    public static String getClan() {
+        return clan;
+    }
+
+    public static void setClan(String clan) {
+        PlayerData.clan = clan;
+    }
+
+    public static String getRank() {
+        return rank;
+    }
+
+    public static void setRank(String rank) {
+        PlayerData.rank = rank;
+    }
+
+    public static String getReleaseList() {
+        return releaseList;
+    }
+
+    public static void setReleaseList(String releaseList) {
+        PlayerData.releaseList = releaseList;
+    }
+
+    public static String getAffiliation() {
+        return affiliation;
+    }
+
+    public static void setAffiliation(String affiliation) {
+        PlayerData.affiliation = affiliation;
     }
 
 }

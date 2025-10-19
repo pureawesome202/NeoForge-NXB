@@ -2,8 +2,7 @@ package net.narutoxboruto.networking;
 
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.narutoxboruto.networking.info.SyncChakra;
-import net.narutoxboruto.networking.info.SyncMaxChakra;
+import net.narutoxboruto.networking.info.*;
 import net.narutoxboruto.networking.misc.RechargeChakra;
 import net.narutoxboruto.networking.misc.ToggleSwordAbility;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -19,6 +18,11 @@ public class ModPacketHandler {
 
         registrar.playToClient(SyncChakra.TYPE, SyncChakra.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToClient(SyncMaxChakra.TYPE, SyncMaxChakra.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncAffiliation.TYPE, SyncAffiliation.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncClan.TYPE, SyncClan.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncRank.TYPE, SyncRank.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncReleaseList.TYPE, SyncReleaseList.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncShinobiPoints.TYPE, SyncShinobiPoints.STREAM_CODEC, (payload, context) -> payload.handle(context));
 
         registrar.playToServer(ToggleSwordAbility.TYPE, ToggleSwordAbility.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToServer(RechargeChakra.TYPE, RechargeChakra.STREAM_CODEC, (payload, context) -> payload.handle(context));
