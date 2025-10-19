@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.narutoxboruto.attachments.MainAttachment;
-import net.narutoxboruto.attachments.info.ChakraAttachment;
-import net.narutoxboruto.attachments.info.MaxChakraAttachment;
+import net.narutoxboruto.attachments.info.Chakra;
+import net.narutoxboruto.attachments.info.MaxChakra;
 
 public class Samehada extends AbstractAbilitySword {
     private static final int MAX_SWORD_CHAKRA = 250;
@@ -44,8 +44,8 @@ public class Samehada extends AbstractAbilitySword {
     public void abilityChakra(LivingEntity pPlayer) {
         if (pPlayer instanceof ServerPlayer serverPlayer) {
             // Use attachment system instead of capabilities
-            ChakraAttachment chakra = serverPlayer.getData(MainAttachment.CHAKRA);
-            MaxChakraAttachment maxChakra = serverPlayer.getData(MainAttachment.MAX_CHAKRA);
+            Chakra chakra = serverPlayer.getData(MainAttachment.CHAKRA);
+            MaxChakra maxChakra = serverPlayer.getData(MainAttachment.MAX_CHAKRA);
 
             this.chakraDiff = maxChakra.getValue() - chakra.getValue();
         }
@@ -56,8 +56,8 @@ public class Samehada extends AbstractAbilitySword {
         abilityChakra(pTarget);
         if (pTarget instanceof ServerPlayer && swordChakra > 0) {
             // Use attachment system instead of capabilities
-            ChakraAttachment targetChakra = ((ServerPlayer) pTarget).getData(MainAttachment.CHAKRA);
-            targetChakra.addValue(swordChakra, ((ServerPlayer) pTarget).getData(MainAttachment.MAX_CHAKRA).getValue(), (ServerPlayer) pTarget);
+            Chakra targetChakra = ((ServerPlayer) pTarget).getData(MainAttachment.CHAKRA.get());
+            targetChakra.addValue(swordChakra, (ServerPlayer) pTarget);
             swordChakra = Math.max(swordChakra - this.chakraDiff, 0);
         }
         serverPlayer.sendSystemMessage(Component.translatable("samehada.chakra_amount", swordChakra));
@@ -67,7 +67,7 @@ public class Samehada extends AbstractAbilitySword {
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
         if (pTarget instanceof ServerPlayer serverPlayer) {
             // Use attachment system instead of capabilities
-            ChakraAttachment targetChakra = serverPlayer.getData(MainAttachment.CHAKRA);
+            Chakra targetChakra = serverPlayer.getData(MainAttachment.CHAKRA);
             if (swordChakra >= MAX_SWORD_CHAKRA) {
                 targetChakra.subValue(3, serverPlayer);
             }

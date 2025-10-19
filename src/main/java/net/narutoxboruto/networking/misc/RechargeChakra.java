@@ -1,12 +1,13 @@
 package net.narutoxboruto.networking.misc;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.narutoxboruto.capabilities.InfoCapabilityProvider;
-import net.narutoxboruto.capabilities.info.Chakra;
+import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.info.Chakra;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class RechargeChakra implements CustomPacketPayload {
@@ -34,7 +35,7 @@ public class RechargeChakra implements CustomPacketPayload {
             ServerPlayer serverPlayer = (ServerPlayer) context.player();
 
             // Use the data attachment system directly
-            Chakra chakra = serverPlayer.getData(InfoCapabilityProvider.CHAKRA);
+            Chakra chakra = serverPlayer.getData(MainAttachment.CHAKRA);
             chakra.addValue(1, serverPlayer);
         });
     }

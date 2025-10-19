@@ -8,9 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.narutoxboruto.attachments.MainAttachment;
-import net.narutoxboruto.attachments.info.ChakraAttachment;
-import net.narutoxboruto.capabilities.info.Chakra;
-import net.narutoxboruto.networking.ModPacketHandler;
+import net.narutoxboruto.attachments.info.Chakra;
 
 public class AbstractAbilitySword extends SwordItem implements Vanishable {
    public boolean isActive = false;
@@ -46,12 +44,12 @@ public class AbstractAbilitySword extends SwordItem implements Vanishable {
             ItemCooldowns cooldowns = serverPlayer.getCooldowns();
 
             //Get the chakra attachment from the player
-            ChakraAttachment chakra = serverPlayer.getData(MainAttachment.CHAKRA);
+            Chakra chakra = serverPlayer.getData(MainAttachment.CHAKRA);
 
             if (!cooldowns.isOnCooldown(pStack.getItem()) && chakra.getValue() >= getChakraCost()) {
                 doSpecialAbility(pTarget, serverPlayer);
                 //Subtract the cost using the attachment
-                chakra.subValue(getChakraCost());
+                chakra.subValue(getChakraCost(), serverPlayer);
                 //Sync the updated data to the client
                 serverPlayer.syncData(MainAttachment.CHAKRA); // New in NeoForge 1.21
                 cooldowns.addCooldown(this, cooldown);

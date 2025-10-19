@@ -1,12 +1,21 @@
-package net.narutoxboruto.capabilities.info;
+package net.narutoxboruto.attachments.info;
 
-import net.minecraft.nbt.CompoundTag;
+import com.mojang.serialization.Codec;
 import net.minecraft.server.level.ServerPlayer;
 import net.narutoxboruto.networking.ModPacketHandler;
 import net.narutoxboruto.networking.info.SyncMaxChakra;
 
 public class MaxChakra {
     private int value = 10;
+
+    public static final Codec<MaxChakra> CODEC = Codec.INT.xmap(MaxChakra::new, MaxChakra::getValue);
+
+    public MaxChakra(int value) {
+        this.value = value;
+    }
+
+    public MaxChakra() {
+    }
 
     public int getValue() {
         return value;
@@ -28,13 +37,5 @@ public class MaxChakra {
     public void copyFrom(MaxChakra source, ServerPlayer serverPlayer) {
         this.value = source.getValue();
         this.syncValue(serverPlayer);
-    }
-
-    public void saveNBTData(CompoundTag nbt) {
-        nbt.putInt("maxChakra", value);
-    }
-
-    public void loadNBTData(CompoundTag nbt) {
-        value = nbt.getInt("maxChakra");
     }
 }

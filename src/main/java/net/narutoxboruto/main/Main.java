@@ -40,7 +40,7 @@ public class Main {
         ModTab.register(modEventBus);
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);
-        ATTACHMENT_TYPES.register(modEventBus);
+        MainAttachment.register(modEventBus);
         modEventBus.register(ModPacketHandler.class);
         NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderGuiEvent.Post.class, this::onRenderGui);
         NeoForge.EVENT_BUS.register(this);
