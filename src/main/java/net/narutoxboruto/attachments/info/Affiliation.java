@@ -1,7 +1,11 @@
 package net.narutoxboruto.attachments.info;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.server.level.ServerPlayer;
+import net.narutoxboruto.networking.ModPacketHandler;
 import net.narutoxboruto.networking.info.SyncAffiliation;
+import net.narutoxboruto.networking.info.SyncMaxChakra;
+import net.narutoxboruto.util.ModUtil;
 
 public class Affiliation {
     private String value;
@@ -25,7 +29,11 @@ public class Affiliation {
         this.value = value;
     }
 
-    public Object getSyncMessage() {
-        return new SyncAffiliation(getValue());
+    public void concatList(String value, ServerPlayer serverPlayer) {
+        this.value = ModUtil.concatAndFormat(this.value, value);
+        this.syncValue(serverPlayer);
+    }
+    public void  syncValue(ServerPlayer serverPlayer) {
+        ModPacketHandler.sendToPlayer(new SyncAffiliation(getValue()), serverPlayer);
     }
 }

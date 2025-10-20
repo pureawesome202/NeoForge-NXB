@@ -1,32 +1,38 @@
-package net.narutoxboruto.attachments.info;
+package net.narutoxboruto.attachments.jutsus;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.narutoxboruto.networking.ModPacketHandler;
-import net.narutoxboruto.networking.info.SyncReleaseList;
+import net.narutoxboruto.networking.jutsus.SyncLightningList;
 import net.narutoxboruto.util.ModUtil;
 
-import java.util.Collections;
-import java.util.List;
-
-public class ReleaseList {
+public class LightningList {
     private final String id;
     protected String value = "";
 
-    public static final Codec<ReleaseList> CODEC = Codec.STRING.xmap(ReleaseList::new, ReleaseList::getValue);
+    // Codec for serialization
+    public static final Codec<LightningList> CODEC = Codec.STRING.xmap(LightningList::new, LightningList::getValue);
 
 
-    public ReleaseList(String identifier) {
-        id = identifier;
+    // Constructor for codec
+    public LightningList(String id, String value) {
+        this.id = id;
+        this.value = value;
     }
 
-    public ReleaseList() {
-        this("releaseList");
+    // Default constructor
+    public LightningList(String identifier) {
+        this.id = identifier;
+        this.value = "";
+    }
+
+    public LightningList() {
+        this("lightning");
     }
 
     public Object getSyncMessage() {
-        return new SyncReleaseList(getValue());
+        return new SyncLightningList(this.value);
     }
 
     public void syncValue(ServerPlayer serverPlayer) {
@@ -37,16 +43,16 @@ public class ReleaseList {
         return value;
     }
 
-    public void concatList(String newRelease, ServerPlayer serverPlayer) {
-        List<String> list = new java.util.ArrayList<>(
-                ModUtil.getArrayFrom(ModUtil.concatAndFormat(getValue(), newRelease)));
-        Collections.sort(list);
-        String s = String.valueOf(list);
-        this.value = s.substring(1, s.length() - 1);
+    public String getId() {
+        return id;
+    }
+
+    public void concatList(String value, ServerPlayer serverPlayer) {
+        this.value = ModUtil.concatAndFormat(this.value, value);
         this.syncValue(serverPlayer);
     }
 
-    public void copyFrom(ReleaseList source, ServerPlayer serverPlayer) {
+    public void copyFrom(LightningList source, ServerPlayer serverPlayer) {
         this.value = source.getValue();
         this.syncValue(serverPlayer);
     }

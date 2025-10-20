@@ -38,7 +38,7 @@ public class ModTab {
                 output.accept(SAMEHADA.get());
                 output.accept(KUBIKIRIBOCHO.get());
                 output.accept(SHIBUKI.get());
-                output.accept(NUIBARI.get());
+               // output.accept(NUIBARI.get());
             }).build());
 
     public static void register(IEventBus eventBus) {CREATIVE_MODE_TAB.register(eventBus);}

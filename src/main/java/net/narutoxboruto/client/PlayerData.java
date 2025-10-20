@@ -9,9 +9,9 @@ public class PlayerData {
     private static String clan, affiliation, rank, releaseList;
    // private static boolean chakraControl, narutoRun;
    // //STATS
-   // private static int taijutsu, ninjutsu, genjutsu, kenjutsu, kinjutsu, medical, senjutsu, shurikenjutsu, speed, summoning;
+    private static int taijutsu, ninjutsu, genjutsu, kenjutsu, kinjutsu, medical, senjutsu, shurikenjutsu, speed, summoning;
     //JUTSUS
-   // private static String fireList, waterList, yangList, yinList, earthList, windList, lightningList;
+    private static String fireList, waterList, yangList, yinList, earthList, windList, lightningList;
    // private static String release, fireJutsu, waterJutsu, yangJutsu, yinJutsu, earthJutsu, windJutsu, lightningJutsu;
    // private static String selectedRelease;
    // private static ItemStack secondOffhandStack = ItemStack.EMPTY;
@@ -69,5 +69,157 @@ public class PlayerData {
     public static void setAffiliation(String affiliation) {
         PlayerData.affiliation = affiliation;
     }
+
+    public static int getGenjutsu() {
+        return genjutsu;
+    }
+
+    public static void setGenjutsu(int chakra) {
+        PlayerData.genjutsu = chakra;
+    }
+
+    public static int getKenjutsu() {
+        return kenjutsu;
+    }
+
+    public static void setKenjutsu(int kenjutsu) {
+        PlayerData.kenjutsu = kenjutsu;
+    }
+
+    public static int getTaijutsu() {
+        return taijutsu;
+    }
+
+    public static void setTaijutsu(int taijutsu) {
+        PlayerData.taijutsu = taijutsu;
+    }
+
+    public static int getNinjutsu() {
+        return ninjutsu;
+    }
+
+    public static void setNinjutsu(int ninjutsu) {
+        PlayerData.ninjutsu = ninjutsu;
+    }
+
+    public static int getKinjutsu() {
+        return kinjutsu;
+    }
+
+    public static void setKinjutsu(int kinjutsu) {
+        PlayerData.kinjutsu = kinjutsu;
+    }
+
+    public static int getMedical() {
+        return medical;
+    }
+
+    public static void setMedical(int medical) {
+        PlayerData.medical = medical;
+    }
+
+    public static int getSenjutsu() {
+        return senjutsu;
+    }
+
+    public static void setSenjutsu(int senjutsu) {
+        PlayerData.senjutsu = senjutsu;
+    }
+
+    public static int getShurikenjutsu() {
+        return shurikenjutsu;
+    }
+
+    public static void setShurikenjutsu(int shurikenjutsu) {
+        PlayerData.shurikenjutsu = shurikenjutsu;
+    }
+
+    public static int getSpeed() {
+        return speed;
+    }
+
+    public static void setSpeed(int speed) {
+        PlayerData.speed = speed;
+    }
+
+    public static int getSummoning() {
+        return summoning;
+    }
+
+    public static void setSummoning(int summoning) {
+        PlayerData.summoning = summoning;
+    }
+
+    public static String getFireList() {
+        return fireList;
+    }
+
+    public static void setFireList(String fireList) {
+        PlayerData.fireList = fireList;
+    }
+
+    public static String getWaterList() {
+        return waterList;
+    }
+
+    public static void setWaterList(String waterList) {
+        PlayerData.waterList = waterList;
+    }
+
+    public static String getYangList() {
+        return yangList;
+    }
+
+    public static void setYangList(String yangList) {
+        PlayerData.yangList = yangList;
+    }
+
+    public static String getYinList() {
+        return yinList;
+    }
+
+    public static void setYinList(String yinList) {
+        PlayerData.yinList = yinList;
+    }
+
+    public static String getEarthList() {
+        return earthList;
+    }
+
+    public static void setEarthList(String earthList) {
+        PlayerData.earthList = earthList;
+    }
+
+    public static String getWindList() {
+        return windList;
+    }
+
+    public static void setWindList(String windList) {
+        PlayerData.windList = windList;
+    }
+
+    public static String getLightningList() {
+        return lightningList;
+    }
+
+    public static void setLightningList(String lightningList) {
+        PlayerData.lightningList = lightningList;
+    }
+
+   // public static boolean getChakraControl() {
+   //     return chakraControl;
+   // }
+
+   // public static void setChakraControl(boolean chakraControl) {
+   //     PlayerData.chakraControl = chakraControl;
+   // }
+
+   // public static String getSelectedRelease() {
+   //     return selectedRelease;
+   // }
+
+   // public static void setSelectedRelease(String release) {
+   //     PlayerData.selectedRelease = release;
+   // }
 
 }

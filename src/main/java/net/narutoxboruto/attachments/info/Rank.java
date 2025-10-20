@@ -1,7 +1,10 @@
 package net.narutoxboruto.attachments.info;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.server.level.ServerPlayer;
+import net.narutoxboruto.networking.ModPacketHandler;
 import net.narutoxboruto.networking.info.SyncRank;
+import net.narutoxboruto.util.ModUtil;
 
 public class Rank {
     private String value;
@@ -21,12 +24,16 @@ public class Rank {
         return value;
     }
 
+    public void concatList(String value, ServerPlayer serverPlayer) {
+        this.value = ModUtil.concatAndFormat(this.value, value);
+        this.syncValue(serverPlayer);
+    }
     public void setValue(String value) {
         this.value = value;
     }
 
-    public Object getSyncMessage() {
-        return new SyncRank(getValue());
+    public void  syncValue(ServerPlayer serverPlayer) {
+        ModPacketHandler.sendToPlayer(new SyncRank(getValue()), serverPlayer);
     }
 
 }
