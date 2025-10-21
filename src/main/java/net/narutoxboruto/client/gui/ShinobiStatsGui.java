@@ -1,21 +1,32 @@
 package net.narutoxboruto.client.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.narutoxboruto.client.PlayerData;
 import net.narutoxboruto.main.Main;
 import net.narutoxboruto.util.ModUtil;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static net.narutoxboruto.client.PlayerData.getReleaseList;
+
+@OnlyIn(Dist.CLIENT)
 public class ShinobiStatsGui extends Screen {
-    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "textures/gui/shinobi_stats.png");
+    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(Main.MOD_ID,
+            "textures/gui/shinobi_stats.png");
 
     private final String[] guiComponentsList = {
             "taijutsu", "ninjutsu", "genjutsu", "kenjutsu", "kinjutsu", "medical", "senjutsu", "shurikenjutsu", "speed",
@@ -37,17 +48,15 @@ public class ShinobiStatsGui extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBackground(guiGraphics, pMouseX, pMouseY, pPartialTick);
+        super.renderBackground(guiGraphics, pMouseX, pMouseY, pPartialTick);
+        guiGraphics.blit(BACKGROUND, (this.width - 234) / 2, (this.height - 192) / 2, 0, 0, 256, 192);
         this.renderInfo(guiGraphics);
         this.drawReleaseIcons(guiGraphics, 95, 16);
         super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 
     protected void createMenuControls() {
-        this.addRenderableWidget(
-                Button.builder(CommonComponents.GUI_DONE, (button) -> this.onClose())
-                        .bounds((this.width - 157) / 2, this.height / 2 + 90, 150, 20)
-                        .build());
+        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (button) -> this.onClose()).bounds((this.width - 157) / 2, this.height / 2 + 90, 150, 20).build());
     }
 
     public void renderInfo(GuiGraphics guiGraphics) {
@@ -59,8 +68,8 @@ public class ShinobiStatsGui extends Screen {
                 else if (l < 13) {
                     drawStringStat(guiGraphics, l);
                     switch (l) {
-                        case 10 -> drawIcon(guiGraphics, 147, 9, l);
-                        case 11 -> drawIcon(guiGraphics, 121, 10, l);
+                        case 10 -> drawIcon(guiGraphics, 147, 11, l);
+                        case 11 -> drawIcon(guiGraphics, 121, 11, l);
                     }
                 }
                 else {
@@ -73,12 +82,17 @@ public class ShinobiStatsGui extends Screen {
     private void drawIntStat(GuiGraphics guiGraphics, int index, int yOffset, int xOffset) {
         String value = this.lockedList.contains(index) && this.valueIntList[index] == 0 ? "-" : String.valueOf(
                 this.valueIntList[index]);
+
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().scale(1.0f, 1.0f, 1.0f);
+
         guiGraphics.drawString(this.font, Component.translatable("shinobiStat." + this.guiComponentsList[index]).append(":"),
                 ((this.width - 192) / 2 - 5) + xOffset, (this.height / 2 - 79 + (index + yOffset) * 12),
                 0, false);
         guiGraphics.drawString(this.font, Component.literal(value), ((this.width - 192) / 2 + 72 + xOffset),
                 (this.height / 2 - 79 + (index + yOffset) * 12), 0, false);
     }
+
 
     private void drawStringStat(GuiGraphics guiGraphics, int index) {
         String spaces = index == 12 ? "" : "   ";
@@ -91,18 +105,20 @@ public class ShinobiStatsGui extends Screen {
     private void drawIcon(GuiGraphics guiGraphics, int x, int size, int l) {
         ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(Main.MOD_ID,
                 "textures/" + this.guiComponentsList[l] + "s/" + this.valueStringList[l - 10] + ".png");
-        guiGraphics.blit(texture, (this.width - 192) / 2 + x, this.height / 2 - 80 + (l - 10) * 12, 0, 0, 0, size, size,
-                size, size);
+        guiGraphics.blit(texture, (this.width - 192) / 2 + x, this.height / 2 - 80 + (l - 10) * 12, 0, 0, 0, size, size, size, size);
     }
 
     private void drawReleaseIcons(GuiGraphics guiGraphics, int x, int size) {
+        String releaseData = getReleaseList();
+        boolean isEmpty = releaseData == null || releaseData.isEmpty() || releaseData.equals("[]");
+
         String releasesLabel = Component.translatable("shinobiStat.releases").append(": ").append(
-                        Component.translatable(PlayerData.getReleaseList().isEmpty() ? "shinobiStat.release_unknown" : ""))
+                        Component.translatable(isEmpty ? "shinobiStat.release_unknown" : ""))
                 .getString();
         guiGraphics.drawString(this.font, releasesLabel, ((this.width - 192) / 2 + x), (this.height / 2 - 43),
                 0, false);
-        if (!PlayerData.getReleaseList().isEmpty()) {
-            List<String> releaseList = ModUtil.getArrayFrom(PlayerData.getReleaseList());
+        if (!isEmpty) {
+            List<String> releaseList = ModUtil.getArrayFrom(releaseData);
             for (int l = 0; l < releaseList.size(); ++l) {
                 int row = l < 6 ? 0 : 1;
                 int column = l < 6 ? l : l - 6;
@@ -122,8 +138,7 @@ public class ShinobiStatsGui extends Screen {
 
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.renderBackground(guiGraphics, pMouseX, pMouseY, pPartialTick);
-        guiGraphics.blit(BACKGROUND, (this.width - 234) / 2, (this.height - 192) / 2, 0, 0, 234, 192);
+
     }
 
     @Override
