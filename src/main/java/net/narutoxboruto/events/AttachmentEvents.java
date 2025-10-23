@@ -15,6 +15,14 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 public class AttachmentEvents {
 
     @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+            System.out.println("DEBUG: Player logged in, release list: '" +
+                    serverPlayer.getData(MainAttachment.RELEASE_LIST).getValue() + "'");
+        }
+    }
+
+    @SubscribeEvent
     public static void onJoinWorldSyncCap(EntityJoinLevelEvent event) {
         if (!event.getLevel().isClientSide() && event.getEntity() instanceof ServerPlayer serverPlayer) {
            // serverPlayer.getCapability(ModeCapabilityProvider.CHAKRA_CONTROL).ifPresent(

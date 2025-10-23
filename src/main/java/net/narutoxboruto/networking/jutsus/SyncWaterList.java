@@ -14,7 +14,7 @@ public class SyncWaterList implements CustomPacketPayload {
 
     public static final StreamCodec<FriendlyByteBuf, SyncWaterList> STREAM_CODEC = StreamCodec.ofMember(SyncWaterList::toBytes, SyncWaterList::new);
 
-    public SyncWaterList(String earthList) { this.waterList = earthList; }
+    public SyncWaterList(String waterList) { this.waterList = waterList; }
 
     public SyncWaterList(FriendlyByteBuf buf) {
         this.waterList = buf.readUtf();

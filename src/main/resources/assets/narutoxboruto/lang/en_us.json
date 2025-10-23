@@ -1,6 +1,7 @@
 {
   "itemGroup.throwable": "Throwables",
   "itemGroup.swords": "Swords",
+  "itemGroup.nxb_misc": "Items",
 
   "item.narutoxboruto.shuriken": "Shuriken",
   "item.narutoxboruto.kunai": "Kunai",
@@ -11,6 +12,8 @@
   "item.narutoxboruto.samehada": "Samehada",
   "item.narutoxboruto.kubikiribocho": "Kubikiribocho",
   "item.narutoxboruto.shibuki": "Shibuki",
+  "item.narutoxboruto.chakra_paper": "Chakra Paper",
+
   "sword_ability.activate": "%s ability activated",
   "sword_ability.deactivate": "%s ability deactivated",
 
@@ -63,5 +66,15 @@
   "rank.sage": "Sage",
   "rank.kage": "Kage",
   "rank.rogue": "Rogue",
-  "rank.null":"Unknown"
+  "rank.null":"Unknown",
+
+  "msg.clan.born": "You were born as a member of %s Clan",
+  "msg.affiliation.born": "You were born at the %s Village",
+  "msg.affinity.releases": "You have chakra affinity towards the elements: %s",
+  "msg.affinity.release": "You have chakra affinity towards the %s element",
+  "msg.affinity.primary_release": "You have chakra affinity towards the %s element",
+  "msg.narutoxboruto.rank": "You are an %s",
+  "msg.no_chakra": "Not enough chakra",
+  "msg.narutoxboruto.release": "you start with %s release",
+  "msg.narutoxboruto.releases": "you start with %s release"
 }

@@ -12,8 +12,8 @@ public class PlayerData {
     private static int taijutsu, ninjutsu, genjutsu, kenjutsu, kinjutsu, medical, senjutsu, shurikenjutsu, speed, summoning;
     //JUTSUS
     private static String fireList, waterList, yangList, yinList, earthList, windList, lightningList;
-   // private static String release, fireJutsu, waterJutsu, yangJutsu, yinJutsu, earthJutsu, windJutsu, lightningJutsu;
-   // private static String selectedRelease;
+    private static String release, fireJutsu, waterJutsu, yangJutsu, yinJutsu, earthJutsu, windJutsu, lightningJutsu;
+    private static String selectedRelease;
    // private static ItemStack secondOffhandStack = ItemStack.EMPTY;
 
     public static int getChakra() {
@@ -55,8 +55,10 @@ public class PlayerData {
     }
 
     public static String getReleaseList() {
-        return releaseList;
-    }
+        if (releaseList == null) {
+            releaseList = ""; // or some default value
+        }
+        return releaseList;    }
 
     public static void setReleaseList(String releaseList) {
         PlayerData.releaseList = releaseList;
@@ -204,6 +206,66 @@ public class PlayerData {
 
     public static void setLightningList(String lightningList) {
         PlayerData.lightningList = lightningList;
+    }
+
+    public static void setSelectedRelease(String release) {
+        PlayerData.selectedRelease = release;
+    }
+
+    public static String getFireJutsu() {
+        return fireJutsu;
+    }
+
+    public static void setFireJutsu(String fireJutsu) {
+        PlayerData.fireJutsu = fireJutsu;
+    }
+
+    public static String getWaterJutsu() {
+        return waterJutsu;
+    }
+
+    public static void setWaterJutsu(String waterJutsu) {
+        PlayerData.waterJutsu = waterJutsu;
+    }
+
+    public static String getYangJutsu() {
+        return yangJutsu;
+    }
+
+    public static void setYangJutsu(String yangJutsu) {
+        PlayerData.yangJutsu = yangJutsu;
+    }
+
+    public static String getYinJutsu() {
+        return yinJutsu;
+    }
+
+    public static void setYinJutsu(String yinJutsu) {
+        PlayerData.yinJutsu = yinJutsu;
+    }
+
+    public static String getEarthJutsu() {
+        return earthJutsu;
+    }
+
+    public static void setEarthJutsu(String earthJutsu) {
+        PlayerData.earthJutsu = earthJutsu;
+    }
+
+    public static String getWindJutsu() {
+        return windJutsu;
+    }
+
+    public static void setWindJutsu(String windJutsu) {
+        PlayerData.windJutsu = windJutsu;
+    }
+
+    public static String getLightningJutsu() {
+        return lightningJutsu;
+    }
+
+    public static void setLightningJutsu(String lightningJutsu) {
+        PlayerData.lightningJutsu = lightningJutsu;
     }
 
    // public static boolean getChakraControl() {

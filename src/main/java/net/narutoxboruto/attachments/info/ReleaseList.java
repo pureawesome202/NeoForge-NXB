@@ -14,8 +14,18 @@ public class ReleaseList {
     private final String id;
     protected String value = "";
 
-    public static final Codec<ReleaseList> CODEC = Codec.STRING.xmap(ReleaseList::new, ReleaseList::getValue);
-
+    public static final Codec<ReleaseList> CODEC = Codec.STRING.xmap(
+            value -> {
+                System.out.println("Deserializing ReleaseList with value: " + value); // Debug
+                ReleaseList releaseList = new ReleaseList();
+                releaseList.value = value;
+                return releaseList;
+            },
+            releaseList -> {
+                System.out.println("Serializing ReleaseList with value: " + releaseList.value); // Debug
+                return releaseList.getValue();
+            }
+    );
 
     public ReleaseList(String identifier) {
         id = identifier;

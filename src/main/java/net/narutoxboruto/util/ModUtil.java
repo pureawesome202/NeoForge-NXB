@@ -29,12 +29,14 @@ public class ModUtil {
             "stone");
     public static final List<String> STAT_LIST = Arrays.asList("taijutsu", "ninjutsu", "genjutsu", "kenjutsu",
             "kinjutsu", "medical", "senjutsu", "shurikenjutsu", "speed", "summoning");
+
     public static final Random RANDOM = new Random();
+
     public static final List<String> RELEASES_LIST = Arrays.asList("earth", "fire", "lightning", "water", "wind",
             "yang", "yin");
 
     public static void giveClanStatBonuses(ServerPlayer serverPlayer) {
-        String clan = serverPlayer.getData(MainAttachment.CLAN).getValue(); // or whatever method gets the actual clan value
+        String clan = serverPlayer.getData(MainAttachment.CLAN).getValue();
 
         switch (clan) {
             case "fuma" -> serverPlayer.getData(MainAttachment.SHURIKENJUTSU).setValue(25, serverPlayer);
@@ -164,11 +166,11 @@ public class ModUtil {
   //     serverPlayer.getAttributes().getInstance(attribute).setBaseValue(i);
   // }
 
-  // public static void msgPlayerInfo(ServerPlayer serverPlayer) {
-  //     displayTranslatableMessage(serverPlayer, "affiliation", getAffiliation(), false);
-  //     displayTranslatableMessage(serverPlayer, "clan", getClan(), false);
-  //     displayTranslatableMessage(serverPlayer, "rank", getRank(), false);
-  // }
+   public static void msgPlayerInfo(ServerPlayer serverPlayer) {
+       displayTranslatableMessage(serverPlayer, "affiliation", getAffiliation(), false);
+       displayTranslatableMessage(serverPlayer, "clan", getClan(), false);
+       displayTranslatableMessage(serverPlayer, "rank", getRank(), false);
+   }
 
   // public static Item getSelectedReleaseItem() {
   //     return getReleaseFromString(getSelectedRelease());

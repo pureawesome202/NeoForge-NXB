@@ -109,23 +109,29 @@ public class ShinobiStatsGui extends Screen {
     }
 
     private void drawReleaseIcons(GuiGraphics guiGraphics, int x, int size) {
-        String releaseData = getReleaseList();
-        boolean isEmpty = releaseData == null || releaseData.isEmpty() || releaseData.equals("[]");
+        Component releasesLabel = Component.translatable("shinobiStat.releases")
+                .append(": ")
+                .append(PlayerData.getReleaseList().isEmpty()
+                        ? Component.translatable("shinobiStat.release_unknown")
+                        : Component.empty());
 
-        String releasesLabel = Component.translatable("shinobiStat.releases").append(": ").append(
-                        Component.translatable(isEmpty ? "shinobiStat.release_unknown" : ""))
-                .getString();
-        guiGraphics.drawString(this.font, releasesLabel, ((this.width - 192) / 2 + x), (this.height / 2 - 43),
-                0, false);
-        if (!isEmpty) {
-            List<String> releaseList = ModUtil.getArrayFrom(releaseData);
+        // Fixed font drawing
+        guiGraphics.drawString(this.font, releasesLabel, (this.width - 192) / 2 + x, this.height / 2 - 43, 0, false);
+
+        if (!PlayerData.getReleaseList().isEmpty()) {
+            List<String> releaseList = ModUtil.getArrayFrom(PlayerData.getReleaseList());
             for (int l = 0; l < releaseList.size(); ++l) {
                 int row = l < 6 ? 0 : 1;
                 int column = l < 6 ? l : l - 6;
+
+                // Fixed texture loading and blitting
                 ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(Main.MOD_ID,
                         "textures/item/release/" + releaseList.get(l).toLowerCase() + ".png");
-                guiGraphics.blit(texture, (this.width - 192) / 2 + x + (size + 1) * column,
-                        this.height / 2 - 33 + row * (size + 1), 0, 0, 0, size, size, size, size);
+
+                guiGraphics.blit(texture,
+                        (this.width - 192) / 2 + x + (size + 1) * column,
+                        this.height / 2 - 33 + row * (size + 1),
+                        0, 0, 0, size, size, size, size);
             }
         }
     }

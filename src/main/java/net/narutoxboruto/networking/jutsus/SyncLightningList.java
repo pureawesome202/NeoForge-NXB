@@ -14,7 +14,7 @@ public class SyncLightningList implements CustomPacketPayload {
 
     public static final StreamCodec<FriendlyByteBuf, SyncLightningList> STREAM_CODEC = StreamCodec.ofMember(SyncLightningList::toBytes, SyncLightningList::new);
 
-    public SyncLightningList(String earthList) { this.lightningList = earthList; }
+    public SyncLightningList(String lightningList) { this.lightningList = lightningList; }
 
     public SyncLightningList(FriendlyByteBuf buf) {
         this.lightningList = buf.readUtf();

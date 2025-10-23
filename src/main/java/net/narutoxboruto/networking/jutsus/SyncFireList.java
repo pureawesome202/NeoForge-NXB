@@ -14,7 +14,7 @@ public class SyncFireList implements CustomPacketPayload {
 
     public static final StreamCodec<FriendlyByteBuf, SyncFireList> STREAM_CODEC = StreamCodec.ofMember(SyncFireList::toBytes, SyncFireList::new);
 
-    public SyncFireList(String earthList) { this.fireList = earthList; }
+    public SyncFireList(String fireList) { this.fireList = fireList; }
 
     public SyncFireList(FriendlyByteBuf buf) {
         this.fireList = buf.readUtf();
