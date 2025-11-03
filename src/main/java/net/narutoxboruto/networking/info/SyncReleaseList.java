@@ -5,14 +5,10 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.attachments.info.ReleaseList;
-import net.narutoxboruto.client.PlayerData;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-
-import java.util.function.Supplier;
 
 public class SyncReleaseList implements CustomPacketPayload {
 

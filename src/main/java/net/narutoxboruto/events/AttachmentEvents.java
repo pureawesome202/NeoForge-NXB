@@ -33,24 +33,24 @@ public class AttachmentEvents {
             serverPlayer.getData(MainAttachment.RANK).syncValue(serverPlayer);
             //STATS
             serverPlayer.getData(MainAttachment.GENJUTSU).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.KENJUTSU).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.KINJUTSU).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.MEDICAL).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.NINJUTSU).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.SENJUTSU).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.SHURIKENJUTSU).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.SPEED).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.SUMMONING).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.TAIJUTSU).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.KENJUTSU).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.KINJUTSU).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.MEDICAL).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.NINJUTSU).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.SENJUTSU).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.SHURIKENJUTSU).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.SPEED).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.SUMMONING).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.TAIJUTSU).syncValue(serverPlayer);
 
             //JUTSU_LIST
-            serverPlayer.getData(MainAttachment.FIRELIST).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.EARTHLIST).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.WATERLIST).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.WINDLIST).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.LIGHTINGLIST).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.YANGLIST).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.YINGLIST).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.FIRELIST).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.EARTHLIST).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.WATERLIST).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.WINDLIST).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.LIGHTINGLIST).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.YANGLIST).syncValue(serverPlayer);
+          //  serverPlayer.getData(MainAttachment.YINGLIST).syncValue(serverPlayer);
         }
     }
 
