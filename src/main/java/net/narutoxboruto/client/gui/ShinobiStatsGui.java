@@ -116,11 +116,6 @@ public class ShinobiStatsGui extends Screen {
         if (player == null) return;
 
         ReleaseList releaseListAttachment = player.getData(MainAttachment.RELEASE_LIST);
-        String releaseListValue = releaseListAttachment.getValue();
-
-        System.out.println("DEBUG: GUI - releaseListValue: '" + releaseListValue + "'");
-        System.out.println("DEBUG: GUI - isEmpty: " + releaseListAttachment.isEmpty());
-
         Component releasesLabel = Component.translatable("shinobiStat.releases")
                 .append(": ")
                 .append(releaseListAttachment.isEmpty()
@@ -131,8 +126,6 @@ public class ShinobiStatsGui extends Screen {
 
         if (!releaseListAttachment.isEmpty()) {
             List<String> releaseList = releaseListAttachment.getReleasesAsList();
-            System.out.println("DEBUG: GUI - releaseList size: " + releaseList.size());
-            System.out.println("DEBUG: GUI - releaseList contents: " + releaseList);
 
             for (int l = 0; l < releaseList.size(); ++l) {
                 int row = l < 6 ? 0 : 1;
@@ -141,8 +134,6 @@ public class ShinobiStatsGui extends Screen {
                 String releaseName = releaseList.get(l).toLowerCase();
                 ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(Main.MOD_ID,
                         "textures/item/release/" + releaseName + ".png");
-
-                System.out.println("DEBUG: GUI - Loading texture for: " + releaseName + " at " + texture);
 
                 guiGraphics.blit(texture,
                         (this.width - 192) / 2 + x + (size + 1) * column,

@@ -4,6 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.client.PlayerData;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -27,7 +28,11 @@ public class SyncSummoning implements CustomPacketPayload {
     }
 
     public void handle(IPayloadContext context) {
-        context.enqueueWork(() -> PlayerData.setSummoning(summoning));
+        context.enqueueWork(() -> {
+            if (context.player() != null) {
+                context.player().getData(MainAttachment.SUMMONING);
+            }
+        });
     }
 
     @Override

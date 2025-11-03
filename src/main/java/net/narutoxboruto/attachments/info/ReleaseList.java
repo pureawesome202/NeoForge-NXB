@@ -20,15 +20,11 @@ public class ReleaseList {
 
     public static final Codec<ReleaseList> CODEC = Codec.STRING.xmap(
             value -> {
-                System.out.println("DEBUG: Deserializing ReleaseList with value: " + value);
                 ReleaseList releaseList = new ReleaseList();
                 releaseList.value = value;
                 return releaseList;
             },
-            releaseList -> {
-                System.out.println("DEBUG: Serializing ReleaseList with value: " + releaseList.value);
-                return releaseList.getValue();
-            }
+            releaseList -> releaseList.getValue()
     );
 
     public ReleaseList(String identifier) {
@@ -45,10 +41,7 @@ public class ReleaseList {
 
     public void syncValue(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            System.out.println("DEBUG: Sending sync packet to client: " + this.value);
             ModPacketHandler.sendToPlayer((CustomPacketPayload) getSyncMessage(), serverPlayer);
-        } else {
-            System.out.println("DEBUG: syncValue called but player is not ServerPlayer");
         }
     }
 
@@ -62,7 +55,6 @@ public class ReleaseList {
         } else {
             value = value + ", " + newRelease;
         }
-        System.out.println("DEBUG: concatList - new value: " + value);
 
         if (player instanceof ServerPlayer) {
             this.syncValue(player);
@@ -71,7 +63,6 @@ public class ReleaseList {
 
     public void copyFrom(ReleaseList source, Player player) {
         this.value = source.getValue();
-        System.out.println("DEBUG: copyFrom - new value: " + value);
         if (player instanceof ServerPlayer) {
             this.syncValue(player);
         }
@@ -79,7 +70,6 @@ public class ReleaseList {
 
     public void resetValue(Player player) {
         this.value = "";
-        System.out.println("DEBUG: resetValue");
         if (player instanceof ServerPlayer) {
             this.syncValue(player);
         }
@@ -87,7 +77,6 @@ public class ReleaseList {
 
     public void setValue(String value, Player player) {
         this.value = value;
-        System.out.println("DEBUG: setValue with player - new value: " + value);
         if (player instanceof ServerPlayer) {
             this.syncValue(player);
         }
@@ -95,7 +84,6 @@ public class ReleaseList {
 
     // Client-side only method
     public void setValue(String value) {
-        System.out.println("DEBUG: setValue (client) - new value: " + value);
         this.value = value;
     }
 

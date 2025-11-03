@@ -44,23 +44,20 @@ public class ModPacketHandler {
         registrar.playToClient(SyncSelectionYang.TYPE, SyncSelectionYang.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToClient(SyncSelectionYin.TYPE, SyncSelectionYin.STREAM_CODEC, (payload, context) -> payload.handle(context));
 
+        registrar.playToClient(SyncGenjutsu.TYPE, SyncGenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncKenjutsu.TYPE, SyncKenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncKinjutsu.TYPE, SyncKinjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncMedical.TYPE, SyncMedical.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncNinjutsu.TYPE, SyncNinjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncSenjutsu.TYPE, SyncSenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncShurikenjutsu.TYPE, SyncShurikenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncSummoning.TYPE, SyncSummoning.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncTaijutsu.TYPE, SyncTaijutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncSpeed.TYPE, SyncSpeed.STREAM_CODEC, (payload, context) -> payload.handle(context));
+
         //Serverbound packets
         registrar.playToServer(ToggleSwordAbility.TYPE, ToggleSwordAbility.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToServer(RechargeChakra.TYPE, RechargeChakra.STREAM_CODEC, (payload, context) -> payload.handle(context));
-
-        registrar.playToServer(SyncGenjutsu.TYPE, SyncGenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToServer(SyncKenjutsu.TYPE, SyncKenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToServer(SyncKinjutsu.TYPE, SyncKinjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToServer(SyncMedical.TYPE, SyncMedical.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToServer(SyncNinjutsu.TYPE, SyncNinjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToServer(SyncSenjutsu.TYPE, SyncSenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToServer(SyncShurikenjutsu.TYPE, SyncShurikenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToServer(SyncSummoning.TYPE, SyncSummoning.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToServer(SyncTaijutsu.TYPE, SyncTaijutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
-
-
-
-
     }
 
     public static void sendToPlayer(CustomPacketPayload packet, ServerPlayer player) {

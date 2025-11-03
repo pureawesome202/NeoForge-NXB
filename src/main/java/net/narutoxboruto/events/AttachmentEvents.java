@@ -15,15 +15,16 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 public class AttachmentEvents {
 
     @SubscribeEvent
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+            ReleaseList releaseList = serverPlayer.getData(MainAttachment.RELEASE_LIST);
+            releaseList.syncValue(serverPlayer);
+        }
+    }
+
+    @SubscribeEvent
     public static void onJoinWorldSyncCap(EntityJoinLevelEvent event) {
         if (!event.getLevel().isClientSide() && event.getEntity() instanceof ServerPlayer serverPlayer) {
-            System.out.println("DEBUG: EntityJoinLevelEvent fired for player: " + serverPlayer.getScoreboardName());
-
-            // Sync release list first with debug
-            ReleaseList releaseList = serverPlayer.getData(MainAttachment.RELEASE_LIST);
-            System.out.println("DEBUG: Before sync - release list value: '" + releaseList.getValue() + "'");
-            releaseList.syncValue(serverPlayer);
-            System.out.println("DEBUG: After sync called for release list");
 
             //INFO
             serverPlayer.getData(MainAttachment.AFFILIATION).syncValue(serverPlayer);
@@ -31,37 +32,28 @@ public class AttachmentEvents {
             serverPlayer.getData(MainAttachment.CHAKRA).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.SHINOBI_POINTS).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.RANK).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.RELEASE_LIST).syncValue(serverPlayer);
+
             //STATS
             serverPlayer.getData(MainAttachment.GENJUTSU).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.KENJUTSU).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.KINJUTSU).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.MEDICAL).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.NINJUTSU).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.SENJUTSU).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.SHURIKENJUTSU).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.SPEED).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.SUMMONING).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.TAIJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.KENJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.KINJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.MEDICAL).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.NINJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.SENJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.SHURIKENJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.SPEED).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.SUMMONING).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.TAIJUTSU).syncValue(serverPlayer);
 
-            //JUTSU_LIST
-          //  serverPlayer.getData(MainAttachment.FIRELIST).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.EARTHLIST).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.WATERLIST).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.WINDLIST).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.LIGHTINGLIST).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.YANGLIST).syncValue(serverPlayer);
-          //  serverPlayer.getData(MainAttachment.YINGLIST).syncValue(serverPlayer);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            System.out.println("DEBUG: PlayerLoggedInEvent fired for player: " + serverPlayer.getScoreboardName());
-
-            ReleaseList releaseList = serverPlayer.getData(MainAttachment.RELEASE_LIST);
-            System.out.println("DEBUG: Login sync - release list value: '" + releaseList.getValue() + "'");
-            releaseList.syncValue(serverPlayer);
+            //JUTSU_LIST (commented out)
+            // serverPlayer.getData(MainAttachment.FIRELIST).syncValue(serverPlayer);
+            // serverPlayer.getData(MainAttachment.EARTHLIST).syncValue(serverPlayer);
+            // serverPlayer.getData(MainAttachment.WATERLIST).syncValue(serverPlayer);
+            // serverPlayer.getData(MainAttachment.WINDLIST).syncValue(serverPlayer);
+            // serverPlayer.getData(MainAttachment.LIGHTINGLIST).syncValue(serverPlayer);
+            // serverPlayer.getData(MainAttachment.YANGLIST).syncValue(serverPlayer);
+            // serverPlayer.getData(MainAttachment.YINGLIST).syncValue(serverPlayer);
         }
     }
 

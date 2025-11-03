@@ -38,12 +38,8 @@ public class SyncReleaseList implements CustomPacketPayload {
         context.enqueueWork(() -> {
             Player player = context.player();
             if (player != null) {
-                System.out.println("DEBUG: SyncReleaseList packet received on client: " + this.releaseList);
                 ReleaseList releaseListAttachment = player.getData(MainAttachment.RELEASE_LIST);
                 releaseListAttachment.setValue(this.releaseList);
-                System.out.println("DEBUG: Client attachment updated to: " + releaseListAttachment.getValue());
-            } else {
-                System.out.println("DEBUG: SyncReleaseList - player is null");
             }
         });
     }
