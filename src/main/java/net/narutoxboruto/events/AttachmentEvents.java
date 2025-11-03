@@ -3,6 +3,7 @@ package net.narutoxboruto.events;
 import net.minecraft.server.level.ServerPlayer;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.attachments.info.Chakra;
+import net.narutoxboruto.attachments.info.ReleaseList;
 import net.narutoxboruto.main.Main;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -11,28 +12,24 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 
-@Mod(Main.MOD_ID)
 public class AttachmentEvents {
-
-    @SubscribeEvent
-    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            System.out.println("DEBUG: Player logged in, release list: '" +
-                    serverPlayer.getData(MainAttachment.RELEASE_LIST).getValue() + "'");
-        }
-    }
 
     @SubscribeEvent
     public static void onJoinWorldSyncCap(EntityJoinLevelEvent event) {
         if (!event.getLevel().isClientSide() && event.getEntity() instanceof ServerPlayer serverPlayer) {
-           // serverPlayer.getCapability(ModeCapabilityProvider.CHAKRA_CONTROL).ifPresent(
-           //         chakraControl -> chakraControl.syncValue(serverPlayer));
+            System.out.println("DEBUG: EntityJoinLevelEvent fired for player: " + serverPlayer.getScoreboardName());
+
+            // Sync release list first with debug
+            ReleaseList releaseList = serverPlayer.getData(MainAttachment.RELEASE_LIST);
+            System.out.println("DEBUG: Before sync - release list value: '" + releaseList.getValue() + "'");
+            releaseList.syncValue(serverPlayer);
+            System.out.println("DEBUG: After sync called for release list");
+
             //INFO
             serverPlayer.getData(MainAttachment.AFFILIATION).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.CLAN).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.CHAKRA).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.SHINOBI_POINTS).syncValue(serverPlayer);
-            serverPlayer.getData(MainAttachment.RELEASE_LIST).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.RANK).syncValue(serverPlayer);
             //STATS
             serverPlayer.getData(MainAttachment.GENJUTSU).syncValue(serverPlayer);
@@ -46,7 +43,6 @@ public class AttachmentEvents {
             serverPlayer.getData(MainAttachment.SUMMONING).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.TAIJUTSU).syncValue(serverPlayer);
 
-
             //JUTSU_LIST
             serverPlayer.getData(MainAttachment.FIRELIST).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.EARTHLIST).syncValue(serverPlayer);
@@ -55,17 +51,17 @@ public class AttachmentEvents {
             serverPlayer.getData(MainAttachment.LIGHTINGLIST).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.YANGLIST).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.YINGLIST).syncValue(serverPlayer);
+        }
+    }
 
-            // //SELECTION
-           // serverPlayer.getCapability(RELEASE).ifPresent(release -> release.syncValue(serverPlayer));
-           // serverPlayer.getCapability(EARTH_JUTSU).ifPresent(earth -> earth.syncValue(serverPlayer));
-           // serverPlayer.getCapability(FIRE_JUTSU).ifPresent(fire -> fire.syncValue(serverPlayer));
-           // serverPlayer.getCapability(LIGHTNING_JUTSU).ifPresent(lightning -> lightning.syncValue(serverPlayer));
-           // serverPlayer.getCapability(WATER_JUTSU).ifPresent(water -> water.syncValue(serverPlayer));
-           // serverPlayer.getCapability(WIND_JUTSU).ifPresent(wind -> wind.syncValue(serverPlayer));
-           // serverPlayer.getCapability(YANG_JUTSU).ifPresent(yang -> yang.syncValue(serverPlayer));
-           // serverPlayer.getCapability(YIN_JUTSU).ifPresent(yin -> yin.syncValue(serverPlayer));
-           // serverPlayer.getCapability(SECOND_OFFHAND).ifPresent(offhand -> offhand.syncValue(serverPlayer));
+    @SubscribeEvent
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+            System.out.println("DEBUG: PlayerLoggedInEvent fired for player: " + serverPlayer.getScoreboardName());
+
+            ReleaseList releaseList = serverPlayer.getData(MainAttachment.RELEASE_LIST);
+            System.out.println("DEBUG: Login sync - release list value: '" + releaseList.getValue() + "'");
+            releaseList.syncValue(serverPlayer);
         }
     }
 
@@ -98,7 +94,6 @@ public class AttachmentEvents {
             newPlayer.setData(MainAttachment.NINJUTSU, original.getData(MainAttachment.NINJUTSU));
             newPlayer.setData(MainAttachment.SENJUTSU, original.getData(MainAttachment.SENJUTSU));
 
-
             //JUTSUS
             newPlayer.setData(MainAttachment.EARTHLIST, original.getData(MainAttachment.EARTHLIST));
             newPlayer.setData(MainAttachment.FIRELIST, original.getData(MainAttachment.FIRELIST));
@@ -107,21 +102,10 @@ public class AttachmentEvents {
             newPlayer.setData(MainAttachment.WINDLIST, original.getData(MainAttachment.WINDLIST));
             newPlayer.setData(MainAttachment.YANGLIST, original.getData(MainAttachment.YANGLIST));
             newPlayer.setData(MainAttachment.YINGLIST, original.getData(MainAttachment.YINGLIST));
-
-
-            //SELECTION
-           // newPlayer.getData(MainAttachment.RELEASE).copyFrom(original.getData(MainAttachment.RELEASE), newPlayer);
-           // newPlayer.getData(MainAttachment.EARTH_JUTSU).copyFrom(original.getData(MainAttachment.EARTH_JUTSU), newPlayer);
-           // newPlayer.getData(MainAttachment.FIRE_JUTSU).copyFrom(original.getData(MainAttachment.FIRE_JUTSU), newPlayer);
-           // newPlayer.getData(MainAttachment.LIGHTNING_JUTSU).copyFrom(original.getData(MainAttachment.LIGHTNING_JUTSU), newPlayer);
-           // newPlayer.getData(MainAttachment.WATER_JUTSU).copyFrom(original.getData(MainAttachment.WATER_JUTSU), newPlayer);
-           // newPlayer.getData(MainAttachment.WIND_JUTSU).copyFrom(original.getData(MainAttachment.WIND_JUTSU), newPlayer);
-           // newPlayer.getData(MainAttachment.YANG_JUTSU).copyFrom(original.getData(MainAttachment.YANG_JUTSU), newPlayer);
-           // newPlayer.getData(MainAttachment.YIN_JUTSU).copyFrom(original.getData(MainAttachment.YIN_JUTSU), newPlayer);
-           // newPlayer.getData(MainAttachment.SECOND_OFFHAND).copyFrom(original.getData(MainAttachment.SECOND_OFFHAND), newPlayer);
         }
     }
-    
+
+    @SubscribeEvent
     public static void onReplenishChakra(PlayerTickEvent.Pre event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer && serverPlayer.isSleepingLongEnough()) {
             Chakra chakra = serverPlayer.getData(MainAttachment.CHAKRA.get());

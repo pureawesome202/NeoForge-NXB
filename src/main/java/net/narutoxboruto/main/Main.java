@@ -3,6 +3,7 @@ package net.narutoxboruto.main;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.client.overlay.ModHudOverlays;
 import net.narutoxboruto.entities.ModEntities;
+import net.narutoxboruto.events.AttachmentEvents;
 import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.items.ModTab;
 import net.narutoxboruto.networking.ModPacketHandler;
@@ -36,6 +37,8 @@ public class Main {
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        NeoForge.EVENT_BUS.register(AttachmentEvents.class);
+
 
         ModTab.register(modEventBus);
         ModItems.register(modEventBus);

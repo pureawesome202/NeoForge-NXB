@@ -7,10 +7,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.info.ReleaseList;
 import net.narutoxboruto.client.PlayerData;
 import net.narutoxboruto.main.Main;
 import net.narutoxboruto.util.ModUtil;
@@ -109,24 +112,37 @@ public class ShinobiStatsGui extends Screen {
     }
 
     private void drawReleaseIcons(GuiGraphics guiGraphics, int x, int size) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        ReleaseList releaseListAttachment = player.getData(MainAttachment.RELEASE_LIST);
+        String releaseListValue = releaseListAttachment.getValue();
+
+        System.out.println("DEBUG: GUI - releaseListValue: '" + releaseListValue + "'");
+        System.out.println("DEBUG: GUI - isEmpty: " + releaseListAttachment.isEmpty());
+
         Component releasesLabel = Component.translatable("shinobiStat.releases")
                 .append(": ")
-                .append(PlayerData.getReleaseList().isEmpty()
+                .append(releaseListAttachment.isEmpty()
                         ? Component.translatable("shinobiStat.release_unknown")
                         : Component.empty());
 
-        // Fixed font drawing
         guiGraphics.drawString(this.font, releasesLabel, (this.width - 192) / 2 + x, this.height / 2 - 43, 0, false);
 
-        if (!PlayerData.getReleaseList().isEmpty()) {
-            List<String> releaseList = ModUtil.getArrayFrom(PlayerData.getReleaseList());
+        if (!releaseListAttachment.isEmpty()) {
+            List<String> releaseList = releaseListAttachment.getReleasesAsList();
+            System.out.println("DEBUG: GUI - releaseList size: " + releaseList.size());
+            System.out.println("DEBUG: GUI - releaseList contents: " + releaseList);
+
             for (int l = 0; l < releaseList.size(); ++l) {
                 int row = l < 6 ? 0 : 1;
                 int column = l < 6 ? l : l - 6;
 
-                // Fixed texture loading and blitting
+                String releaseName = releaseList.get(l).toLowerCase();
                 ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(Main.MOD_ID,
-                        "textures/item/release/" + releaseList.get(l).toLowerCase() + ".png");
+                        "textures/item/release/" + releaseName + ".png");
+
+                System.out.println("DEBUG: GUI - Loading texture for: " + releaseName + " at " + texture);
 
                 guiGraphics.blit(texture,
                         (this.width - 192) / 2 + x + (size + 1) * column,
