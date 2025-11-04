@@ -87,13 +87,13 @@ public class AttachmentEvents {
             newPlayer.setData(MainAttachment.SENJUTSU, original.getData(MainAttachment.SENJUTSU));
 
             //JUTSUS
-            newPlayer.setData(MainAttachment.EARTHLIST, original.getData(MainAttachment.EARTHLIST));
-            newPlayer.setData(MainAttachment.FIRELIST, original.getData(MainAttachment.FIRELIST));
-            newPlayer.setData(MainAttachment.LIGHTINGLIST, original.getData(MainAttachment.LIGHTINGLIST));
-            newPlayer.setData(MainAttachment.WATERLIST, original.getData(MainAttachment.WATERLIST));
-            newPlayer.setData(MainAttachment.WINDLIST, original.getData(MainAttachment.WINDLIST));
-            newPlayer.setData(MainAttachment.YANGLIST, original.getData(MainAttachment.YANGLIST));
-            newPlayer.setData(MainAttachment.YINGLIST, original.getData(MainAttachment.YINGLIST));
+          //  newPlayer.setData(MainAttachment.EARTHLIST, original.getData(MainAttachment.EARTHLIST));
+          //  newPlayer.setData(MainAttachment.FIRELIST, original.getData(MainAttachment.FIRELIST));
+          //  newPlayer.setData(MainAttachment.LIGHTINGLIST, original.getData(MainAttachment.LIGHTINGLIST));
+          //  newPlayer.setData(MainAttachment.WATERLIST, original.getData(MainAttachment.WATERLIST));
+          //  newPlayer.setData(MainAttachment.WINDLIST, original.getData(MainAttachment.WINDLIST));
+          //  newPlayer.setData(MainAttachment.YANGLIST, original.getData(MainAttachment.YANGLIST));
+          //  newPlayer.setData(MainAttachment.YINGLIST, original.getData(MainAttachment.YINGLIST));
         }
     }
 
