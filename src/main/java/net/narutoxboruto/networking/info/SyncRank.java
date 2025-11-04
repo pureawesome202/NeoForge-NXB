@@ -9,13 +9,11 @@ import net.narutoxboruto.attachments.MainAttachment;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class SyncRank implements CustomPacketPayload {
-
-    private final String rank;
+    private String rank;
 
     public static final CustomPacketPayload.Type<SyncRank> TYPE =
             new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("narutoxboruto", "sync_rank"));
 
-    // Fixed StreamCodec - properly handles String data
     public static final StreamCodec<FriendlyByteBuf, SyncRank> STREAM_CODEC =
             StreamCodec.of(
                     (buf, packet) -> buf.writeUtf(packet.rank),
@@ -29,7 +27,7 @@ public class SyncRank implements CustomPacketPayload {
     public void handle(IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
-                serverPlayer.getData(MainAttachment.RANK).setValue(rank);
+                serverPlayer.getData(MainAttachment.RANK).setValue(rank, serverPlayer);
             }
         });
     }

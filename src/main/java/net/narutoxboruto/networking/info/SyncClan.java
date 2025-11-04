@@ -30,7 +30,7 @@ public class SyncClan implements CustomPacketPayload {
     public void handle(IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
-                serverPlayer.getData(MainAttachment.CLAN).setValue(clan);
+                serverPlayer.getData(MainAttachment.CLAN).setValue(clan, serverPlayer);
             }
         });
     }

@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import net.minecraft.server.level.ServerPlayer;
 import net.narutoxboruto.networking.ModPacketHandler;
 import net.narutoxboruto.networking.info.SyncAffiliation;
-import net.narutoxboruto.networking.info.SyncMaxChakra;
 import net.narutoxboruto.util.ModUtil;
 
 public class Affiliation {
@@ -25,8 +24,9 @@ public class Affiliation {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(String value, ServerPlayer serverPlayer) {
         this.value = value;
+        this.syncValue(serverPlayer);
     }
 
     public void concatList(String value, ServerPlayer serverPlayer) {

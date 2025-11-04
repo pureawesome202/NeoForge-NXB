@@ -29,7 +29,7 @@ public class SyncAffiliation implements CustomPacketPayload {
     public void handle(IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
-                serverPlayer.getData(MainAttachment.AFFILIATION).setValue(affiliation);
+                serverPlayer.getData(MainAttachment.AFFILIATION).setValue(affiliation, serverPlayer);
             }
         });
     }

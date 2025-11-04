@@ -24,8 +24,9 @@ public class Clan {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(String value, ServerPlayer serverPlayer) {
         this.value = value;
+        this.syncValue(serverPlayer);
     }
 
     public void concatList(String value, ServerPlayer serverPlayer) {

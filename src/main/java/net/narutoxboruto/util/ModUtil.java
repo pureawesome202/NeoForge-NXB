@@ -12,19 +12,34 @@ import net.minecraft.world.item.Item;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.attachments.jutsus.EarthList;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static net.narutoxboruto.client.PlayerData.*;
 
 public class ModUtil {
     public static final List<String> CLAN_LIST = Arrays.asList("fuma", "nara", "shiin", "shirogane", "uzumaki");
-    public static final Map<String, Integer> CLAN_MAP = Map.of("fuma", 5, "nara", 3, "shiin", 5, "shirogane", 5,
-            "uzumaki", 1);
+
+    public static final Map<String, Integer> CLAN_MAP = new HashMap<>();
+    static {
+        CLAN_MAP.put("fuma", 25);
+        CLAN_MAP.put("nara", 10);
+        CLAN_MAP.put("shiin", 4);
+        CLAN_MAP.put("shirogane", 25);
+        CLAN_MAP.put("uzumaki", 1);
+        //CLAN_MAP.put("jugo", 10);
+        //CLAN_MAP.put("hyuuga", 5);
+        //CLAN_MAP.put("sarutobi", 15);
+        // CLAN_MAP.put("senju", 1);
+        // CLAN_MAP.put("tsuchigumo", 25);
+        // CLAN_MAP.put("uchiha", 1);
+        // CLAN_MAP.put("kaguya", 5);
+        // CLAN_MAP.put("kurama", 15);
+        // CLAN_MAP.put("ryu", 15);
+        // CLAN_MAP.put("inuzuka", 25);
+    }
     public static final List<String> RANK_LIST = Arrays.asList("civilian", "student", "genin", "chuunin", "jounin",
             "special_jounin", "anbu", "sage", "kage", "rogue");
+
     public static final List<String> AFF_LIST = Arrays.asList("cloud", "leaf", "mist", "rain", "sand", "sound",
             "stone");
     public static final List<String> STAT_LIST = Arrays.asList("taijutsu", "ninjutsu", "genjutsu", "kenjutsu",
