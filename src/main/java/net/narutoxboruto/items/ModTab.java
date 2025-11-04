@@ -41,9 +41,8 @@ public class ModTab {
                // output.accept(NUIBARI.get());
             }).build());
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NXB_MISC = CREATIVE_MODE_TAB.register("nxb_misc", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.nxb_misc")) //The language key for the title of your CreativeModeTab
-            .withTabsBefore(CreativeModeTabs.COMBAT)
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NXB_TAB = CREATIVE_MODE_TAB.register("nxb_tab", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.nxb_tab")) //The language key for the title of your CreativeModeTab
             .icon(() -> CHAKRA_PAPER.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(CHAKRA_PAPER.get());
