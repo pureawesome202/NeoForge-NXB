@@ -36,17 +36,30 @@ public class ShinobiStatsGui extends Screen {
             "summoning", "affiliation", "clan", "rank", "shinobi_points"
     };
     private final List<Integer> lockedList = new ArrayList<>(Arrays.asList(1, 2, 4, 6, 9));
-    private final int[] valueIntList = {
-            PlayerData.getTaijutsu(), PlayerData.getNinjutsu(), PlayerData.getGenjutsu(), PlayerData.getKenjutsu(),
-            PlayerData.getKinjutsu(), PlayerData.getMedical(), PlayerData.getSenjutsu(), PlayerData.getShurikenjutsu(),
-            PlayerData.getSpeed(), PlayerData.getSummoning(), 0, 0, 0, PlayerData.getShinobiPoints()
-    };
-    private final String[] valueStringList = {
-            PlayerData.getAffiliation(), PlayerData.getClan(), PlayerData.getRank()
-    };
+
+    // Store the player reference
+    private final LocalPlayer player;
 
     public ShinobiStatsGui() {
         super(Component.translatable("gui.narutoxboruto.shinobi_stats"));
+        this.player = Minecraft.getInstance().player;
+    }
+
+    // Helper methods to get current values from attachments
+    private int[] getValueIntList() {
+        if (player == null) return new int[14];
+
+        return new int[] {
+                getTaijutsu(), getNinjutsu(), getGenjutsu(), getKenjutsu(),
+                getKinjutsu(), getMedical(), getSenjutsu(), getShurikenjutsu(),
+                getSpeed(), getSummoning(), 0, 0, 0, getShinobiPoints()
+        };
+    }
+
+    private String[] getValueStringList() {
+        return new String[] {
+                getAffiliation(), getClan(), getRank()
+        };
     }
 
     @Override
@@ -63,28 +76,31 @@ public class ShinobiStatsGui extends Screen {
     }
 
     public void renderInfo(GuiGraphics guiGraphics) {
+        // Get current values each render to ensure they're up to date
+        int[] currentIntValues = getValueIntList();
+        String[] currentStringValues = getValueStringList();
+
         for (int l = 0; l < this.guiComponentsList.length; ++l) {
             if (!this.guiComponentsList[l].isBlank()) {
                 if (l < 10) {
-                    drawIntStat(guiGraphics, l, 0, 0);
+                    drawIntStat(guiGraphics, l, 0, 0, currentIntValues);
                 }
                 else if (l < 13) {
-                    drawStringStat(guiGraphics, l);
+                    drawStringStat(guiGraphics, l, currentStringValues);
                     switch (l) {
-                        case 10 -> drawIcon(guiGraphics, 147, 11, l);
-                        case 11 -> drawIcon(guiGraphics, 121, 11, l);
+                        case 10 -> drawIcon(guiGraphics, 147, 11, l, currentStringValues);
+                        case 11 -> drawIcon(guiGraphics, 121, 11, l, currentStringValues);
                     }
                 }
                 else {
-                    drawIntStat(guiGraphics, l, -1, 101);
+                    drawIntStat(guiGraphics, l, -1, 101, currentIntValues);
                 }
             }
         }
     }
 
-    private void drawIntStat(GuiGraphics guiGraphics, int index, int yOffset, int xOffset) {
-        String value = this.lockedList.contains(index) && this.valueIntList[index] == 0 ? "-" : String.valueOf(
-                this.valueIntList[index]);
+    private void drawIntStat(GuiGraphics guiGraphics, int index, int yOffset, int xOffset, int[] currentIntValues) {
+        String value = this.lockedList.contains(index) && currentIntValues[index] == 0 ? "-" : String.valueOf(currentIntValues[index]);
 
         guiGraphics.pose().pushPose();
         guiGraphics.pose().scale(1.0f, 1.0f, 1.0f);
@@ -94,20 +110,21 @@ public class ShinobiStatsGui extends Screen {
                 0, false);
         guiGraphics.drawString(this.font, Component.literal(value), ((this.width - 192) / 2 + 72 + xOffset),
                 (this.height / 2 - 79 + (index + yOffset) * 12), 0, false);
+
+        guiGraphics.pose().popPose();
     }
 
-
-    private void drawStringStat(GuiGraphics guiGraphics, int index) {
+    private void drawStringStat(GuiGraphics guiGraphics, int index, String[] currentStringValues) {
         String spaces = index == 12 ? "" : "   ";
         guiGraphics.drawString(this.font, Component.translatable("shinobiStat." + this.guiComponentsList[index])
                         .append(": " + spaces)
-                        .append(Component.translatable(this.guiComponentsList[index] + "." + this.valueStringList[index - 10])),
+                        .append(Component.translatable(this.guiComponentsList[index] + "." + currentStringValues[index - 10])),
                 ((this.width - 192) / 2 + 95), (this.height / 2 - 79 + (index - 10) * 12), 0, false);
     }
 
-    private void drawIcon(GuiGraphics guiGraphics, int x, int size, int l) {
+    private void drawIcon(GuiGraphics guiGraphics, int x, int size, int l, String[] currentStringValues) {
         ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(Main.MOD_ID,
-                "textures/" + this.guiComponentsList[l] + "s/" + this.valueStringList[l - 10] + ".png");
+                "textures/" + this.guiComponentsList[l] + "s/" + currentStringValues[l - 10] + ".png");
         guiGraphics.blit(texture, (this.width - 192) / 2 + x, this.height / 2 - 80 + (l - 10) * 12, 0, 0, 0, size, size, size, size);
     }
 
@@ -151,11 +168,67 @@ public class ShinobiStatsGui extends Screen {
 
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-
     }
 
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    // Individual stat getters from attachments
+    private int getTaijutsu() {
+        return player.getData(MainAttachment.TAIJUTSU).getValue();
+    }
+
+    private int getNinjutsu() {
+        return player.getData(MainAttachment.NINJUTSU).getValue();
+    }
+
+    private int getGenjutsu() {
+        return player.getData(MainAttachment.GENJUTSU).getValue();
+    }
+
+    private int getKenjutsu() {
+        return player.getData(MainAttachment.KENJUTSU).getValue();
+    }
+
+    private int getKinjutsu() {
+        return player.getData(MainAttachment.KINJUTSU).getValue();
+    }
+
+    private int getMedical() {
+        return player.getData(MainAttachment.MEDICAL).getValue();
+    }
+
+    private int getSenjutsu() {
+        return player.getData(MainAttachment.SENJUTSU).getValue();
+    }
+
+    private int getShurikenjutsu() {
+        return player.getData(MainAttachment.SHURIKENJUTSU).getValue();
+    }
+
+    private int getSpeed() {
+        return player.getData(MainAttachment.SPEED).getValue();
+    }
+
+    private int getSummoning() {
+        return player.getData(MainAttachment.SUMMONING).getValue();
+    }
+
+    private int getShinobiPoints() {
+        return player.getData(MainAttachment.SHINOBI_POINTS).getValue();
+    }
+
+    private String getAffiliation() {
+        return player.getData(MainAttachment.AFFILIATION).getValue();
+    }
+
+    private String getClan() {
+        return player.getData(MainAttachment.CLAN).getValue();
+    }
+
+    private String getRank() {
+        return player.getData(MainAttachment.RANK).getValue();
     }
 }

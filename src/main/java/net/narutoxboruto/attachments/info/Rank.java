@@ -4,33 +4,30 @@ import com.mojang.serialization.Codec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.narutoxboruto.networking.ModPacketHandler;
+import net.narutoxboruto.networking.info.SyncClan;
 import net.narutoxboruto.networking.info.SyncRank;
 import net.narutoxboruto.util.ModUtil;
 
 public class Rank {
-    private final String id;
-    protected String value = "";
+    private String value;
 
     public static final Codec<Rank> CODEC = Codec.STRING.xmap(Rank::new, Rank::getValue);
 
+
     public Rank() {
-        this.id = "rank";
+        this.value = "rank";
     }
 
-    public Rank(String identifier) {
-        id = identifier;
-    }
-
-    public void syncValue(ServerPlayer serverPlayer) {
-        ModPacketHandler.sendToPlayer((CustomPacketPayload) getSyncMessage(), serverPlayer);
+    public Rank(String value) {
+        this.value = value;
     }
 
     public String getValue() {
         return value;
     }
 
-    public Object getSyncMessage() {
-        return new SyncRank(getValue());
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public void concatList(String value, ServerPlayer serverPlayer) {
@@ -38,20 +35,7 @@ public class Rank {
         this.syncValue(serverPlayer);
     }
 
-    public void copyFrom(Rank source, ServerPlayer serverPlayer) {
-        this.value = source.getValue();
-        this.syncValue(serverPlayer);
+    public void  syncValue(ServerPlayer serverPlayer) {
+        ModPacketHandler.sendToPlayer(new SyncRank(getValue()), serverPlayer);
     }
-
-    public void resetValue(ServerPlayer serverPlayer) {
-        this.value = "";
-        this.syncValue(serverPlayer);
-    }
-
-    public void setValue(String value, ServerPlayer serverPlayer) {
-        this.value = value;
-        this.syncValue(serverPlayer);
-    }
-
-
 }

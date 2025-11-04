@@ -1,15 +1,10 @@
 package net.narutoxboruto.attachments;
 
-import com.mojang.serialization.Codec;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.narutoxboruto.attachments.info.*;
 import net.narutoxboruto.attachments.jutsus.*;
 import net.narutoxboruto.attachments.selection.*;
 import net.narutoxboruto.attachments.stats.*;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.attachment.AttachmentHolder;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;

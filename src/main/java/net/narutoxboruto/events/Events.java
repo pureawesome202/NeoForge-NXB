@@ -3,47 +3,47 @@ package net.narutoxboruto.events;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.item.ItemStack;
-import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.info.Affiliation;
 import net.narutoxboruto.attachments.info.Clan;
 import net.narutoxboruto.attachments.info.Rank;
 import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.util.ModUtil;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
+import static net.narutoxboruto.attachments.MainAttachment.*;
+import static net.narutoxboruto.attachments.MainAttachment.RANK;
 import static net.narutoxboruto.util.ModUtil.*;
+import static net.narutoxboruto.util.ModUtil.getRandomIndex;
 
 public class Events {
 
 
-        @SubscribeEvent
-        public static void onPlayerFirstJoin(PlayerEvent.PlayerLoggedInEvent event) {
-            if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer serverPlayer) {
-                // Check if this is the first join by checking play time or use a custom flag
-                if (ModUtil.getPlayerStatistics(serverPlayer, Stats.CUSTOM.get(Stats.PLAY_TIME).getValue()) == 0) {
+    @SubscribeEvent
+    public static void onPlayerFirstJoin(EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide() && event.getEntity() instanceof ServerPlayer serverPlayer
+                && ModUtil.getPlayerStatistics(serverPlayer, Stats.PLAY_TIME) == 0) {
 
-                    // Small delay to ensure everything is loaded
-                    serverPlayer.getServer().execute(() -> {
-                        // Get the clan attachment and set random value
-                        Clan clan = serverPlayer.getData(MainAttachment.CLAN);
-                        clan.setValue(getRandomIndex(CLAN_LIST), serverPlayer);
+            Clan clan = serverPlayer.getData(CLAN);
+            Affiliation affiliation = serverPlayer.getData(AFFILIATION);
+            Rank rank = serverPlayer.getData(RANK);
 
-                        // Get rank attachment and set value
-                        Rank rank = serverPlayer.getData(MainAttachment.RANK);
-                        rank.setValue("student", serverPlayer);
+            clan.setValue(getRandomIndex(CLAN_LIST));
+            affiliation.setValue(getRandomIndex(AFF_LIST));
+            rank.setValue("student");
 
-                        serverPlayer.getData(MainAttachment.AFFILIATION).setValue(getRandomIndex(AFF_LIST), serverPlayer);
+            clan.syncValue(serverPlayer);
+            affiliation.syncValue(serverPlayer);
+            rank.syncValue(serverPlayer);
 
-                        giveClanStatBonuses(serverPlayer);
-                        serverPlayer.addItem(new ItemStack(ModItems.CHAKRA_PAPER.get()));
-
-                        // Debug output
-                        System.out.println("Set rank to: " + rank.getValue());
-                    });
-                }
-            }
+            giveClanStatBonuses(serverPlayer);
+            serverPlayer.addItem(new ItemStack(ModItems.CHAKRA_PAPER.get()));
+            // Send packet to open the GUI
+            // Open the GUI
+            //ModPacketHandler.INSTANCE2.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new SyncStartGui());
         }
+
+    }
 
        // @SubscribeEvent
        // public static void onProjectileImpact(ProjectileImpactEvent event) {

@@ -2,8 +2,7 @@ package net.narutoxboruto.events;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.narutoxboruto.attachments.MainAttachment;
-import net.narutoxboruto.attachments.info.Chakra;
-import net.narutoxboruto.attachments.info.ReleaseList;
+import net.narutoxboruto.attachments.info.*;
 import net.narutoxboruto.main.Main;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -19,6 +18,15 @@ public class AttachmentEvents {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             ReleaseList releaseList = serverPlayer.getData(MainAttachment.RELEASE_LIST);
             releaseList.syncValue(serverPlayer);
+
+            Affiliation affiliation = serverPlayer.getData(MainAttachment.AFFILIATION);
+            affiliation.syncValue(serverPlayer);
+
+            Clan clan = serverPlayer.getData(MainAttachment.CLAN);
+            clan.syncValue(serverPlayer);
+
+            Rank rank = serverPlayer.getData(MainAttachment.RANK);
+            rank.syncValue(serverPlayer);
         }
     }
 
