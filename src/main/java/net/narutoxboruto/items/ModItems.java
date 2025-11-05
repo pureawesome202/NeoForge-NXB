@@ -5,6 +5,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 import net.narutoxboruto.items.misc.ChakraPaper;
 import net.narutoxboruto.items.misc.ClanReroll;
+import net.narutoxboruto.items.misc.RandomDna;
+import net.narutoxboruto.items.misc.ReleaseDnaBottleItem;
 import net.narutoxboruto.items.swords.*;
 import net.narutoxboruto.items.throwables.FumaShurikenItem;
 import net.narutoxboruto.items.throwables.ThrowableWeaponItem;
@@ -44,6 +46,15 @@ public class ModItems {
 
     public static final DeferredItem<Item> CLAN_REROLL = ITEMS.register("clan_reroll", () -> new ClanReroll(new Item.Properties().stacksTo(1)));
 
+    //DNA BOTTLE'S
+    public static final DeferredItem<Item> RANDOM_DNA = ITEMS.register("random_dna", () -> new RandomDna(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> FIRE_DNA = ITEMS.register("fire_dna", () -> new ReleaseDnaBottleItem(new Item.Properties().stacksTo(1), "fire"));
+    public static final DeferredItem<Item> EARTH_DNA = ITEMS.register("earth_dna", () -> new ReleaseDnaBottleItem(new Item.Properties().stacksTo(1), "earth"));
+    public static final DeferredItem<Item> LIGHTNING_DNA = ITEMS.register("lightning_dna", () -> new ReleaseDnaBottleItem(new Item.Properties().stacksTo(1), "lightning"));
+    public static final DeferredItem<Item> WATER_DNA = ITEMS.register("water_dna", () -> new ReleaseDnaBottleItem(new Item.Properties().stacksTo(1), "water"));
+    public static final DeferredItem<Item> WIND_DNA = ITEMS.register("wind_dna", () -> new ReleaseDnaBottleItem(new Item.Properties().stacksTo(1), "wind"));
+    public static final DeferredItem<Item> YIN_DNA = ITEMS.register("yin_dna", () -> new ReleaseDnaBottleItem(new Item.Properties().stacksTo(1), "yin"));
+    public static final DeferredItem<Item> YANG_DNA = ITEMS.register("yang_dna", () -> new ReleaseDnaBottleItem(new Item.Properties().stacksTo(1), "yang"));
 
     public static void register(IEventBus eventBus) {
        ITEMS.register(eventBus);

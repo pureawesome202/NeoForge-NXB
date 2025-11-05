@@ -133,18 +133,18 @@ public class ModUtil {
   //      };
   //  }
 //
-  //  public static AbstractNatureReleaseItem getReleaseFromString(String release) {
-  //      return switch (release) {
-  //          case "earth" -> EARTH.get();
-  //          case "fire" -> FIRE.get();
-  //          case "lightning" -> LIGHTNING.get();
-  //          case "water" -> WATER.get();
-  //          case "wind" -> WIND.get();
-  //          case "yang" -> YANG.get();
-  //          case "yin" -> YIN.get();
-  //          default -> throw new IllegalStateException("Unexpected value: " + release);
-  //      };
-  //  }
+    // public static AbstractNatureReleaseItem getReleaseFromString(String release) {
+   //     return switch (release) {
+   //         case "earth" -> EARTHLIST.get();
+   //         case "fire" -> FIRELIST.get();
+   //         case "lightning" -> LIGHTINGLIST.get();
+   //         case "water" -> WATERLIST.get();
+   //         case "wind" -> WINDLIST.get();
+   //         case "yang" -> YANGLIST.get();
+   //         case "yin" -> YINGLIST.get();
+   //         default -> throw new IllegalStateException("Unexpected value: " + release);
+   //     };
+   // }
 
     public static String concatAndFormat(String pList, String value) {
         return (pList + (pList.isEmpty() ? "" : ", ") + value).toLowerCase();

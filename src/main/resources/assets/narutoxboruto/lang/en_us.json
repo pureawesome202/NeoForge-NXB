@@ -2,6 +2,7 @@
   "itemGroup.throwable": "Throwables",
   "itemGroup.swords": "Swords",
   "itemGroup.nxb_tab": "Misc",
+  "itemGroup.dna_tab": "Dna Bottles",
 
   "item.narutoxboruto.shuriken": "Shuriken",
   "item.narutoxboruto.kunai": "Kunai",
@@ -14,6 +15,14 @@
   "item.narutoxboruto.shibuki": "Shibuki",
   "item.narutoxboruto.chakra_paper": "Chakra Paper",
   "item.narutoxboruto.clan_reroll":"Clan Reroll",
+  "item.narutoxboruto.random_dna":"Random Dna Bottle",
+  "item.narutoxboruto.fire_dna":"Fire Dna Bottle",
+  "item.narutoxboruto.water_dna":"Water Dna Bottle",
+  "item.narutoxboruto.lightning_dna":"Lightning Dna Bottle",
+  "item.narutoxboruto.earth_dna":"Earth Dna Bottle",
+  "item.narutoxboruto.yin_dna":"Yin Dna Bottle",
+  "item.narutoxboruto.yang_dna":"Yang Dna Bottle",
+  "item.narutoxboruto.wind_dna":"Wind Dna Bottle",
 
   "sword_ability.activate": "%s ability activated",
   "sword_ability.deactivate": "%s ability deactivated",

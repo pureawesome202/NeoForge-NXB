@@ -49,5 +49,19 @@ public class ModTab {
                 output.accept(CLAN_REROLL.get());
             }).build());
 
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NXB_DNA = CREATIVE_MODE_TAB.register("nxb_dna", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.dna_tab")) //The language key for the title of your CreativeModeTab
+            .icon(() -> RANDOM_DNA.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+                output.accept(RANDOM_DNA.get());
+                output.accept(EARTH_DNA.get());
+                output.accept(FIRE_DNA.get());
+                output.accept(WATER_DNA.get());
+                output.accept(WIND_DNA.get());
+                output.accept(LIGHTNING_DNA.get());
+                output.accept(YIN_DNA.get());
+                output.accept(YANG_DNA.get());
+            }).build());
+
     public static void register(IEventBus eventBus) {CREATIVE_MODE_TAB.register(eventBus);}
 }
