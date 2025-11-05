@@ -7,9 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.narutoxboruto.attachments.MainAttachment;
-import net.narutoxboruto.attachments.info.Affiliation;
 import net.narutoxboruto.attachments.info.Clan;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -38,7 +36,6 @@ public class SyncClan implements CustomPacketPayload {
             if (level != null && Minecraft.getInstance().player != null) {
                 LocalPlayer clientPlayer = Minecraft.getInstance().player;
 
-                // Get the existing Affiliation object and update its value for client side only
                 Clan clan = clientPlayer.getData(MainAttachment.CLAN);
                 clan.setValue(this.clan); // Use client-side method
             }

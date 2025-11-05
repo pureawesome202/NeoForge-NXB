@@ -13,6 +13,7 @@
   "item.narutoxboruto.kubikiribocho": "Kubikiribocho",
   "item.narutoxboruto.shibuki": "Shibuki",
   "item.narutoxboruto.chakra_paper": "Chakra Paper",
+  "item.narutoxboruto.clan_reroll":"Clan Reroll",
 
   "sword_ability.activate": "%s ability activated",
   "sword_ability.deactivate": "%s ability deactivated",
@@ -76,5 +77,8 @@
   "msg.narutoxboruto.rank": "You are an %s",
   "msg.no_chakra": "Not enough chakra",
   "msg.narutoxboruto.release": "you start with %s release",
-  "msg.narutoxboruto.releases": "you start with %s release"
+  "msg.narutoxboruto.releases": "you start with %s release",
+
+  "clan_reroll.success": "You have become a member of %s Clan",
+  "clan_reroll.fail": "You are not the owner of this item"
 }

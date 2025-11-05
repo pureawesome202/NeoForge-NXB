@@ -1,10 +1,15 @@
 package net.narutoxboruto.networking.stats;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.stats.Shurikenjutsu;
+import net.narutoxboruto.attachments.stats.Speed;
 import net.narutoxboruto.client.PlayerData;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -29,11 +34,16 @@ public class SyncSpeed implements CustomPacketPayload {
 
     public void handle(IPayloadContext context) {
         context.enqueueWork(() -> {
-            if (context.player() != null) {
-                context.player().getData(MainAttachment.SPEED);
+            ClientLevel level = Minecraft.getInstance().level;
+            if (level != null && Minecraft.getInstance().player != null) {
+                LocalPlayer clientPlayer = Minecraft.getInstance().player;
+
+                Speed speed = clientPlayer.getData(MainAttachment.SPEED);
+                speed.setValue(this.speed); // Use client-side method
             }
         });
     }
+
 
     @Override
     public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {

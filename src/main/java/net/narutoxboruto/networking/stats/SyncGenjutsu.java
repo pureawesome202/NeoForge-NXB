@@ -1,11 +1,16 @@
 package net.narutoxboruto.networking.stats;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.info.Clan;
 import net.narutoxboruto.attachments.stats.Genjutsu;
 import net.narutoxboruto.client.PlayerData;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -32,8 +37,12 @@ public class SyncGenjutsu implements CustomPacketPayload {
 
     public void handle(IPayloadContext context) {
         context.enqueueWork(() -> {
-            if (context.player() != null) {
-                context.player().getData(MainAttachment.GENJUTSU);
+            ClientLevel level = Minecraft.getInstance().level;
+            if (level != null && Minecraft.getInstance().player != null) {
+                LocalPlayer clientPlayer = Minecraft.getInstance().player;
+
+                Genjutsu genjutsu = clientPlayer.getData(MainAttachment.GENJUTSU);
+                genjutsu.setValue(this.genjutsu); // Use client-side method
             }
         });
     }

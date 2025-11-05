@@ -6,11 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.narutoxboruto.attachments.MainAttachment;
-import net.narutoxboruto.attachments.jutsus.EarthList;
 
 import java.util.*;
 
@@ -54,23 +51,25 @@ public class ModUtil {
         String clan = serverPlayer.getData(MainAttachment.CLAN).getValue();
 
         switch (clan) {
-            case "fuma" -> serverPlayer.getData(MainAttachment.SHURIKENJUTSU).setValue(25, serverPlayer);
-
-            case "nara" -> {
-                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(15, serverPlayer);
-                serverPlayer.getData(MainAttachment.SHURIKENJUTSU).setValue(10, serverPlayer);
-                serverPlayer.getData(MainAttachment.KINJUTSU).setValue(5, serverPlayer);
+            case "fuma" -> {
+                serverPlayer.getData(MainAttachment.SHURIKENJUTSU).setValue(25);
             }
-            case "shiin" -> serverPlayer.getData(MainAttachment.KINJUTSU).setValue(15, serverPlayer);
+            case "nara" -> {
+                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(15);
+                serverPlayer.getData(MainAttachment.SHURIKENJUTSU).setValue(10);
+                serverPlayer.getData(MainAttachment.KINJUTSU).setValue(5);
+            }
+            case "shiin" -> {
+                serverPlayer.getData(MainAttachment.KINJUTSU).setValue(15);}
 
             case "shirogane" -> {
-                serverPlayer.getData(MainAttachment.SUMMONING).setValue(20, serverPlayer);
-                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(10, serverPlayer);
+                serverPlayer.getData(MainAttachment.SUMMONING).setValue(20);
+                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(10);
             }
             case "uzumaki" -> {
-                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(15, serverPlayer);
-                serverPlayer.getData(MainAttachment.MEDICAL).setValue(10, serverPlayer);
-                serverPlayer.getData(MainAttachment.KENJUTSU).setValue(5, serverPlayer);
+                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(15);
+                serverPlayer.getData(MainAttachment.MEDICAL).setValue(10);
+                serverPlayer.getData(MainAttachment.KENJUTSU).setValue(5);
             }
         }
     }
@@ -81,38 +80,38 @@ public class ModUtil {
         switch (clan) {
             case "fuma" -> {
                 int currentShuriken = serverPlayer.getData(MainAttachment.SHURIKENJUTSU).getValue();
-                serverPlayer.getData(MainAttachment.SHURIKENJUTSU).setValue(currentShuriken - 25, serverPlayer);
+                serverPlayer.getData(MainAttachment.SHURIKENJUTSU).setValue(currentShuriken - 25);
             }
             case "nara" -> {
                 int currentNinjutsu = serverPlayer.getData(MainAttachment.NINJUTSU).getValue();
-                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(currentNinjutsu - 15, serverPlayer);
+                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(currentNinjutsu - 15);
 
                 int currentShuriken = serverPlayer.getData(MainAttachment.SHURIKENJUTSU).getValue();
-                serverPlayer.getData(MainAttachment.SHURIKENJUTSU).setValue(currentShuriken - 10, serverPlayer);
+                serverPlayer.getData(MainAttachment.SHURIKENJUTSU).setValue(currentShuriken - 10);
 
                 int currentKinjutsu = serverPlayer.getData(MainAttachment.KINJUTSU).getValue();
-                serverPlayer.getData(MainAttachment.KINJUTSU).setValue(currentKinjutsu - 5, serverPlayer);
+                serverPlayer.getData(MainAttachment.KINJUTSU).setValue(currentKinjutsu - 5);
             }
             case "shiin" -> {
                 int currentKinjutsu = serverPlayer.getData(MainAttachment.KINJUTSU).getValue();
-                serverPlayer.getData(MainAttachment.KINJUTSU).setValue(currentKinjutsu - 15, serverPlayer);
+                serverPlayer.getData(MainAttachment.KINJUTSU).setValue(currentKinjutsu - 15);
             }
             case "shirogane" -> {
                 int currentSummoning = serverPlayer.getData(MainAttachment.SUMMONING).getValue();
-                serverPlayer.getData(MainAttachment.SUMMONING).setValue(currentSummoning - 20, serverPlayer);
+                serverPlayer.getData(MainAttachment.SUMMONING).setValue(currentSummoning - 20);
 
                 int currentNinjutsu = serverPlayer.getData(MainAttachment.NINJUTSU).getValue();
-                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(currentNinjutsu - 10, serverPlayer);
+                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(currentNinjutsu - 10);
             }
             case "uzumaki" -> {
                 int currentNinjutsu = serverPlayer.getData(MainAttachment.NINJUTSU).getValue();
-                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(currentNinjutsu - 15, serverPlayer);
+                serverPlayer.getData(MainAttachment.NINJUTSU).setValue(currentNinjutsu - 15);
 
                 int currentMedical = serverPlayer.getData(MainAttachment.MEDICAL).getValue();
-                serverPlayer.getData(MainAttachment.MEDICAL).setValue(currentMedical - 10, serverPlayer);
+                serverPlayer.getData(MainAttachment.MEDICAL).setValue(currentMedical - 10);
 
                 int currentKenjutsu = serverPlayer.getData(MainAttachment.KENJUTSU).getValue();
-                serverPlayer.getData(MainAttachment.KENJUTSU).setValue(currentKenjutsu - 5, serverPlayer);
+                serverPlayer.getData(MainAttachment.KENJUTSU).setValue(currentKenjutsu - 5);
             }
         }
     }

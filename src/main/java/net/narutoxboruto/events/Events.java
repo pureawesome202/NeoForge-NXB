@@ -24,11 +24,16 @@ public class Events {
         if (!event.getLevel().isClientSide() && event.getEntity() instanceof ServerPlayer serverPlayer
                 && ModUtil.getPlayerStatistics(serverPlayer, Stats.PLAY_TIME) == 0) {
 
+            System.out.println("First join detected - setting up clan and stats");
+
             Clan clan = serverPlayer.getData(CLAN);
             Affiliation affiliation = serverPlayer.getData(AFFILIATION);
             Rank rank = serverPlayer.getData(RANK);
 
-            clan.setValue(getRandomIndex(CLAN_LIST));
+            String randomClan = getRandomIndex(CLAN_LIST);
+            System.out.println("Selected clan: " + randomClan);
+
+            clan.setValue(randomClan, serverPlayer);
             affiliation.setValue(getRandomIndex(AFF_LIST));
             rank.setValue("student");
 
@@ -38,11 +43,9 @@ public class Events {
 
             giveClanStatBonuses(serverPlayer);
             serverPlayer.addItem(new ItemStack(ModItems.CHAKRA_PAPER.get()));
-            // Send packet to open the GUI
-            // Open the GUI
-            //ModPacketHandler.INSTANCE2.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new SyncStartGui());
-        }
 
+            System.out.println("Clan setup completed");
+        }
     }
 
        // @SubscribeEvent

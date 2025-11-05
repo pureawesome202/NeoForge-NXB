@@ -16,17 +16,25 @@ public class AttachmentEvents {
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            ReleaseList releaseList = serverPlayer.getData(MainAttachment.RELEASE_LIST);
-            releaseList.syncValue(serverPlayer);
+            //INFO
+            serverPlayer.getData(MainAttachment.AFFILIATION).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.CLAN).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.CHAKRA).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.SHINOBI_POINTS).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.RANK).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.RELEASE_LIST).syncValue(serverPlayer);
 
-            Affiliation affiliation = serverPlayer.getData(MainAttachment.AFFILIATION);
-            affiliation.syncValue(serverPlayer);
-
-            Clan clan = serverPlayer.getData(MainAttachment.CLAN);
-            clan.syncValue(serverPlayer);
-
-            Rank rank = serverPlayer.getData(MainAttachment.RANK);
-            rank.syncValue(serverPlayer);
+            //STATS
+            serverPlayer.getData(MainAttachment.GENJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.KENJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.KINJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.MEDICAL).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.NINJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.SENJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.SHURIKENJUTSU).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.SPEED).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.SUMMONING).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.TAIJUTSU).syncValue(serverPlayer);
         }
     }
 

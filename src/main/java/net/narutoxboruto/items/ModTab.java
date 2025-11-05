@@ -46,6 +46,7 @@ public class ModTab {
             .icon(() -> CHAKRA_PAPER.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(CHAKRA_PAPER.get());
+                output.accept(CLAN_REROLL.get());
             }).build());
 
     public static void register(IEventBus eventBus) {CREATIVE_MODE_TAB.register(eventBus);}

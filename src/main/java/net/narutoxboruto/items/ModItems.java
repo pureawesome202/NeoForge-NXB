@@ -4,6 +4,7 @@ package net.narutoxboruto.items;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 import net.narutoxboruto.items.misc.ChakraPaper;
+import net.narutoxboruto.items.misc.ClanReroll;
 import net.narutoxboruto.items.swords.*;
 import net.narutoxboruto.items.throwables.FumaShurikenItem;
 import net.narutoxboruto.items.throwables.ThrowableWeaponItem;
@@ -40,6 +41,9 @@ public class ModItems {
     public static final DeferredItem<Item> NUIBARI = ITEMS.register("nuibari", () -> new Nuibari(new Item.Properties().stacksTo(1).attributes(SwordItem.createAttributes(SwordCustomTiers.NUIBARI, 2, -1.5f))));
 
     public static final DeferredItem<Item> CHAKRA_PAPER = ITEMS.register("chakra_paper", () -> new ChakraPaper(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<Item> CLAN_REROLL = ITEMS.register("clan_reroll", () -> new ClanReroll(new Item.Properties().stacksTo(1)));
+
 
     public static void register(IEventBus eventBus) {
        ITEMS.register(eventBus);

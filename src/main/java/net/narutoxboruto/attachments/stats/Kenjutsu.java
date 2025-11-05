@@ -45,9 +45,8 @@ public class Kenjutsu {
         this.syncValue(serverPlayer);
     }
 
-    public void setValue(int value, ServerPlayer serverPlayer) {
+    public void setValue(int value) {
         this.value = Math.min(value, maxValue); // Removed adjustment multiplier
-        this.syncValue(serverPlayer);
     }
 
     public void subValue(int sub, ServerPlayer serverPlayer) {
