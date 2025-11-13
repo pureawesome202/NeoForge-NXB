@@ -4,6 +4,8 @@
   "itemGroup.nxb_tab": "Misc",
   "itemGroup.dna_tab": "Dna Bottles",
 
+  "effect.narutoxboruto.chakra_control": "Chakra Control",
+
   "item.narutoxboruto.shuriken": "Shuriken",
   "item.narutoxboruto.kunai": "Kunai",
   "item.narutoxboruto.explosive_kunai": "Explosive Kunai",
@@ -33,6 +35,11 @@
   "key.category.narutoxboruto": "Naruto x Boruto",
   "key.category.chakra_recharge": "Chakra Recharge",
   "key.category.special_action": "Special Action",
+
+  "key.narutoxboruto.chakra_control": "Chakra Control",
+  "key.narutoxboruto.chakra_recharge": "Chakra Recharge",
+  "key.narutoxboruto.open_gui": "Stats Gui",
+  "key.narutoxboruto.special_action": "Special Action",
 
   "gui.narutoxboruto.shinobi_stats": "Shinobi Stats",
   "shinobiStat.taijutsu": "Taijutsu",
@@ -89,5 +96,9 @@
   "msg.narutoxboruto.releases": "you start with %s release",
 
   "clan_reroll.success": "You have become a member of %s Clan",
-  "clan_reroll.fail": "You are not the owner of this item"
+  "clan_reroll.fail": "You are not the owner of this item",
+
+  "dna_bottle.release.success": "%s successfully implemented",
+  "dna_bottle.release.fail": "%s implementation failed",
+  "dna_bottle.already_implemented": "You already have %s affinity"
 }

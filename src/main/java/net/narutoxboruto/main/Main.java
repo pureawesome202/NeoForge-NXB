@@ -2,6 +2,7 @@ package net.narutoxboruto.main;
 
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.client.overlay.ModHudOverlays;
+import net.narutoxboruto.effect.ModEffects;
 import net.narutoxboruto.entities.ModEntities;
 import net.narutoxboruto.events.AttachmentEvents;
 import net.narutoxboruto.events.Events;
@@ -41,6 +42,7 @@ public class Main {
         NeoForge.EVENT_BUS.register(AttachmentEvents.class);
         NeoForge.EVENT_BUS.register(Events.class);
 
+        ModEffects.register(modEventBus);
         ModTab.register(modEventBus);
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);

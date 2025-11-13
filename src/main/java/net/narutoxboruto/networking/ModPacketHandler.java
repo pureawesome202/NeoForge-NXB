@@ -2,10 +2,10 @@ package net.narutoxboruto.networking;
 
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import net.narutoxboruto.attachments.modes.ChakraControl;
 import net.narutoxboruto.networking.info.*;
 import net.narutoxboruto.networking.jutsus.*;
-import net.narutoxboruto.networking.misc.RechargeChakra;
-import net.narutoxboruto.networking.misc.ToggleSwordAbility;
+import net.narutoxboruto.networking.misc.*;
 import net.narutoxboruto.networking.selection.*;
 import net.narutoxboruto.networking.stats.*;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -54,10 +54,14 @@ public class ModPacketHandler {
         registrar.playToClient(SyncSummoning.TYPE, SyncSummoning.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToClient(SyncTaijutsu.TYPE, SyncTaijutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToClient(SyncSpeed.TYPE, SyncSpeed.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncChakraControl.TYPE, SyncChakraControl.STREAM_CODEC, (payload, context) -> payload.handle(context));
 
         //Serverbound packets
         registrar.playToServer(ToggleSwordAbility.TYPE, ToggleSwordAbility.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToServer(RechargeChakra.TYPE, RechargeChakra.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToClient(SyncNarutoRun.TYPE, SyncNarutoRun.STREAM_CODEC, (payload, context) -> payload.handle(context));
+        registrar.playToServer(ToggleChakraControl.TYPE, ToggleChakraControl.STREAM_CODEC, (payload, context) -> payload.handle(context));
+
     }
 
     public static void sendToPlayer(CustomPacketPayload packet, ServerPlayer player) {

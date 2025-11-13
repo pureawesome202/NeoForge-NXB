@@ -2,6 +2,7 @@ package net.narutoxboruto.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.narutoxboruto.client.gui.ShinobiStatsGui;
@@ -10,6 +11,7 @@ import net.narutoxboruto.items.swords.AbstractAbilitySword;
 import net.narutoxboruto.main.Main;
 import net.narutoxboruto.networking.ModPacketHandler;
 import net.narutoxboruto.networking.misc.RechargeChakra;
+import net.narutoxboruto.networking.misc.ToggleChakraControl;
 import net.narutoxboruto.networking.misc.ToggleSwordAbility;
 import net.narutoxboruto.util.ModKeyBinds;
 import net.neoforged.api.distmarker.Dist;
@@ -59,6 +61,15 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
+    public static void chakraKeybind(InputEvent.Key event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        if (player != null && ModKeyBinds.CHAKRA_CONTROL.consumeClick()) {
+            ModPacketHandler.sendToServer(new ToggleChakraControl());
+        }
+    }
+
+    @SubscribeEvent
     public static void chakraCharge(InputEvent.Key event) {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
@@ -77,6 +88,7 @@ public class ClientEvents {
             event.register(ModKeyBinds.SPECIAL_ACTION);
             event.register(ModKeyBinds.CHAKRA_RECHARGE);
             event.register(ModKeyBinds.OPEN_GUI);
+            event.register(ModKeyBinds.CHAKRA_CONTROL);
         }
     }
 

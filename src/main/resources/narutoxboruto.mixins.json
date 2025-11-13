@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "net.narutoxboruto.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "MixinLiquidBlock",
+    "MixinPlayer"
+  ],
+  "client": [
+    "MixinLocalPlayer",
+    "MixinPlayerModel",
+    "MixinPlayerRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

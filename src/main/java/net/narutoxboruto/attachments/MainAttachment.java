@@ -2,6 +2,8 @@ package net.narutoxboruto.attachments;
 
 import net.narutoxboruto.attachments.info.*;
 import net.narutoxboruto.attachments.jutsus.*;
+import net.narutoxboruto.attachments.modes.ChakraControl;
+import net.narutoxboruto.attachments.modes.NarutoRun;
 import net.narutoxboruto.attachments.selection.*;
 import net.narutoxboruto.attachments.stats.*;
 import net.neoforged.bus.api.IEventBus;
@@ -48,6 +50,8 @@ public class MainAttachment {
     public static final Supplier<AttachmentType<SelectedRelease>> SELECTED_RELEASE = ATTACHMENT_TYPES.register("selectedrelease", () -> AttachmentType.<SelectedRelease>builder(() -> new SelectedRelease()).serialize(SelectedRelease.CODEC).copyOnDeath().build());
 
     public static final Supplier<AttachmentType<ReleaseList>> RELEASE_LIST = ATTACHMENT_TYPES.register("release_list", () -> AttachmentType.<ReleaseList>builder(() -> new ReleaseList()).serialize(ReleaseList.CODEC).copyOnDeath().build());
+    public static final Supplier<AttachmentType<ChakraControl>> CHAKRA_CONTROL = ATTACHMENT_TYPES.register("chakra_control", () -> AttachmentType.<ChakraControl>builder(() -> new ChakraControl()).serialize(ChakraControl.CODEC).copyOnDeath().build());
+    public static final Supplier<AttachmentType<NarutoRun>> NARUTO_RUN = ATTACHMENT_TYPES.register("naruto_run", () -> AttachmentType.<NarutoRun>builder(() -> new NarutoRun()).serialize(NarutoRun.CODEC).copyOnDeath().build());
 
     public static void register(IEventBus modEventBus) {
         ATTACHMENT_TYPES.register(modEventBus);
