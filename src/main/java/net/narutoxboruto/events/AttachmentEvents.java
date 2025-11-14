@@ -113,6 +113,25 @@ public class AttachmentEvents {
         }
     }
 
+    // Add this method to sync all stats to the client
+    public static void syncAllStatsToClient(ServerPlayer player) {
+        // Sync each individual stat attachment
+        player.getData(MainAttachment.NINJUTSU).syncValue(player);
+        player.getData(MainAttachment.SHURIKENJUTSU).syncValue(player);
+        player.getData(MainAttachment.KINJUTSU).syncValue(player);
+        player.getData(MainAttachment.SUMMONING).syncValue(player);
+        player.getData(MainAttachment.MEDICAL).syncValue(player);
+        player.getData(MainAttachment.KENJUTSU).syncValue(player);
+        player.getData(MainAttachment.TAIJUTSU).syncValue(player);
+        player.getData(MainAttachment.SENJUTSU).syncValue(player);
+        player.getData(MainAttachment.SPEED).syncValue(player);
+        player.getData(MainAttachment.GENJUTSU).syncValue(player);
+
+        // Sync clan as well
+        player.getData(MainAttachment.CLAN).syncValue(player);
+        player.getData(MainAttachment.SHINOBI_POINTS).syncValue(player);
+    }
+
     @SubscribeEvent
     public static void onReplenishChakra(PlayerTickEvent.Pre event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer && serverPlayer.isSleepingLongEnough()) {

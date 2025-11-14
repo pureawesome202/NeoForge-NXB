@@ -1,30 +1,22 @@
 package net.narutoxboruto.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.attachments.info.ReleaseList;
-import net.narutoxboruto.client.PlayerData;
 import net.narutoxboruto.main.Main;
-import net.narutoxboruto.util.ModUtil;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static net.narutoxboruto.client.PlayerData.getReleaseList;
 
 @OnlyIn(Dist.CLIENT)
 public class ShinobiStatsGui extends Screen {

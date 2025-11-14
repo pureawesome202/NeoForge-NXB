@@ -31,20 +31,20 @@ public class Medical {
     }
 
     public void incrementValue(int add, ServerPlayer serverPlayer) {
-        int oldValue = value;
-        this.value = Math.min(value + add, this.maxValue);
+        this.value = Math.min(value + add, maxValue);
         this.syncValue(serverPlayer);
-        if (awardSP) {
-            for (int i = oldValue + 1; i <= value; i++) {
-                if (i % 20 == 0) { // Replace 10 with your desired interval
-                    serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(serverPlayer);
-                }
-            }
-        }
+
+        // Always award SP
+        serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(add, serverPlayer);
     }
 
     public void addValue(int add, ServerPlayer serverPlayer) {
         this.value = add; // Removed adjustment multiplier
+        this.syncValue(serverPlayer);
+    }
+
+    public void setValue(int value, ServerPlayer serverPlayer) {
+        this.value = Math.min(value, maxValue); // Removed adjustment multiplier
         this.syncValue(serverPlayer);
     }
 

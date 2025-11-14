@@ -11,7 +11,6 @@ public class Taijutsu {
     private final String id;
     protected int maxValue;
     protected int value;
-    public boolean awardSP;
 
     public static final Codec<Taijutsu> CODEC = Codec.INT.xmap(value -> {Taijutsu taijutsu = new Taijutsu();taijutsu.value = value;return taijutsu;}, Taijutsu::getValue);
 
@@ -30,16 +29,11 @@ public class Taijutsu {
     }
 
     public void incrementValue(int add, ServerPlayer serverPlayer) {
-        int oldValue = value;
-        this.value = Math.min(value + add, this.maxValue);
+        this.value = Math.min(value + add, maxValue);
         this.syncValue(serverPlayer);
-        if (awardSP) {
-            for (int i = oldValue + 1; i <= value; i++) {
-                if (i % 20 == 0) { // Replace 20 with your desired interval
-                    serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(serverPlayer);
-                }
-            }
-        }
+
+        // Always award SP when Taijutsu increases
+        serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(add, serverPlayer);
     }
 
     public void addValue(int add, ServerPlayer serverPlayer) {
@@ -47,8 +41,13 @@ public class Taijutsu {
         this.syncValue(serverPlayer);
     }
 
-    public void setValue(int value) {
+    public void setValue(int value, ServerPlayer serverPlayer) {
         this.value = Math.min(value, maxValue);
+        this.syncValue(serverPlayer);
+    }
+
+    public void setValue(int value) {
+        this.value = Math.min(value, maxValue); // Removed adjustment multiplier
     }
 
 

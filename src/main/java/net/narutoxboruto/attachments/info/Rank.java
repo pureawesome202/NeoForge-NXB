@@ -1,10 +1,8 @@
 package net.narutoxboruto.attachments.info;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.narutoxboruto.networking.ModPacketHandler;
-import net.narutoxboruto.networking.info.SyncClan;
 import net.narutoxboruto.networking.info.SyncRank;
 import net.narutoxboruto.util.ModUtil;
 
@@ -12,7 +10,6 @@ public class Rank {
     private String value;
 
     public static final Codec<Rank> CODEC = Codec.STRING.xmap(Rank::new, Rank::getValue);
-
 
     public Rank() {
         this.value = "rank";
@@ -26,6 +23,10 @@ public class Rank {
         return value;
     }
 
+    public void setValue(String value, ServerPlayer serverPlayer) {
+        this.value = value;
+        this.syncValue(serverPlayer);
+    }
     public void setValue(String value) {
         this.value = value;
     }

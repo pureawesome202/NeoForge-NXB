@@ -119,7 +119,7 @@ public abstract class MixinPlayer extends LivingEntity implements ModeHandler {
         }
     }
 
-        @Override
+    @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
         if (DATA_NARUTO_RUNNING.equals(entityDataAccessor)) {
             this.refreshDimensions();

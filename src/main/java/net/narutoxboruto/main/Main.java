@@ -1,10 +1,14 @@
 package net.narutoxboruto.main;
 
+import net.minecraft.commands.synchronization.ArgumentTypeInfos;
+import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.client.overlay.ModHudOverlays;
+import net.narutoxboruto.command.argument.*;
 import net.narutoxboruto.effect.ModEffects;
 import net.narutoxboruto.entities.ModEntities;
 import net.narutoxboruto.events.AttachmentEvents;
+import net.narutoxboruto.events.CommandEvents;
 import net.narutoxboruto.events.Events;
 import net.narutoxboruto.events.StatEvents;
 import net.narutoxboruto.items.ModItems;
@@ -27,8 +31,6 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-import static net.narutoxboruto.attachments.MainAttachment.ATTACHMENT_TYPES;
-
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Main.MOD_ID)
 public class Main {
@@ -43,6 +45,8 @@ public class Main {
         NeoForge.EVENT_BUS.register(AttachmentEvents.class);
         NeoForge.EVENT_BUS.register(Events.class);
         NeoForge.EVENT_BUS.register(StatEvents.class);
+        NeoForge.EVENT_BUS.register(CommandEvents.class);
+
 
 
         ModEffects.register(modEventBus);
@@ -61,17 +65,15 @@ public class Main {
         // Copy the render code here or call static method
         ModHudOverlays.onRenderGui(event);
     }
-    private void commonSetup(FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.LOG_DIRT_BLOCK.getAsBoolean()) {
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-        }
-
-        LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
-
-        Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> { });
+        ArgumentTypeInfos.registerByClass(AffiliationArgument.class,
+                SingletonArgumentInfo.contextFree(AffiliationArgument::affiliation));
+        ArgumentTypeInfos.registerByClass(ClanArgument.class, SingletonArgumentInfo.contextFree(ClanArgument::clan));
+        ArgumentTypeInfos.registerByClass(RankArgument.class, SingletonArgumentInfo.contextFree(RankArgument::rank));
+        ArgumentTypeInfos.registerByClass(ShinobiStatArgument.class,
+                SingletonArgumentInfo.contextFree(ShinobiStatArgument::shinobiStat));
+        ArgumentTypeInfos.registerByClass(InfoArgument.class, SingletonArgumentInfo.contextFree(InfoArgument::info));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

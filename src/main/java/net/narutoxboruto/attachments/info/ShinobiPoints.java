@@ -1,31 +1,18 @@
 package net.narutoxboruto.attachments.info;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.networking.ModPacketHandler;
 import net.narutoxboruto.networking.info.SyncShinobiPoints;
 
 public class ShinobiPoints {
     private final String id;
     protected int maxValue;
-    protected int value;
+    public int value;
 
     // Codec for serialization
-    public static final Codec<ShinobiPoints> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.STRING.fieldOf("id").forGetter(attachment -> attachment.id),
-            Codec.INT.fieldOf("maxValue").forGetter(attachment -> attachment.maxValue),
-            Codec.INT.fieldOf("value").forGetter(attachment -> attachment.value)
-    ).apply(instance, ShinobiPoints::new));
-
-    // Constructor for codec
-    public ShinobiPoints(String id, int maxValue, int value) {
-        this.id = id;
-        this.maxValue = maxValue;
-        this.value = value;
-    }
+    public static final Codec<ShinobiPoints> CODEC = Codec.INT.xmap(value -> {ShinobiPoints shinobiPoints = new ShinobiPoints();shinobiPoints.value = value;return shinobiPoints;}, ShinobiPoints::getValue);
 
     // Default constructor
     public ShinobiPoints(String id, int maxValue) {
@@ -59,22 +46,13 @@ public class ShinobiPoints {
         this.incrementValue(1, serverPlayer);
     }
 
-    public void incrementValue(int add, ServerPlayer serverPlayer, boolean awardSP) {
+    public void incrementValue(int add, ServerPlayer serverPlayer) {
         this.value = Math.min(value + add, maxValue);
         this.syncValue(serverPlayer);
-        if (awardSP) {
-            // If you need to award to another attachment, you'd handle it here
-            ShinobiPoints shinobiPoints = serverPlayer.getData(MainAttachment.SHINOBI_POINTS.get());
-            shinobiPoints.incrementValue(add, serverPlayer);
-        }
-    }
-
-    public void incrementValue(int add, ServerPlayer serverPlayer) {
-        this.incrementValue(add, serverPlayer, false);
     }
 
     public void addValue(int add, ServerPlayer serverPlayer) {
-        this.incrementValue(add, serverPlayer, false);
+        this.incrementValue(add, serverPlayer);
     }
 
     public void setValue(int value, ServerPlayer serverPlayer) {
@@ -100,12 +78,4 @@ public class ShinobiPoints {
         this.value = 0;
         this.syncValue(serverPlayer);
     }
-
-    public void setMaxValue(int maxValue, ServerPlayer serverPlayer) {
-        this.maxValue = maxValue;
-        // Ensure current value doesn't exceed new max
-        this.value = Math.min(this.value, maxValue);
-        this.syncValue(serverPlayer);
-    }
 }
-

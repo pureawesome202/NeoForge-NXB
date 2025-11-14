@@ -28,17 +28,12 @@ public class Ninjutsu {
         ModPacketHandler.sendToPlayer(new SyncNinjutsu(getValue()), serverPlayer);
     }
 
-    public void incrementValue(int add, ServerPlayer serverPlayer, boolean awardSP) {
-        int oldValue = value;
-        this.value = Math.min(value + add, this.maxValue);
+    public void incrementValue(int add, ServerPlayer serverPlayer) {
+        this.value = Math.min(value + add, maxValue);
         this.syncValue(serverPlayer);
-        if (awardSP) {
-            for (int i = oldValue + 1; i <= value; i++) {
-                if (i % 20 == 0) { // Replace 10 with your desired interval
-                    serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(serverPlayer);
-                }
-            }
-        }
+
+        // Always award SP
+        serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(add, serverPlayer);
     }
 
     public void addValue(int add, ServerPlayer serverPlayer) {
@@ -46,8 +41,14 @@ public class Ninjutsu {
         this.syncValue(serverPlayer);
     }
 
-    public void setValue(int value) {
+    public void setValue(int value, ServerPlayer serverPlayer) {
         this.value = Math.min(value, maxValue); // Removed adjustment multiplier
+        this.syncValue(serverPlayer);
+
+    }
+
+    public void setValue(int value) {
+        this.value = Math.min(value, maxValue);
     }
 
     public void subValue(int sub, ServerPlayer serverPlayer) {

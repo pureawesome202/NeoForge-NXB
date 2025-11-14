@@ -24,6 +24,11 @@ public class Affiliation {
         return value;
     }
 
+    public void setValue(String value, ServerPlayer serverPlayer) {
+        this.value = value;
+        this.syncValue(serverPlayer);
+    }
+
     public void setValue(String value) {
         this.value = value;
     }

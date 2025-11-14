@@ -8,9 +8,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.narutoxboruto.attachments.MainAttachment;
-import net.narutoxboruto.attachments.stats.Summoning;
 import net.narutoxboruto.attachments.stats.Taijutsu;
-import net.narutoxboruto.client.PlayerData;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class SyncTaijutsu implements CustomPacketPayload {

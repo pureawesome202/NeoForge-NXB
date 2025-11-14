@@ -80,7 +80,7 @@ public class ModUtil {
     }
 
     public static void removeClanStatBonuses(ServerPlayer serverPlayer) {
-        String clan = serverPlayer.getData(MainAttachment.CLAN).getValue(); // Use the correct method name
+        String clan = serverPlayer.getData(MainAttachment.CLAN).getValue();
 
         switch (clan) {
             case "fuma" -> {

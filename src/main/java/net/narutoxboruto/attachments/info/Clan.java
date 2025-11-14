@@ -37,7 +37,7 @@ public class Clan {
         this.syncValue(serverPlayer);
     }
 
-    public void  syncValue(ServerPlayer serverPlayer) {
+    public void syncValue(ServerPlayer serverPlayer) {
         ModPacketHandler.sendToPlayer(new SyncClan(getValue()), serverPlayer);
     }
 }

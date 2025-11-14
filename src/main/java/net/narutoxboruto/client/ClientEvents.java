@@ -2,11 +2,9 @@ package net.narutoxboruto.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.narutoxboruto.client.gui.ShinobiStatsGui;
-import net.narutoxboruto.client.overlay.ModHudOverlays;
 import net.narutoxboruto.items.swords.AbstractAbilitySword;
 import net.narutoxboruto.main.Main;
 import net.narutoxboruto.networking.ModPacketHandler;

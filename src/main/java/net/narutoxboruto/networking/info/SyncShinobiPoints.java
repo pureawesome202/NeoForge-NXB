@@ -1,10 +1,15 @@
 package net.narutoxboruto.networking.info;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.info.ShinobiPoints;
+import net.narutoxboruto.attachments.stats.Genjutsu;
 import net.narutoxboruto.client.PlayerData;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -26,8 +31,10 @@ public class SyncShinobiPoints implements CustomPacketPayload {
     public void handle(IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() != null) {
-                context.player().getData(MainAttachment.SHINOBI_POINTS);
-            }
+                ShinobiPoints points = context.player().getData(MainAttachment.SHINOBI_POINTS);
+
+                // Update the value directly (you might need to make 'value' field accessible)
+                points.value = Math.min(this.shinobi_points, points.getMaxValue());}
         });
     }
 
