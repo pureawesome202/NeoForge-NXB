@@ -16,7 +16,7 @@ public class ModEffects {
     public static final DeferredHolder<MobEffect, MobEffect> CHAKRA_CONTROL = MOD_EFFECTS.register("chakra_control",
             () -> new ChakraControlEffect().addAttributeModifier(Attributes.JUMP_STRENGTH,
                     ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "chakra_control_jump_boost"),
-                    0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+                    0.5,  AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
     );
 
     public static void register(IEventBus eventBus) {

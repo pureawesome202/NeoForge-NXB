@@ -11,6 +11,7 @@ public class Taijutsu {
     private final String id;
     protected int maxValue;
     protected int value;
+    public boolean awardSP;
 
     public static final Codec<Taijutsu> CODEC = Codec.INT.xmap(value -> {Taijutsu taijutsu = new Taijutsu();taijutsu.value = value;return taijutsu;}, Taijutsu::getValue);
 
@@ -28,7 +29,7 @@ public class Taijutsu {
         ModPacketHandler.sendToPlayer(new SyncTaijutsu(getValue()), serverPlayer);
     }
 
-    public void incrementValue(int add, ServerPlayer serverPlayer, boolean awardSP) {
+    public void incrementValue(int add, ServerPlayer serverPlayer) {
         int oldValue = value;
         this.value = Math.min(value + add, this.maxValue);
         this.syncValue(serverPlayer);
@@ -49,6 +50,7 @@ public class Taijutsu {
     public void setValue(int value) {
         this.value = Math.min(value, maxValue);
     }
+
 
     public void subValue(int sub, ServerPlayer serverPlayer) {
         this.value = Math.max(value - sub, 0);

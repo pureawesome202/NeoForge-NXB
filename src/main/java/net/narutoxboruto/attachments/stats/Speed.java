@@ -46,10 +46,14 @@ public class Speed {
         this.syncValue(serverPlayer);
     }
 
+    public void setValue(int value, ServerPlayer serverPlayer) {
+        this.value = Math.min(value, maxValue);
+        this.syncValue(serverPlayer);
+    }
+
     public void setValue(int value) {
         this.value = Math.min(value, maxValue);
     }
-
     public void subValue(int sub, ServerPlayer serverPlayer) {
         this.value = Math.max(value - sub, 0);
         this.syncValue(serverPlayer);

@@ -10,6 +10,8 @@ public class Kenjutsu {
     private final String id;
     protected int maxValue;
     protected int value;
+    public boolean awardSP;
+
 
     public static final Codec<Kenjutsu> CODEC = Codec.INT.xmap(value -> {Kenjutsu kenjutsu = new Kenjutsu();kenjutsu.value = value;return kenjutsu;}, Kenjutsu::getValue);
 
@@ -27,7 +29,7 @@ public class Kenjutsu {
         ModPacketHandler.sendToPlayer(new SyncKenjutsu(getValue()), serverPlayer);
     }
 
-    public void incrementValue(int add, ServerPlayer serverPlayer, boolean awardSP) {
+    public void incrementValue(int add, ServerPlayer serverPlayer) {
         int oldValue = value;
         this.value = Math.min(value + add, this.maxValue);
         this.syncValue(serverPlayer);

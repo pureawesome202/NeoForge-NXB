@@ -1,14 +1,19 @@
 package net.narutoxboruto.util;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.narutoxboruto.attachments.MainAttachment;
 
+import javax.management.Attribute;
 import java.util.*;
 
 import static net.narutoxboruto.client.PlayerData.*;
@@ -175,10 +180,6 @@ public class ModUtil {
     public static void displayColoredMessage(Player player, String s, ChatFormatting chatFormatting) {
         displayColoredMessage(player, s, "", chatFormatting);
     }
-
-  // public static void setBaseAttributeValue(ServerPlayer serverPlayer, Attribute attribute, double i) {
-  //     serverPlayer.getAttributes().getInstance(attribute).setBaseValue(i);
-  // }
 
    public static void msgPlayerInfo(ServerPlayer serverPlayer) {
        displayTranslatableMessage(serverPlayer, "affiliation", getAffiliation(), false);

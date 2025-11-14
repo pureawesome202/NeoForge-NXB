@@ -11,6 +11,8 @@ public class Medical {
     private final String id;
     protected int maxValue;
     protected int value;
+    public boolean awardSP;
+
 
     public static final Codec<Medical> CODEC = Codec.INT.xmap(value -> {Medical medical = new Medical();medical.value = value;return medical;}, Medical::getValue);
 
@@ -28,7 +30,7 @@ public class Medical {
         ModPacketHandler.sendToPlayer(new SyncMedical(getValue()), serverPlayer);
     }
 
-    public void incrementValue(int add, ServerPlayer serverPlayer, boolean awardSP) {
+    public void incrementValue(int add, ServerPlayer serverPlayer) {
         int oldValue = value;
         this.value = Math.min(value + add, this.maxValue);
         this.syncValue(serverPlayer);

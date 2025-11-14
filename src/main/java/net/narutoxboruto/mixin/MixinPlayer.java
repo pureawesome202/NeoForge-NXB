@@ -110,11 +110,11 @@ public abstract class MixinPlayer extends LivingEntity implements ModeHandler {
         if (b) {
             this.addEffect(new MobEffectInstance(
                     ModEffects.CHAKRA_CONTROL,
-                    Integer.MAX_VALUE,  // duration
-                    0,                  // amplifier
-                    false,               // ambient = false (like beacon effects)
-                    true,               // visible = true
-                    true                // show icon = true
+                    -1,      // Use -1 for infinite duration
+                    0,       // amplifier
+                    false,   // ambient = false
+                    true,    // visible = true
+                    true     // show icon = true
             ));
         }
     }

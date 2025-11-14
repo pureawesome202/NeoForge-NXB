@@ -6,6 +6,7 @@ import net.narutoxboruto.effect.ModEffects;
 import net.narutoxboruto.entities.ModEntities;
 import net.narutoxboruto.events.AttachmentEvents;
 import net.narutoxboruto.events.Events;
+import net.narutoxboruto.events.StatEvents;
 import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.items.ModTab;
 import net.narutoxboruto.networking.ModPacketHandler;
@@ -41,6 +42,8 @@ public class Main {
         modEventBus.addListener(this::commonSetup);
         NeoForge.EVENT_BUS.register(AttachmentEvents.class);
         NeoForge.EVENT_BUS.register(Events.class);
+        NeoForge.EVENT_BUS.register(StatEvents.class);
+
 
         ModEffects.register(modEventBus);
         ModTab.register(modEventBus);
