@@ -31,8 +31,9 @@ public class PoisonSenbon extends AbstractThrowableWeapon {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         if (pResult.getEntity() instanceof LivingEntity target) {
-            if (!target.isInvulnerableTo(this.level().damageSources().mobProjectile((Entity) this, (LivingEntity) this.getOwner()))) {
-                target.addEffect(new MobEffectInstance(MobEffects.POISON, 432), this);
+            if (!target.isInvulnerableTo(this.level().damageSources().mobProjectile(this, (LivingEntity) this.getOwner()))) {
+                // Use amplifier 1 or higher for more noticeable damage
+                target.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1), this); // Level 2 poison
             }
         }
         super.onHitEntity(pResult);
