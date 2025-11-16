@@ -3,6 +3,8 @@ package net.narutoxboruto.main;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.blocks.ModBlocks;
+import net.narutoxboruto.blocks.entity.ModBlockEntities;
 import net.narutoxboruto.client.overlay.ModHudOverlays;
 import net.narutoxboruto.command.argument.*;
 import net.narutoxboruto.effect.ModEffects;
@@ -47,8 +49,8 @@ public class Main {
         NeoForge.EVENT_BUS.register(StatEvents.class);
         NeoForge.EVENT_BUS.register(CommandEvents.class);
 
-
-
+        ModBlockEntities.register(modEventBus);
+        ModBlocks.register(modEventBus);
         ModEffects.register(modEventBus);
         ModTab.register(modEventBus);
         ModItems.register(modEventBus);

@@ -8,6 +8,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import static net.narutoxboruto.blocks.ModBlocks.PAPER_BOMB;
 import static net.narutoxboruto.items.ModItems.*;
 import static net.narutoxboruto.main.Main.MOD_ID;
 
@@ -47,6 +48,7 @@ public class ModTab {
             .displayItems((parameters, output) -> {
                 output.accept(CHAKRA_PAPER.get());
                 output.accept(CLAN_REROLL.get());
+                output.accept(PAPER_BOMB.get());
             }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NXB_DNA = CREATIVE_MODE_TAB.register("nxb_dna", () -> CreativeModeTab.builder()

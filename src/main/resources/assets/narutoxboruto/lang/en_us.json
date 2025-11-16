@@ -6,6 +6,8 @@
 
   "effect.narutoxboruto.chakra_control": "Chakra Control",
 
+  "block.narutoxboruto.paper_bomb": "Paper Bomb",
+
   "item.narutoxboruto.shuriken": "Shuriken",
   "item.narutoxboruto.kunai": "Kunai",
   "item.narutoxboruto.explosive_kunai": "Explosive Kunai",
@@ -107,6 +109,14 @@
   "argument.info.invalid": "Unknown info '%s'",
   "argument.rank.invalid": "Unknown rank '%s',",
   "argument.shinobi_stat.invalid": "Unknown shinobi stat '%s',",
+
+  "release.earth": "Earth",
+  "release.fire": "Fire",
+  "release.lightning": "Lightning",
+  "release.water": "Water",
+  "release.wind": "Wind",
+  "release.yang": "Yang",
+  "release.yin": "Yin",
 
   "command.shinobi_stat.add.single": "%s's %s increased by %s",
   "command.shinobi_stat.add.multiple": "Increased %s of %s entities to %s",
