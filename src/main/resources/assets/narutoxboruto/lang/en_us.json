@@ -3,6 +3,8 @@
   "itemGroup.swords": "Swords",
   "itemGroup.nxb_tab": "Misc",
   "itemGroup.dna_tab": "Dna Bottles",
+  "itemGroup.bosses_tab": "Spawn Eggs",
+
 
   "effect.narutoxboruto.chakra_control": "Chakra Control",
 
@@ -27,6 +29,9 @@
   "item.narutoxboruto.yin_dna":"Yin Dna Bottle",
   "item.narutoxboruto.yang_dna":"Yang Dna Bottle",
   "item.narutoxboruto.wind_dna":"Wind Dna Bottle",
+  "item.narutoxboruto.kisame_hoshigaki_egg":"Kisame Hoshigaki Spawn Egg",
+  "item.narutoxboruto.jinpachi_munashi_egg":"Jinpachi Munashi Spawn Egg",
+  "item.narutoxboruto.zabuza_momochi_egg":"Zabuza Momochi Spawn Egg",
 
   "sword_ability.activate": "%s ability activated",
   "sword_ability.deactivate": "%s ability deactivated",

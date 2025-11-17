@@ -65,5 +65,15 @@ public class ModTab {
                 output.accept(YANG_DNA.get());
             }).build());
 
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NXB_BOSSES = CREATIVE_MODE_TAB.register("nxb_bosses", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.bosses_tab")) //The language key for the title of your CreativeModeTab
+            .icon(() -> ZABUZA_SPAWN_EGG.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+                output.accept(KISAME_SPAWN_EGG.get());
+                output.accept(JINPACHI_SPAWN_EGG.get());
+                output.accept(ZABUZA_SPAWN_EGG.get());
+
+            }).build());
+
     public static void register(IEventBus eventBus) {CREATIVE_MODE_TAB.register(eventBus);}
 }

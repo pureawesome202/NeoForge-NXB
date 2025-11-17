@@ -2,6 +2,7 @@ package net.narutoxboruto.main;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.narutoxboruto.client.renderer.entity.*;
+import net.narutoxboruto.client.renderer.shinobi.AbstractShinobiRender;
 import net.narutoxboruto.entities.ModEntities;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -36,6 +37,13 @@ public class MainClient {
             EntityRenderers.register(ModEntities.POISON_SENBON.get(), PoisonSenbonRenderer::new);
             EntityRenderers.register(ModEntities.SENBON.get(), SenbonRenderer::new);
             EntityRenderers.register(ModEntities.FUMA_SHURIKEN.get(), FumaShurikenRenderer::new);
+
+            EntityRenderers.register(ModEntities.JINPACHI_MUNASHI.get(),
+                    (ctx) -> new AbstractShinobiRender(ctx, "jinpachi_munashi", true));
+            EntityRenderers.register(ModEntities.KISAME_HOSHIGAKI.get(),
+                    (ctx) -> new AbstractShinobiRender(ctx, "kisame_hoshigaki"));
+            EntityRenderers.register(ModEntities.ZABUZA_MOMOCHI.get(),
+                    (ctx) -> new AbstractShinobiRender(ctx, "zabuza_momochi"));
         });
     }
 }

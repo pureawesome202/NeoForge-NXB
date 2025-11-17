@@ -2,6 +2,10 @@ package net.narutoxboruto.main;
 
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.blocks.ModBlocks;
 import net.narutoxboruto.blocks.entity.ModBlockEntities;
@@ -9,15 +13,17 @@ import net.narutoxboruto.client.overlay.ModHudOverlays;
 import net.narutoxboruto.command.argument.*;
 import net.narutoxboruto.effect.ModEffects;
 import net.narutoxboruto.entities.ModEntities;
-import net.narutoxboruto.events.AttachmentEvents;
-import net.narutoxboruto.events.CommandEvents;
-import net.narutoxboruto.events.Events;
-import net.narutoxboruto.events.StatEvents;
+import net.narutoxboruto.entities.shinobis.JinpachiMunashi;
+import net.narutoxboruto.entities.shinobis.KizameHoshigaki;
+import net.narutoxboruto.entities.shinobis.ZabuzaMomochi;
+import net.narutoxboruto.events.*;
 import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.items.ModTab;
 import net.narutoxboruto.networking.ModPacketHandler;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -32,6 +38,8 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+
+import static net.narutoxboruto.entities.ModEntities.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Main.MOD_ID)
@@ -48,6 +56,8 @@ public class Main {
         NeoForge.EVENT_BUS.register(Events.class);
         NeoForge.EVENT_BUS.register(StatEvents.class);
         NeoForge.EVENT_BUS.register(CommandEvents.class);
+        modEventBus.register(SpawnEvents.class);
+        modEventBus.addListener(this::attributes);
 
         ModBlockEntities.register(modEventBus);
         ModBlocks.register(modEventBus);
@@ -76,6 +86,20 @@ public class Main {
         ArgumentTypeInfos.registerByClass(ShinobiStatArgument.class,
                 SingletonArgumentInfo.contextFree(ShinobiStatArgument::shinobiStat));
         ArgumentTypeInfos.registerByClass(InfoArgument.class, SingletonArgumentInfo.contextFree(InfoArgument::info));
+    }
+
+    private void attributes(EntityAttributeCreationEvent event) {
+       // event.put(AMEYURI_RINGO.get(), AmeyuriRingo.setAttribute());
+       // event.put(CHOJURO.get(), Chojuro.setAttribute());
+       // event.put(JININ_AKEBINO.get(), JininAkebino.setAttribute());
+        event.put(JINPACHI_MUNASHI.get(), JinpachiMunashi.setAttribute());
+        event.put(KISAME_HOSHIGAKI.get(), KizameHoshigaki.setAttribute());
+       // event.put(KURIARARE_KUSHIMARU.get(), KuriarareKushimaru.setAttribute());
+        event.put(ZABUZA_MOMOCHI.get(), ZabuzaMomochi.setAttribute());
+       // event.put(SHUKAKU.get(), Shukaku.setAttribute());
+       // event.put(MATABI.get(), Matabi.setAttribute());
+       // event.put(ISOBU.get(), Isobu.setAttribute());
+       // event.put(SON_GOKU.get(), SonGoku.setAttribute());
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
