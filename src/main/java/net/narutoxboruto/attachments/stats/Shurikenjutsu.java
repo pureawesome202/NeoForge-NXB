@@ -31,9 +31,6 @@ public class Shurikenjutsu {
     public void incrementValue(int add, ServerPlayer serverPlayer) {
         this.value = Math.min(value + add, maxValue);
         this.syncValue(serverPlayer);
-
-        // Always award SP
-        serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(add, serverPlayer);
     }
 
     public void addValue(int add, ServerPlayer serverPlayer) {
@@ -44,8 +41,8 @@ public class Shurikenjutsu {
     public void setValue(int value, ServerPlayer serverPlayer) {
         this.value = Math.min(value, maxValue);
         this.syncValue(serverPlayer);
-
     }
+
     public void setValue(int value) {
         this.value = Math.min(value, maxValue);
     }
@@ -54,6 +51,7 @@ public class Shurikenjutsu {
         this.value = Math.max(value - sub, 0);
         this.syncValue(serverPlayer);
     }
+
     public void copyFrom(Shurikenjutsu source, ServerPlayer serverPlayer) {
         this.value = source.getValue();
         this.syncValue(serverPlayer);

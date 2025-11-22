@@ -34,27 +34,16 @@ public class Genjutsu {
     public void incrementValue(int add, ServerPlayer serverPlayer) {
         this.value = Math.min(value + add, maxValue);
         this.syncValue(serverPlayer);
-
-        // Always award SP
-        serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(add, serverPlayer);
     }
 
     public void addValue(int add, ServerPlayer serverPlayer) {
-        int oldValue = this.value;
-        this.value = Math.min(this.value + add, maxValue); // Fixed: now actually adds instead of setting
-
-        if (this.value != oldValue) {
-            this.syncValue(serverPlayer);
-        }
+        this.value = add; // Removed adjustment multiplier
+        this.syncValue(serverPlayer);
     }
 
     public void setValue(int value, ServerPlayer serverPlayer) {
-        int oldValue = this.value;
         this.value = Math.min(value, maxValue);
-
-        if (this.value != oldValue) {
-            this.syncValue(serverPlayer);
-        }
+        this.syncValue(serverPlayer);
     }
 
     public void setValue(int value) {
@@ -62,12 +51,8 @@ public class Genjutsu {
     }
 
     public void subValue(int sub, ServerPlayer serverPlayer) {
-        int oldValue = this.value;
-        this.value = Math.max(value - sub, 0);
-
-        if (this.value != oldValue) {
-            this.syncValue(serverPlayer);
-        }
+        this.value = Math.max(value - sub, 0); // Removed adjustment multiplier
+        this.syncValue(serverPlayer);
     }
 
     public void copyFrom(Genjutsu source, ServerPlayer serverPlayer) {
@@ -76,11 +61,7 @@ public class Genjutsu {
     }
 
     public void resetValue(ServerPlayer serverPlayer) {
-        int oldValue = this.value;
         this.value = 0;
-
-        if (oldValue != 0) {
-            this.syncValue(serverPlayer);
-        }
+        this.syncValue(serverPlayer);
     }
 }

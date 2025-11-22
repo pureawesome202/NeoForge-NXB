@@ -31,9 +31,6 @@ public class Taijutsu {
     public void incrementValue(int add, ServerPlayer serverPlayer) {
         this.value = Math.min(value + add, maxValue);
         this.syncValue(serverPlayer);
-
-        // Always award SP when Taijutsu increases
-        serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(add, serverPlayer);
     }
 
     public void addValue(int add, ServerPlayer serverPlayer) {
@@ -47,9 +44,8 @@ public class Taijutsu {
     }
 
     public void setValue(int value) {
-        this.value = Math.min(value, maxValue); // Removed adjustment multiplier
+        this.value = Math.min(value, maxValue);
     }
-
 
     public void subValue(int sub, ServerPlayer serverPlayer) {
         this.value = Math.max(value - sub, 0);

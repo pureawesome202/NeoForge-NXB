@@ -31,9 +31,6 @@ public class Summoning {
     public void incrementValue(int add, ServerPlayer serverPlayer) {
         this.value = Math.min(value + add, maxValue);
         this.syncValue(serverPlayer);
-
-        // Always award SP
-        serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(add, serverPlayer);
     }
 
     public void addValue(int add, ServerPlayer serverPlayer) {
@@ -53,6 +50,10 @@ public class Summoning {
     public void subValue(int sub, ServerPlayer serverPlayer) {
         this.value = Math.max(value - sub, 0);
         this.syncValue(serverPlayer);
+    }
+
+    public void subValue(int sub) {
+        this.value = Math.max(value - sub, 0);
     }
 
     public void copyFrom(Summoning source, ServerPlayer serverPlayer) {

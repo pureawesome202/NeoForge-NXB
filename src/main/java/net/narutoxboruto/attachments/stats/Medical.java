@@ -2,6 +2,8 @@ package net.narutoxboruto.attachments.stats;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.networking.ModPacketHandler;
 import net.narutoxboruto.networking.stats.SyncMedical;
@@ -33,30 +35,35 @@ public class Medical {
     public void incrementValue(int add, ServerPlayer serverPlayer) {
         this.value = Math.min(value + add, maxValue);
         this.syncValue(serverPlayer);
+        GetHearts(serverPlayer);
 
-        // Always award SP
-        serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(add, serverPlayer);
     }
 
     public void addValue(int add, ServerPlayer serverPlayer) {
-        this.value = add; // Removed adjustment multiplier
+        this.value = add;
         this.syncValue(serverPlayer);
+
+        GetHearts(serverPlayer);
     }
 
     public void setValue(int value, ServerPlayer serverPlayer) {
-        this.value = Math.min(value, maxValue); // Removed adjustment multiplier
+        this.value = Math.min(value, maxValue);
         this.syncValue(serverPlayer);
+
+        GetHearts(serverPlayer);
     }
 
     public void setValue(int value) {
-        this.value = Math.min(value, maxValue); // Removed adjustment multiplier
+        this.value = Math.min(value, maxValue);
     }
 
     public void subValue(int sub, ServerPlayer serverPlayer) {
-        this.value = Math.max(value - sub, 0); // Removed adjustment multiplier
+        this.value = Math.max(value - sub, 0);
         this.syncValue(serverPlayer);
-    }
 
+        GetHearts(serverPlayer);
+
+    }
     public void copyFrom(Medical source, ServerPlayer serverPlayer) {
         this.value = source.getValue();
         this.syncValue(serverPlayer);
@@ -65,5 +72,14 @@ public class Medical {
     public void resetValue(ServerPlayer serverPlayer) {
         this.value = 0;
         this.syncValue(serverPlayer);
+    }
+
+    private void GetHearts(ServerPlayer serverPlayer) {
+        AttributeInstance maxHealthAttr = serverPlayer.getAttribute(Attributes.MAX_HEALTH);
+        if (maxHealthAttr != null) {
+            // 1 Medical point = 1 heart = 2 HP
+            double bonusHealth = this.value * 2;
+            maxHealthAttr.setBaseValue(20 + bonusHealth); // 20 base + bonus
+        }
     }
 }
