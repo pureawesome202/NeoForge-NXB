@@ -4,6 +4,10 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.info.ReleaseList;
+import net.narutoxboruto.attachments.jutsus.EarthList;
 import net.narutoxboruto.client.PlayerData;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -25,7 +29,13 @@ public class SyncEarthList implements CustomPacketPayload {
     }
 
     public void handle(IPayloadContext context) {
-        context.enqueueWork(() -> PlayerData.setEarthList(earthList));
+        context.enqueueWork(() -> {
+            Player player = context.player();
+            if (player != null) {
+                EarthList releaseListAttachment = player.getData(MainAttachment.EARTHLIST);
+                releaseListAttachment.setValue(this.earthList);
+            }
+        });
     }
 
     @Override

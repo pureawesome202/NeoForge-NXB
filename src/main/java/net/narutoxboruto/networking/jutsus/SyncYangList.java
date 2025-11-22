@@ -4,6 +4,10 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.jutsus.LightningList;
+import net.narutoxboruto.attachments.jutsus.YangList;
 import net.narutoxboruto.client.PlayerData;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -25,7 +29,13 @@ public class SyncYangList implements CustomPacketPayload {
     }
 
     public void handle(IPayloadContext context) {
-        context.enqueueWork(() -> PlayerData.setYangList(yangList));
+        context.enqueueWork(() -> {
+            Player player = context.player();
+            if (player != null) {
+                YangList releaseListAttachment = player.getData(MainAttachment.YANGLIST);
+                releaseListAttachment.setValue(this.yangList);
+            }
+        });
     }
 
     @Override

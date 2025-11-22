@@ -66,4 +66,8 @@ public class WindList {
         this.value = value;
         this.syncValue(serverPlayer);
     }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

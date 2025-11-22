@@ -27,7 +27,6 @@ public class ChakraPaper extends Item {
 
             // Get attachments
             var releaseListAttachment = serverPlayer.getData(MainAttachment.RELEASE_LIST);
-            var selectedReleaseAttachment = serverPlayer.getData(MainAttachment.SELECTED_RELEASE);
 
             if (releaseListAttachment.getValue().isEmpty()) {
                 String newReleaseList = "";
@@ -43,7 +42,6 @@ public class ChakraPaper extends Item {
                 String s = newReleaseList.contains(",") ? "s" : "";
                 displayTranslatableMessage(serverPlayer, "release" + s, releaseListAttachment.getValue(), true);
 
-              selectedReleaseAttachment.setValue(getRandomIndex(getArrayFrom(releaseListAttachment.getValue())), serverPlayer);
               // serverPlayer.addItem(ModUtil.getSelectedReleaseItem().getDefaultInstance());
                 this.consume(stack, serverPlayer);
             }

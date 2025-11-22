@@ -66,4 +66,9 @@ public class FireList {
         this.value = value;
         this.syncValue(serverPlayer);
     }
+
+    public void setValue(String value) {
+        this.value = value;
+
+    }
 }

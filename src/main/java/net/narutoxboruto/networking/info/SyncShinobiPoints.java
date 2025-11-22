@@ -32,8 +32,6 @@ public class SyncShinobiPoints implements CustomPacketPayload {
         context.enqueueWork(() -> {
             if (context.player() != null) {
                 ShinobiPoints points = context.player().getData(MainAttachment.SHINOBI_POINTS);
-
-                // Update the value directly (you might need to make 'value' field accessible)
                 points.value = Math.min(this.shinobi_points, points.getMaxValue());}
         });
     }

@@ -66,4 +66,8 @@ public class LightningList {
         this.value = value;
         this.syncValue(serverPlayer);
     }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

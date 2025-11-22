@@ -2,11 +2,9 @@ package net.narutoxboruto.networking;
 
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.narutoxboruto.attachments.modes.ChakraControl;
 import net.narutoxboruto.networking.info.*;
 import net.narutoxboruto.networking.jutsus.*;
 import net.narutoxboruto.networking.misc.*;
-import net.narutoxboruto.networking.selection.*;
 import net.narutoxboruto.networking.stats.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -34,15 +32,6 @@ public class ModPacketHandler {
         registrar.playToClient(SyncWaterList.TYPE, SyncWaterList.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToClient(SyncYangList.TYPE, SyncYangList.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToClient(SyncYingList.TYPE, SyncYingList.STREAM_CODEC, (payload, context) -> payload.handle(context));
-
-        registrar.playToClient(SyncSelectionEarth.TYPE, SyncSelectionEarth.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToClient(SyncSelectionFire.TYPE, SyncSelectionFire.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToClient(SyncSelectionLightning.TYPE, SyncSelectionLightning.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToClient(SyncSelectionRelease.TYPE, SyncSelectionRelease.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToClient(SyncSelectionWater.TYPE, SyncSelectionWater.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToClient(SyncSelectionWind.TYPE, SyncSelectionWind.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToClient(SyncSelectionYang.TYPE, SyncSelectionYang.STREAM_CODEC, (payload, context) -> payload.handle(context));
-        registrar.playToClient(SyncSelectionYin.TYPE, SyncSelectionYin.STREAM_CODEC, (payload, context) -> payload.handle(context));
 
         registrar.playToClient(SyncGenjutsu.TYPE, SyncGenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));
         registrar.playToClient(SyncKenjutsu.TYPE, SyncKenjutsu.STREAM_CODEC, (payload, context) -> payload.handle(context));

@@ -1,5 +1,6 @@
 package net.narutoxboruto.main;
 
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.minecraft.world.entity.Mob;
@@ -10,6 +11,8 @@ import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.blocks.ModBlocks;
 import net.narutoxboruto.blocks.entity.ModBlockEntities;
 import net.narutoxboruto.client.overlay.ModHudOverlays;
+import net.narutoxboruto.client.renderer.entity.*;
+import net.narutoxboruto.client.renderer.shinobi.AbstractShinobiRender;
 import net.narutoxboruto.command.argument.*;
 import net.narutoxboruto.effect.ModEffects;
 import net.narutoxboruto.entities.ModEntities;
@@ -21,6 +24,7 @@ import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.items.ModTab;
 import net.narutoxboruto.networking.ModPacketHandler;
 import net.neoforged.bus.api.EventPriority;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;

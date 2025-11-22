@@ -18,35 +18,21 @@ public class ModEntities {
     public static final DeferredRegister<EntityType<?>> MOD_ENTITIES =
             DeferredRegister.create(Registries.ENTITY_TYPE, Main.MOD_ID);
 
-    // Register your kunai entity:cite[1]
+    //THROWABLES
     public static final DeferredHolder<EntityType<?>, EntityType<Kunai>> KUNAI = registerEntity("kunai", Kunai::new, MobCategory.MISC, 0.5F, 0.5F);
-
     public static final DeferredHolder<EntityType<?>, EntityType<Shuriken>> SHURIKEN = registerEntity("shuriken", Shuriken::new, MobCategory.MISC, 0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<ExplosiveKunai>> EXPLOSIVE_KUNAI = registerEntity("explosive_kunai", ExplosiveKunai::new, MobCategory.MISC, 0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<PoisonSenbon>> POISON_SENBON = registerEntity("poison_senbon", PoisonSenbon::new, MobCategory.MISC, 0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<Senbon>> SENBON = registerEntity("senbon", Senbon::new, MobCategory.MISC, 0.5F, 0.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrownFumaShuriken>> FUMA_SHURIKEN = registerEntity("fuma_shuriken", ThrownFumaShuriken::new, MobCategory.MISC, 0.5F, 0.5F);
 
-    public static final DeferredHolder<EntityType<?>, EntityType<ExplosiveKunai>> EXPLOSIVE_KUNAI = registerEntity("explosive_kunai", ExplosiveKunai::new, MobCategory.MISC,
-                    0.5F, 0.5F);
-
-    public static final DeferredHolder<EntityType<?>, EntityType<PoisonSenbon>> POISON_SENBON = registerEntity("poison_senbon", PoisonSenbon::new, MobCategory.MISC,
-                     0.5F, 0.5F);
-
-    public static final DeferredHolder<EntityType<?>, EntityType<Senbon>> SENBON = registerEntity("senbon", Senbon::new, MobCategory.MISC,
-                    0.5F, 0.5F);
-
-    public static final DeferredHolder<EntityType<?>, EntityType<ThrownFumaShuriken>> FUMA_SHURIKEN = registerEntity("fuma_shuriken", ThrownFumaShuriken::new, MobCategory.MISC,
-                     0.5F, 0.5F);
-
-    public static final DeferredHolder<EntityType<?>, EntityType<KizameHoshigaki>> KISAME_HOSHIGAKI = registerEntity("kisame_hoshigaki", KizameHoshigaki::new, MobCategory.MONSTER,
-            0.6F, 1.8F);
-
-    public static final DeferredHolder<EntityType<?>, EntityType<JinpachiMunashi>> JINPACHI_MUNASHI = registerEntity("jinpachi_munashi", JinpachiMunashi::new, MobCategory.MONSTER,
-            0.6F, 1.8F);
-
-    public static final DeferredHolder<EntityType<?>, EntityType<ZabuzaMomochi>> ZABUZA_MOMOCHI = registerEntity("zabuza_momochi", ZabuzaMomochi::new, MobCategory.MONSTER,
-            0.6F, 1.8F);
+    //BOSSES
+    public static final DeferredHolder<EntityType<?>, EntityType<KizameHoshigaki>> KISAME_HOSHIGAKI = registerEntity("kisame_hoshigaki", KizameHoshigaki::new, MobCategory.MONSTER, 0.6F, 1.8F);
+    public static final DeferredHolder<EntityType<?>, EntityType<JinpachiMunashi>> JINPACHI_MUNASHI = registerEntity("jinpachi_munashi", JinpachiMunashi::new, MobCategory.MONSTER, 0.6F, 1.8F);
+    public static final DeferredHolder<EntityType<?>, EntityType<ZabuzaMomochi>> ZABUZA_MOMOCHI = registerEntity("zabuza_momochi", ZabuzaMomochi::new, MobCategory.MONSTER, 0.6F, 1.8F);
 
     public static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerEntity(
             String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height) {
-
         return MOD_ENTITIES.register(name, () -> EntityType.Builder.of(factory, category).sized(width, height).build(name) // In 1.21.1, this should be a ResourceLocation
         );
     }

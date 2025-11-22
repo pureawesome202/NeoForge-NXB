@@ -16,8 +16,6 @@ public class ModTab {
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
-    //EXAMPLE ITEM NEEDS TO BE CHANGED
-
    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> THORWABLE = CREATIVE_MODE_TAB.register("throwable", () -> CreativeModeTab.builder()
            .title(Component.translatable("itemGroup.throwable")) //The language key for the title of your CreativeModeTab
            .withTabsBefore(CreativeModeTabs.COMBAT)

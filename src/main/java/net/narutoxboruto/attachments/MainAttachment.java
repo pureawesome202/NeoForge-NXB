@@ -4,7 +4,6 @@ import net.narutoxboruto.attachments.info.*;
 import net.narutoxboruto.attachments.jutsus.*;
 import net.narutoxboruto.attachments.modes.ChakraControl;
 import net.narutoxboruto.attachments.modes.NarutoRun;
-import net.narutoxboruto.attachments.selection.*;
 import net.narutoxboruto.attachments.stats.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -39,15 +38,6 @@ public class MainAttachment {
     public static final Supplier<AttachmentType<WindList>> WINDLIST = ATTACHMENT_TYPES.register("wind", () -> AttachmentType.<WindList>builder(() -> new WindList()).serialize(WindList.CODEC).copyOnDeath().build());
     public static final Supplier<AttachmentType<YangList>> YANGLIST = ATTACHMENT_TYPES.register("yang", () -> AttachmentType.<YangList>builder(() -> new YangList()).serialize(YangList.CODEC).copyOnDeath().build());
     public static final Supplier<AttachmentType<YingList>> YINGLIST = ATTACHMENT_TYPES.register("ying", () -> AttachmentType.<YingList>builder(() -> new YingList()).serialize(YingList.CODEC).copyOnDeath().build());
-
-    public static final Supplier<AttachmentType<SelectedWind>> SELECTED_WIND = ATTACHMENT_TYPES.register("selectedwind", () -> AttachmentType.<SelectedWind>builder(() -> new SelectedWind()).serialize(SelectedWind.CODEC).copyOnDeath().build());
-    public static final Supplier<AttachmentType<SelectedEarth>> SELECTED_EARTH = ATTACHMENT_TYPES.register("selectedearth", () -> AttachmentType.<SelectedEarth>builder(() -> new SelectedEarth()).serialize(SelectedEarth.CODEC).copyOnDeath().build());
-    public static final Supplier<AttachmentType<SelectedFire>> SELECTED_FIRE = ATTACHMENT_TYPES.register("selectedfire", () -> AttachmentType.<SelectedFire>builder(() -> new SelectedFire()).serialize(SelectedFire.CODEC).copyOnDeath().build());
-    public static final Supplier<AttachmentType<SelectedLightning>> SELECTED_LIGHTNING = ATTACHMENT_TYPES.register("selectedlightning", () -> AttachmentType.<SelectedLightning>builder(() -> new SelectedLightning()).serialize(SelectedLightning.CODEC).copyOnDeath().build());
-    public static final Supplier<AttachmentType<SelectedWater>> SELECTED_WATER = ATTACHMENT_TYPES.register("selectedwater", () -> AttachmentType.<SelectedWater>builder(() -> new SelectedWater()).serialize(SelectedWater.CODEC).copyOnDeath().build());
-    public static final Supplier<AttachmentType<SelectedYang>> SELECTED_YANG = ATTACHMENT_TYPES.register("selectedyang", () -> AttachmentType.<SelectedYang>builder(() -> new SelectedYang()).serialize(SelectedYang.CODEC).copyOnDeath().build());
-    public static final Supplier<AttachmentType<SelectedYin>> SELECTED_YIN = ATTACHMENT_TYPES.register("selectedyin", () -> AttachmentType.<SelectedYin>builder(() -> new SelectedYin()).serialize(SelectedYin.CODEC).copyOnDeath().build());
-    public static final Supplier<AttachmentType<SelectedRelease>> SELECTED_RELEASE = ATTACHMENT_TYPES.register("selectedrelease", () -> AttachmentType.<SelectedRelease>builder(() -> new SelectedRelease()).serialize(SelectedRelease.CODEC).copyOnDeath().build());
 
     public static final Supplier<AttachmentType<ReleaseList>> RELEASE_LIST = ATTACHMENT_TYPES.register("release_list", () -> AttachmentType.<ReleaseList>builder(() -> new ReleaseList()).serialize(ReleaseList.CODEC).copyOnDeath().build());
     public static final Supplier<AttachmentType<ChakraControl>> CHAKRA_CONTROL = ATTACHMENT_TYPES.register("chakra_control", () -> AttachmentType.<ChakraControl>builder(() -> new ChakraControl()).serialize(ChakraControl.CODEC).copyOnDeath().build());
