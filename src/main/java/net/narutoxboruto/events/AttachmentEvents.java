@@ -20,6 +20,7 @@ public class AttachmentEvents {
             serverPlayer.getData(MainAttachment.AFFILIATION).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.CLAN).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.CHAKRA).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.MAX_CHAKRA).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.SHINOBI_POINTS).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.RANK).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.RELEASE_LIST).syncValue(serverPlayer);
@@ -46,6 +47,8 @@ public class AttachmentEvents {
             serverPlayer.getData(MainAttachment.AFFILIATION).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.CLAN).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.CHAKRA).syncValue(serverPlayer);
+            serverPlayer.getData(MainAttachment.MAX_CHAKRA).syncValue(serverPlayer);
+
             serverPlayer.getData(MainAttachment.SHINOBI_POINTS).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.RANK).syncValue(serverPlayer);
             serverPlayer.getData(MainAttachment.RELEASE_LIST).syncValue(serverPlayer);
@@ -101,15 +104,6 @@ public class AttachmentEvents {
             newPlayer.setData(MainAttachment.SHURIKENJUTSU, original.getData(MainAttachment.SHURIKENJUTSU));
             newPlayer.setData(MainAttachment.NINJUTSU, original.getData(MainAttachment.NINJUTSU));
             newPlayer.setData(MainAttachment.SENJUTSU, original.getData(MainAttachment.SENJUTSU));
-
-            //JUTSUS
-          //  newPlayer.setData(MainAttachment.EARTHLIST, original.getData(MainAttachment.EARTHLIST));
-          //  newPlayer.setData(MainAttachment.FIRELIST, original.getData(MainAttachment.FIRELIST));
-          //  newPlayer.setData(MainAttachment.LIGHTINGLIST, original.getData(MainAttachment.LIGHTINGLIST));
-          //  newPlayer.setData(MainAttachment.WATERLIST, original.getData(MainAttachment.WATERLIST));
-          //  newPlayer.setData(MainAttachment.WINDLIST, original.getData(MainAttachment.WINDLIST));
-          //  newPlayer.setData(MainAttachment.YANGLIST, original.getData(MainAttachment.YANGLIST));
-          //  newPlayer.setData(MainAttachment.YINGLIST, original.getData(MainAttachment.YINGLIST));
         }
     }
 

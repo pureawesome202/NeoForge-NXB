@@ -19,9 +19,6 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 @EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT)
 public class MainClient {
     public MainClient(ModContainer container) {
-        // Allows NeoForge to create a config screen for this mod's configs.
-        // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
-        // Do not forget to add translations for your config options to the en_us.json file.
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
@@ -29,7 +26,7 @@ public class MainClient {
     static void onClientSetup(FMLClientSetupEvent event) {
         // Some client setup code
         event.enqueueWork(() -> {
-            // your client-only entity renderers, packet receivers, etc.
+            // your client, only entity renderers, packet receivers, etc.
 
             EntityRenderers.register(ModEntities.SHURIKEN.get(), ShurikenRenderer::new);
             EntityRenderers.register(ModEntities.KUNAI.get(), ThrowableWeaponRenderer::new);

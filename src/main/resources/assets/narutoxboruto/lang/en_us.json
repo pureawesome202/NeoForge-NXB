@@ -4,6 +4,7 @@
   "itemGroup.nxb_tab": "Misc",
   "itemGroup.dna_tab": "Dna Bottles",
   "itemGroup.bosses_tab": "Spawn Eggs",
+  "itemGroup.scroll": "Scrolls",
 
 
   "effect.narutoxboruto.chakra_control": "Chakra Control",
@@ -32,6 +33,18 @@
   "item.narutoxboruto.kisame_hoshigaki_egg":"Kisame Hoshigaki Spawn Egg",
   "item.narutoxboruto.jinpachi_munashi_egg":"Jinpachi Munashi Spawn Egg",
   "item.narutoxboruto.zabuza_momochi_egg":"Zabuza Momochi Spawn Egg",
+  "item.narutoxboruto.taijutsu_scroll":"Taijutsu Scroll",
+  "item.narutoxboruto.genjutsu_scroll":"Genjutsu Scroll",
+  "item.narutoxboruto.kenjutsu_scroll":"Kenjutsu Scroll",
+  "item.narutoxboruto.kinjutsu_scroll":"Kinjutsu Scroll",
+  "item.narutoxboruto.medical_scroll":"Medical Scroll",
+  "item.narutoxboruto.ninjutsu_scroll":"Ninjutsu Scroll",
+  "item.narutoxboruto.senjutsu_scroll":"Senjutsu Scroll",
+  "item.narutoxboruto.shurikenjutsu_scroll":"Shurikenjutsu Scroll",
+  "item.narutoxboruto.speed_scroll":"Speed Scroll",
+  "item.narutoxboruto.summoning_scroll":"Summoning Scroll",
+
+
 
   "sword_ability.activate": "%s ability activated",
   "sword_ability.deactivate": "%s ability deactivated",

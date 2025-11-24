@@ -70,7 +70,22 @@ public class ModTab {
                 output.accept(KISAME_SPAWN_EGG.get());
                 output.accept(JINPACHI_SPAWN_EGG.get());
                 output.accept(ZABUZA_SPAWN_EGG.get());
+            }).build());
 
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NXB_SCROLLS = CREATIVE_MODE_TAB.register("nxb_scroll", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.scroll")) //The language key for the title of your CreativeModeTab
+            .icon(() -> TAIJUTSU_SCROLL.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+                output.accept(TAIJUTSU_SCROLL.get());
+                output.accept(GENJUTSU_SCROLL.get());
+                output.accept(KENJUTSU_SCROLL.get());
+                output.accept(KINJUTSU_SCROLL.get());
+                output.accept(MEDICAL_SCROLL.get());
+                output.accept(NINJUTSU_SCROLL.get());
+                output.accept(SENJUTSU_SCROLL.get());
+                output.accept(SHURIKENJUTSU_SCROLL.get());
+                output.accept(SPEED_SCROLL.get());
+                output.accept(SUMMONING_SCROLL.get());
             }).build());
 
     public static void register(IEventBus eventBus) {CREATIVE_MODE_TAB.register(eventBus);}

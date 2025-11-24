@@ -33,12 +33,12 @@ public class ReleaseDnaBottleItem extends Item {
             if (serverPlayer.getAbilities().instabuild || serverPlayer.getRandom().nextInt(3) == 0) {
                 releaseList.concatList(natureType, serverPlayer);
                 ModUtil.displayColoredMessage(serverPlayer, "dna_bottle.release.success",
-                        "release.", ChatFormatting.GREEN);
+                        "release." + natureType, ChatFormatting.GREEN);
                 serverPlayer.getCooldowns().addCooldown(this, 20);
             }
             else {
                 ModUtil.displayColoredMessage(serverPlayer, "dna_bottle.release.fail",
-                        "release.", ChatFormatting.RED);
+                        "release." + natureType, ChatFormatting.RED);
             }
         }
     }

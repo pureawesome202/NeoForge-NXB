@@ -9,6 +9,7 @@ import net.narutoxboruto.items.misc.ChakraPaper;
 import net.narutoxboruto.items.misc.ClanReroll;
 import net.narutoxboruto.items.misc.RandomDna;
 import net.narutoxboruto.items.misc.ReleaseDnaBottleItem;
+import net.narutoxboruto.items.scrolls.*;
 import net.narutoxboruto.items.swords.*;
 import net.narutoxboruto.items.throwables.FumaShurikenItem;
 import net.narutoxboruto.items.throwables.ThrowableWeaponItem;
@@ -22,8 +23,7 @@ import static net.narutoxboruto.main.Main.MOD_ID;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
 
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MOD_ID);
-
+    //THROWABLES
     public static final DeferredItem<Item> SHURIKEN = ITEMS.register("shuriken", () -> new ThrowableWeaponItem(new Item.Properties().stacksTo(64), "shuriken"));
     public static final DeferredItem<Item> KUNAI = ITEMS.register("kunai", () -> new ThrowableWeaponItem(new Item.Properties().stacksTo(64), "kunai"));
     public static final DeferredItem<Item> EXPLOSIVE_KUNAI = ITEMS.register("explosive_kunai", () -> new ThrowableWeaponItem(new Item.Properties().stacksTo(16), "explosive_kunai"));
@@ -31,13 +31,27 @@ public class ModItems {
     public static final DeferredItem<Item> POISON_SENBON = ITEMS.register("poison_senbon", () -> new ThrowableWeaponItem(new Item.Properties().stacksTo(64), "poison_senbon"));
     public static final DeferredItem<Item> FUMA_SHURIKEN = ITEMS.register("fuma_shuriken", () -> new FumaShurikenItem(new Item.Properties().stacksTo(1),"fuma_shuriken"));
 
+    //SWORDS
     public static final DeferredItem<Item> SAMEHADA = ITEMS.register("samehada", () -> new Samehada(new Item.Properties().stacksTo(1).attributes(SwordItem.createAttributes(SwordCustomTiers.SAMEHADA, 2, -2.5f))));
     public static final DeferredItem<Item> KUBIKIRIBOCHO = ITEMS.register("kubikiribocho", () -> new Kubikiribocho(new Item.Properties().stacksTo(1).attributes(SwordItem.createAttributes(SwordCustomTiers.KUBIKIRIBOCHO, 6, -3f))));
     public static final DeferredItem<Item> SHIBUKI = ITEMS.register("shibuki", () -> new Shibuki(new Item.Properties().stacksTo(1).attributes(SwordItem.createAttributes(SwordCustomTiers.SHIBUKI, 2, -2f))));
     public static final DeferredItem<Item> NUIBARI = ITEMS.register("nuibari", () -> new Nuibari(new Item.Properties().stacksTo(1).attributes(SwordItem.createAttributes(SwordCustomTiers.NUIBARI, 2, -1.5f))));
 
+    //MISC'S
     public static final DeferredItem<Item> CHAKRA_PAPER = ITEMS.register("chakra_paper", () -> new ChakraPaper(new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> CLAN_REROLL = ITEMS.register("clan_reroll", () -> new ClanReroll(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> CLAN_REROLL = ITEMS.register("clan_reroll", () -> new ClanReroll(new Item.Properties().stacksTo(8)));
+
+    //SCROLLS
+    public static final DeferredItem<Item> TAIJUTSU_SCROLL = ITEMS.register("taijutsu_scroll", () -> new TaijutsuScroll(new Item.Properties().stacksTo(8)));
+    public static final DeferredItem<Item> GENJUTSU_SCROLL = ITEMS.register("genjutsu_scroll", () -> new GenjutsuScroll(new Item.Properties().stacksTo(8)));
+    public static final DeferredItem<Item> KENJUTSU_SCROLL = ITEMS.register("kenjutsu_scroll", () -> new KenjutsuScroll(new Item.Properties().stacksTo(8)));
+    public static final DeferredItem<Item> KINJUTSU_SCROLL = ITEMS.register("kinjutsu_scroll", () -> new KinjutsuScroll(new Item.Properties().stacksTo(8)));
+    public static final DeferredItem<Item> MEDICAL_SCROLL = ITEMS.register("medical_scroll", () -> new MedicalScroll(new Item.Properties().stacksTo(8)));
+    public static final DeferredItem<Item> NINJUTSU_SCROLL = ITEMS.register("ninjutsu_scroll", () -> new NinjutsuScroll(new Item.Properties().stacksTo(8)));
+    public static final DeferredItem<Item> SENJUTSU_SCROLL = ITEMS.register("senjutsu_scroll", () -> new SenjutsuScroll(new Item.Properties().stacksTo(8)));
+    public static final DeferredItem<Item> SHURIKENJUTSU_SCROLL = ITEMS.register("shurikenjutsu_scroll", () -> new ShurikenjutsuScroll(new Item.Properties().stacksTo(8)));
+    public static final DeferredItem<Item> SPEED_SCROLL = ITEMS.register("speed_scroll", () -> new SpeedScroll(new Item.Properties().stacksTo(8)));
+    public static final DeferredItem<Item> SUMMONING_SCROLL = ITEMS.register("summoning_scroll", () -> new SummoningScroll(new Item.Properties().stacksTo(8)));
 
     //DNA BOTTLE'S
     public static final DeferredItem<Item> RANDOM_DNA = ITEMS.register("random_dna", () -> new RandomDna(new Item.Properties().stacksTo(1)));

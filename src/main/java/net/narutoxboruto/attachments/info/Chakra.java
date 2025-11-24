@@ -38,7 +38,12 @@ public class Chakra {
         }
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
     public void syncValue(ServerPlayer serverPlayer) {
+        serverPlayer.setData(MainAttachment.CHAKRA.get(), this);
         ModPacketHandler.sendToPlayer(new SyncChakra(getValue()), serverPlayer);
     }
 

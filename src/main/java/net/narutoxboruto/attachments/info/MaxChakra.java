@@ -2,11 +2,12 @@ package net.narutoxboruto.attachments.info;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.server.level.ServerPlayer;
+import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.networking.ModPacketHandler;
 import net.narutoxboruto.networking.info.SyncMaxChakra;
 
 public class MaxChakra {
-    private int value = 10;
+    private int value;
 
     public static final Codec<MaxChakra> CODEC = Codec.INT.xmap(MaxChakra::new, MaxChakra::getValue);
 
@@ -15,6 +16,7 @@ public class MaxChakra {
     }
 
     public MaxChakra() {
+        this.value = 10;
     }
 
     public int getValue() {
@@ -31,7 +33,12 @@ public class MaxChakra {
         this.syncValue(serverPlayer);
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
     public void syncValue(ServerPlayer serverPlayer) {
+        serverPlayer.setData(MainAttachment.MAX_CHAKRA.get(), this);
         ModPacketHandler.sendToPlayer(new SyncMaxChakra(getValue()), serverPlayer);
     }
     public void copyFrom(MaxChakra source, ServerPlayer serverPlayer) {

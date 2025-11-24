@@ -3,7 +3,7 @@ package net.narutoxboruto.client.overlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
-import net.narutoxboruto.client.PlayerData;
+import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.main.Main;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -35,8 +35,8 @@ public class ModHudOverlays {
         int chakraWidth = 90;
         int chakraHeight = 5;
 
-        int currentChakra = PlayerData.getChakra();
-        int maxChakra = PlayerData.setMaxChakra(10);
+        int currentChakra = minecraft.player.getData(MainAttachment.CHAKRA.get()).getValue();
+        int maxChakra = minecraft.player.getData(MainAttachment.MAX_CHAKRA.get()).getValue();
 
         // Avoid division by zero
         if (maxChakra <= 0) return;
@@ -44,7 +44,6 @@ public class ModHudOverlays {
         int filledWidth = (int) (currentChakra / (float) maxChakra * chakraWidth);
 
         // Render with explicit texture dimensions
-        // Method 1: Try the simple blit first
         try {
             // Set up the rendering properly
             gui.pose().pushPose();
