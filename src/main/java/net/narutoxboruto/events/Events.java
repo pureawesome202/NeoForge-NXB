@@ -2,21 +2,14 @@ package net.narutoxboruto.events;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.SpawnPlacementType;
-import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.narutoxboruto.attachments.info.Affiliation;
 import net.narutoxboruto.attachments.info.Clan;
 import net.narutoxboruto.attachments.info.Rank;
-import net.narutoxboruto.entities.ModEntities;
 import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.util.ModUtil;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 import static net.narutoxboruto.attachments.MainAttachment.*;
 import static net.narutoxboruto.attachments.MainAttachment.RANK;
@@ -49,15 +42,5 @@ public class Events {
             serverPlayer.addItem(new ItemStack(ModItems.CHAKRA_PAPER.get()));
         }
     }
-
-       // @SubscribeEvent
-       // public static void onProjectileImpact(ProjectileImpactEvent event) {
-       //     Level level = event.getProjectile().level;
-       //     BlockPos pos = new BlockPos(event.getRayTraceResult().getLocation());
-       //     Block hitBlock = level.getBlockState(pos).getBlock();
-       //     if (!level.isClientSide && hitBlock instanceof PaperBombBlock) {
-       //         PaperBombBlock.explode(level, pos);
-       //     }
-       // }
 
 }

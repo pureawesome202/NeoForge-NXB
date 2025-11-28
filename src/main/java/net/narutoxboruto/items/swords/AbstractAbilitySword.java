@@ -48,13 +48,23 @@ public class AbstractAbilitySword extends SwordItem implements Vanishable {
 
             if (!cooldowns.isOnCooldown(pStack.getItem()) && chakra.getValue() >= getChakraCost()) {
                 doSpecialAbility(pTarget, serverPlayer);
-                //Subtract the cost using the attachment
                 chakra.subValue(getChakraCost(), serverPlayer);
                 //Sync the updated data to the client
-                serverPlayer.syncData(MainAttachment.CHAKRA); // New in NeoForge 1.21
+                serverPlayer.syncData(MainAttachment.CHAKRA);
                 cooldowns.addCooldown(this, cooldown);
             }
         }
         return true;
     }
+
+    protected boolean consumeChakra(ServerPlayer serverPlayer) {
+        Chakra chakra = serverPlayer.getData(MainAttachment.CHAKRA);
+        if (chakra.getValue() >= getChakraCost()) {
+            chakra.subValue(getChakraCost(), serverPlayer);
+            serverPlayer.syncData(MainAttachment.CHAKRA);
+            return true;
+        }
+        return false;
+    }
+
 }

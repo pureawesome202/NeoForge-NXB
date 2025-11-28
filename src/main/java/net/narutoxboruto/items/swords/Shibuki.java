@@ -24,7 +24,7 @@ public class Shibuki extends AbstractAbilitySword {
 
     @Override
     public int getChakraCost() {
-        return 3;
+        return 30;
     }
 
     protected void doSpecialAbility(LivingEntity pTarget, ServerPlayer serverPlayer) {
