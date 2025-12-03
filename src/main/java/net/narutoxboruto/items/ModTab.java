@@ -37,7 +37,7 @@ public class ModTab {
                 output.accept(SAMEHADA.get());
                 output.accept(KUBIKIRIBOCHO.get());
                 output.accept(SHIBUKI.get());
-                output.accept(NUIBARI.get());
+                //output.accept(NUIBARI.get());
             }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NXB_TAB = CREATIVE_MODE_TAB.register("nxb_tab", () -> CreativeModeTab.builder()

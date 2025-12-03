@@ -2,12 +2,20 @@ package net.narutoxboruto.items.jutsus;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+
+import java.util.List;
+
+import static net.narutoxboruto.util.BlockUtils.isBlockEntity;
 
 public class EarthWave extends Item {
     public EarthWave(Item.Properties pProperties) {
@@ -71,10 +79,10 @@ public class EarthWave extends Item {
    //                                 pLevel.setBlock(targetPos, pLevel.getBlockState(targetPos).getFluidState()
    //                                         .createLegacyBlock(), 3);
    //                                 bLOOOOCK.push(0, 0.46D, 0);
-   //                                 pLevel.addFreshEntity(bLOOOOCK);
-//
+   //                                  pLevel.addFreshEntity(bLOOOOCK);
+////
    //                                 /*BLOCK INSTANCE AND MOVEMENT END*/
-     //                                 //
+   ////                                 //
    //                             }
    //                         }
    //                     }
