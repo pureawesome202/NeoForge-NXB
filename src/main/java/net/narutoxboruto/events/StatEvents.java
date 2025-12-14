@@ -8,18 +8,21 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.narutoxboruto.attachments.MainAttachment;
 import net.narutoxboruto.attachments.info.Chakra;
 import net.narutoxboruto.attachments.info.MaxChakra;
 import net.narutoxboruto.attachments.modes.ChakraControl;
-import net.narutoxboruto.attachments.stats.Kenjutsu;
-import net.narutoxboruto.attachments.stats.Medical;
-import net.narutoxboruto.attachments.stats.Speed;
-import net.narutoxboruto.attachments.stats.Taijutsu;
+import net.narutoxboruto.attachments.stats.*;
 import net.narutoxboruto.effect.ModEffects;
+import net.narutoxboruto.items.ModItems;
 import net.narutoxboruto.util.ModUtil;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -30,7 +33,8 @@ import java.util.UUID;
 public class StatEvents {
 
     private static final Map<UUID, Integer> playerHitCounters = new HashMap<>();
-    private static final Map<UUID, Integer> playerDamageCounters = new HashMap<>(); // New counter for tracking times player gets hit
+    private static final Map<UUID, Integer> playerDamageCounters = new HashMap<>();
+    private static final Map<UUID, Integer> playerThrowCounters = new HashMap<>(); // NEW: Counter for tracking thrown items
     private static boolean taiFlag, kenFlag;
     private static int chakraDrainTimer;
 
@@ -65,7 +69,7 @@ public class StatEvents {
             }
         }
 
-        // NEW: Check if the entity taking damage is a player (for receiving damage)
+        // Check if the entity taking damage is a player (for receiving damage)
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             UUID playerId = serverPlayer.getUUID();
 
@@ -92,6 +96,49 @@ public class StatEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onProjectileLaunch(ProjectileImpactEvent event) {
+        if (event.getProjectile() instanceof AbstractArrow arrow) {
+            // Check if shooter is a player
+            if (arrow.getOwner() instanceof ServerPlayer player) {
+                // Check what item the player is holding
+                ItemStack heldItem = player.getMainHandItem();
+
+                // Only give points for specific items
+                if (isCustomThrownWeapon(heldItem)) {
+                    // Get shurikenjutsu attachment
+                    Shurikenjutsu shurikenjutsu = player.getData(MainAttachment.SHURIKENJUTSU);
+
+                    // Increment by 1 point
+                    shurikenjutsu.incrementValue(1, player);
+
+                    // Also give SP
+                    player.getData(MainAttachment.SHINOBI_POINTS).incrementValue(1, player);
+
+                    // Optional feedback message
+                    player.displayClientMessage(
+                            Component.translatable("msg.shurikenjutsu_increased", shurikenjutsu.getValue()),
+                            true
+                    );
+
+                    // Debug log (optional)
+                    // System.out.println("Shurikenjutsu increased to: " + shurikenjutsu.getValue());
+                }
+            }
+        }
+    }
+
+    private static boolean isCustomThrownWeapon(ItemStack stack) {
+        Item item = stack.getItem();
+        return item == ModItems.SHURIKEN.get() ||
+                item == ModItems.KUNAI.get() ||
+                item == ModItems.EXPLOSIVE_KUNAI.get() ||
+                item == ModItems.SENBON.get() ||
+                item == ModItems.POISON_SENBON.get() ||
+                item == ModItems.FUMA_SHURIKEN.get();
+    }
+
 
     @SubscribeEvent
     public static void addStatBonuses(PlayerTickEvent.Post event) {
@@ -139,23 +186,6 @@ public class StatEvents {
                     speed.setValue(targetSpeedValue, serverPlayer);
                     serverPlayer.getData(MainAttachment.SHINOBI_POINTS).incrementValue(serverPlayer);
                 }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void addStatExtraDamage(LivingDamageEvent.Post event) {
-        LivingEntity entity = event.getEntity();
-        if (!entity.level().isClientSide() && entity.getLastAttacker() instanceof ServerPlayer serverPlayer) {
-            if (taiFlag) {
-                Taijutsu taijutsu = serverPlayer.getData(MainAttachment.TAIJUTSU);
-                entity.hurt(entity.damageSources().generic(), (float) taijutsu.getValue() / 33.33F);
-                taiFlag = false;
-            }
-            else if (kenFlag) {
-                Kenjutsu kenjutsu = serverPlayer.getData(MainAttachment.KENJUTSU);
-                entity.hurt(entity.damageSources().generic(), (float) kenjutsu.getValue() / 33.33F);
-                kenFlag = false;
             }
         }
     }

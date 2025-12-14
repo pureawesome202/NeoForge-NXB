@@ -1,5 +1,7 @@
 package net.narutoxboruto.items.throwables;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.Main;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -12,10 +14,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.narutoxboruto.attachments.MainAttachment;
+import net.narutoxboruto.attachments.stats.Shurikenjutsu;
 import net.narutoxboruto.entities.throwables.*;
 import net.narutoxboruto.items.PreventSlow;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ThrowableWeaponItem extends Item implements PreventSlow {
     private final String name;
@@ -98,16 +103,25 @@ public class ThrowableWeaponItem extends Item implements PreventSlow {
         return UseAnim.SPEAR;
     }
 
-    // public void specialThrow(ServerPlayer player, ItemStack stack, float angle) {
-    //     if (player.getCapability(StatCapabilityProvider.SHURIKENJUTSU).map(cap -> cap.getValue() >= 20).orElse(false)
-    //             && !player.getCooldowns().isOnCooldown(this)
-    //             && (player.getAbilities().instabuild || stack.getCount() >= 3)) {
-    //         throwWeapon(player.level(), player, stack, 0.5f, -angle);
-    //         throwWeapon(player.level(), player, stack, 0.5f, 0f);
-    //         throwWeapon(player.level(), player, stack, 0.5f, angle);
-    //         if (!player.getAbilities().instabuild) stack.shrink(3);
-    //         player.swing(InteractionHand.MAIN_HAND);
-    //         player.getCooldowns().addCooldown(this, 30);
-    //     }
-    // }
+    public boolean canSpecialThrow(ServerPlayer serverPlayer, ItemStack stack) {
+        Shurikenjutsu shurikenjutsu = serverPlayer.getData(MainAttachment.SHURIKENJUTSU);
+        int statValue = (shurikenjutsu != null) ? shurikenjutsu.getValue() : 0;
+
+        return statValue >= 20
+                && !serverPlayer.getCooldowns().isOnCooldown(this)
+                && (serverPlayer.getAbilities().instabuild || stack.getCount() >= 3);
+    }
+
+    public void specialThrow(ServerPlayer serverPlayer, ItemStack stack, float angle) {
+        if (canSpecialThrow(serverPlayer, stack)) {
+            this.throwWeapon(serverPlayer.level(), serverPlayer, stack, 0.5F, -angle);
+            this.throwWeapon(serverPlayer.level(), serverPlayer, stack, 0.5F, 0F);
+            this.throwWeapon(serverPlayer.level(), serverPlayer, stack, 0.5F, angle);
+            if (!serverPlayer.getAbilities().instabuild) {
+                stack.shrink(3);
+            }
+            Minecraft.getInstance().player.swing(InteractionHand.MAIN_HAND);
+            serverPlayer.getCooldowns().addCooldown(this, 30);
+        }
+    }
 }

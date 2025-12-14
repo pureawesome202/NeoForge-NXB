@@ -111,32 +111,6 @@ public class ModUtil {
         return serverPlayer.getStats().getValue(Stats.CUSTOM.get(stat));
     }
 
-  //  public static AbstractNatureReleaseItem getRandomRelease() {
-  //      return switch (RANDOM.nextInt(12)) {
-  //          case 0, 1, 2 -> EARTH.get();
-  //          case 3, 4, 5 -> FIRE.get();
-  //          case 6, 7, 8 -> LIGHTNING.get();
-  //          case 9, 10, 11-> WATER.get();
-  //          case 12, 13, 14-> WIND.get();
-  //          case 15 -> YIN.get();
-  //          case 16 -> YANG.get();
-  //          default -> throw new IllegalStateException("Unexpected value: " + RANDOM.nextInt(17));
-  //      };
-  //  }
-//
-    // public static AbstractNatureReleaseItem getReleaseFromString(String release) {
-   //     return switch (release) {
-   //         case "earth" -> EARTHLIST.get();
-   //         case "fire" -> FIRELIST.get();
-   //         case "lightning" -> LIGHTINGLIST.get();
-   //         case "water" -> WATERLIST.get();
-   //         case "wind" -> WINDLIST.get();
-   //         case "yang" -> YANGLIST.get();
-   //         case "yin" -> YINGLIST.get();
-   //         default -> throw new IllegalStateException("Unexpected value: " + release);
-   //     };
-   // }
-
     public static String concatAndFormat(String pList, String value) {
         return (pList + (pList.isEmpty() ? "" : ", ") + value).toLowerCase();
     }
@@ -172,10 +146,6 @@ public class ModUtil {
        displayTranslatableMessage(serverPlayer, "clan", getClan(), false);
        displayTranslatableMessage(serverPlayer, "rank", getRank(), false);
    }
-
-  // public static Item getSelectedReleaseItem() {
-  //     return getReleaseFromString(getSelectedRelease());
-  // }
 
     public static double getEntitySpeed(Entity entity) {
         double motionX = entity.getX() - entity.xo;
