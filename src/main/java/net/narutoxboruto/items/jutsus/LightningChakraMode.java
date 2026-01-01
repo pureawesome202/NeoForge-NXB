@@ -101,10 +101,8 @@ public class LightningChakraMode extends Item {
             
             // No sound effect - owner will provide custom sounds later
             
-            // Spawn activation burst particles
-            if (level instanceof ServerLevel serverLevel) {
-                spawnLightningParticles(serverLevel, serverPlayer, 30);
-            }
+            // NOTE: Activation particles now handled by client-side burst system in KibaLightningOverlay
+            // which detects state change and renders intense lightning for 0.5 seconds
             
             serverPlayer.displayClientMessage(
                     Component.translatable("jutsu.activate", Component.translatable("item.narutoxboruto.lightning_chakra_mode")), true);
@@ -242,17 +240,12 @@ public class LightningChakraMode extends Item {
     
     /**
      * Called by StatEvents every second to spawn visual lightning aura.
-     * Separate from chakra drain for more frequent visual updates.
+     * NOTE: Visual effects now handled entirely by client-side KibaLightningOverlay
+     * which renders lightning directly on the player model with proper positioning.
      */
     public static void tickVisualEffects(ServerPlayer serverPlayer) {
-        LightningChakraModeActive modeActive = serverPlayer.getData(MainAttachment.LIGHTNING_CHAKRA_MODE_ACTIVE);
-        
-        if (modeActive.isActive()) {
-            // Spawn lightning aura around the player
-            if (serverPlayer.level() instanceof ServerLevel serverLevel) {
-                spawnLightningParticles(serverLevel, serverPlayer, 20);
-            }
-        }
+        // Visual effects now handled client-side - see KibaLightningOverlay
+        // Keeping method signature for compatibility with StatEvents
     }
     
     /**

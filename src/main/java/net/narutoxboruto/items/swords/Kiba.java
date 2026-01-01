@@ -72,10 +72,8 @@ public class Kiba extends SwordItem implements Vanishable {
             // Toggle the ability
             kibaActive.toggle(serverPlayer);
             
-            // Spawn activation particles burst - arcing off the sword
-            if (kibaActive.isActive() && serverPlayer.level() instanceof ServerLevel serverLevel) {
-                spawnSwordArcParticles(serverLevel, serverPlayer, 20);
-            }
+            // NOTE: Activation particles now handled by client-side burst system in MixinItemRenderer
+            // which detects state change and renders intense lightning for 0.5 seconds
             
             String messageKey = kibaActive.isActive() ? "sword_ability.activate" : "sword_ability.deactivate";
             serverPlayer.displayClientMessage(
@@ -157,17 +155,12 @@ public class Kiba extends SwordItem implements Vanishable {
     
     /**
      * Called by StatEvents every half second (10 ticks) to spawn visual lightning aura.
-     * Separate from chakra drain for more frequent visual updates.
+     * NOTE: Visual effects now handled entirely by client-side MixinItemRenderer
+     * which renders lightning directly on the sword model with proper positioning.
      */
     public static void tickVisualEffects(ServerPlayer serverPlayer) {
-        KibaActive kibaActive = serverPlayer.getData(MainAttachment.KIBA_ACTIVE);
-        
-        if (kibaActive.isActive()) {
-            // Spawn lightning arcs around the sword
-            if (serverPlayer.level() instanceof ServerLevel serverLevel) {
-                spawnSwordArcParticles(serverLevel, serverPlayer, 3);
-            }
-        }
+        // Visual effects now handled client-side - see MixinItemRenderer
+        // Keeping method signature for compatibility with StatEvents
     }
 
     public static int getChakraDrainPerSecond() {

@@ -44,10 +44,16 @@ public class MixinItemRenderer {
     private static long narutoxboruto$lastArcGenTime = 0;
     
     @Unique
-    private static final long ARC_INTERVAL_MS = 40;
+    private static final long ARC_INTERVAL_MS = 80; // Halved frequency (was 40)
     
     @Unique
-    private static final int MAX_ARCS = 20;
+    private static final long BURST_ARC_INTERVAL_MS = 15; // Fast interval during activation burst
+    
+    @Unique
+    private static final int MAX_ARCS = 10; // Halved max (was 20)
+    
+    @Unique
+    private static final int BURST_MAX_ARCS = 40; // More arcs during activation burst
     
     /**
      * After the normal item render, render a glowing overlay if it's Kiba with active ability
@@ -115,10 +121,21 @@ public class MixinItemRenderer {
         long currentTime = System.currentTimeMillis();
         Matrix4f matrix = poseStack.last().pose();
         
+        // Check if we're in activation burst mode (more aggressive lightning)
+        boolean isBurst = PlayerData.isKibaBurstActive();
+        long interval = isBurst ? BURST_ARC_INTERVAL_MS : ARC_INTERVAL_MS;
+        int maxArcs = isBurst ? BURST_MAX_ARCS : MAX_ARCS;
+        float thickness = isBurst ? 0.02f : 0.012f; // Thicker bolts during burst
+        
         // Generate new arcs periodically
-        if (currentTime - narutoxboruto$lastArcGenTime > ARC_INTERVAL_MS) {
+        if (currentTime - narutoxboruto$lastArcGenTime > interval) {
             narutoxboruto$lastArcGenTime = currentTime;
-            narutoxboruto$generateSwordArcs(model, currentTime);
+            narutoxboruto$generateSwordArcs(model, currentTime, isBurst);
+        }
+        
+        // Cap arcs based on mode
+        while (narutoxboruto$swordArcs.size() > maxArcs) {
+            narutoxboruto$swordArcs.remove(0);
         }
         
         // Remove expired arcs
@@ -126,16 +143,18 @@ public class MixinItemRenderer {
         
         // Render all active arcs
         for (SwordLightningArc arc : narutoxboruto$swordArcs) {
-            narutoxboruto$renderArc(matrix, consumer, arc, currentTime, KIBA_LIGHTNING_COLOR, 0.012f);
+            narutoxboruto$renderArc(matrix, consumer, arc, currentTime, KIBA_LIGHTNING_COLOR, thickness);
         }
     }
     
     /**
      * Generates lightning arcs along the sword geometry
+     * @param isBurst If true, generates more aggressive arcs for activation burst
      */
     @Unique
-    private void narutoxboruto$generateSwordArcs(BakedModel model, long currentTime) {
-        while (narutoxboruto$swordArcs.size() >= MAX_ARCS) {
+    private void narutoxboruto$generateSwordArcs(BakedModel model, long currentTime, boolean isBurst) {
+        int maxArcs = isBurst ? BURST_MAX_ARCS : MAX_ARCS;
+        while (narutoxboruto$swordArcs.size() >= maxArcs) {
             narutoxboruto$swordArcs.remove(0);
         }
         
@@ -155,18 +174,19 @@ public class MixinItemRenderer {
             narutoxboruto$extractVertices(quad, modelVertices);
         }
         
-        // If we have vertices, generate arcs between random pairs
+        // If we have vertices, generate arcs between random pairs (blade only, Y > 0.25)
         if (modelVertices.size() >= 2) {
-            // Generate several arcs along the sword
-            for (int i = 0; i < 4; i++) {
+            // During burst: 8 arcs, normal: 2 arcs
+            int arcCount = isBurst ? 8 : 2;
+            for (int i = 0; i < arcCount; i++) {
                 int idx1 = narutoxboruto$random.nextInt(modelVertices.size());
                 int idx2 = narutoxboruto$random.nextInt(modelVertices.size());
                 if (idx1 != idx2) {
                     Vector3f start = new Vector3f(modelVertices.get(idx1));
                     Vector3f end = new Vector3f(modelVertices.get(idx2));
                     
-                    // Add small random offset to make it dance on the surface
-                    float jitter = 0.02f;
+                    // More jitter during burst for chaotic effect
+                    float jitter = isBurst ? 0.05f : 0.02f;
                     start.add(
                         (narutoxboruto$random.nextFloat() - 0.5f) * jitter,
                         (narutoxboruto$random.nextFloat() - 0.5f) * jitter,
@@ -178,16 +198,20 @@ public class MixinItemRenderer {
                         (narutoxboruto$random.nextFloat() - 0.5f) * jitter
                     );
                     
-                    narutoxboruto$swordArcs.add(new SwordLightningArc(start, end, currentTime + 60 + narutoxboruto$random.nextInt(80)));
+                    // Shorter duration during burst for rapid flashing
+                    int duration = isBurst ? (30 + narutoxboruto$random.nextInt(40)) : (60 + narutoxboruto$random.nextInt(80));
+                    narutoxboruto$swordArcs.add(new SwordLightningArc(start, end, currentTime + duration));
                 }
             }
             
-            // Add small surface sparks
-            for (int i = 0; i < 3; i++) {
+            // During burst: 4 sparks, normal: 1 spark
+            int sparkCount = isBurst ? 4 : 1;
+            for (int i = 0; i < sparkCount; i++) {
                 int idx = narutoxboruto$random.nextInt(modelVertices.size());
                 Vector3f base = new Vector3f(modelVertices.get(idx));
                 
-                float sparkLen = 0.03f + narutoxboruto$random.nextFloat() * 0.05f;
+                // Longer sparks during burst
+                float sparkLen = isBurst ? (0.06f + narutoxboruto$random.nextFloat() * 0.1f) : (0.03f + narutoxboruto$random.nextFloat() * 0.05f);
                 Vector3f end = new Vector3f(base);
                 end.add(
                     (narutoxboruto$random.nextFloat() - 0.5f) * sparkLen,
@@ -195,7 +219,9 @@ public class MixinItemRenderer {
                     (narutoxboruto$random.nextFloat() - 0.5f) * sparkLen
                 );
                 
-                narutoxboruto$swordArcs.add(new SwordLightningArc(base, end, currentTime + 40 + narutoxboruto$random.nextInt(50)));
+                // Shorter duration during burst for rapid flashing
+                int sparkDuration = isBurst ? (20 + narutoxboruto$random.nextInt(30)) : (40 + narutoxboruto$random.nextInt(50));
+                narutoxboruto$swordArcs.add(new SwordLightningArc(base, end, currentTime + sparkDuration));
             }
         }
     }
@@ -213,7 +239,10 @@ public class MixinItemRenderer {
             float x = Float.intBitsToFloat(data[offset]);
             float y = Float.intBitsToFloat(data[offset + 1]);
             float z = Float.intBitsToFloat(data[offset + 2]);
-            vertices.add(new Vector3f(x, y, z));
+            // Only include vertices in the top 3/4 (blade) to avoid hilt lightning
+            if (y > 0.25f) {
+                vertices.add(new Vector3f(x, y, z));
+            }
         }
     }
     

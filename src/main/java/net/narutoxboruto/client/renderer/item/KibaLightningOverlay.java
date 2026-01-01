@@ -51,13 +51,15 @@ public class KibaLightningOverlay {
     private static long lastSwordArcGenTime = 0;
     private static long lastCloakArcGenTime = 0;
     private static final long SWORD_ARC_INTERVAL_MS = 50;
-    private static final long CLOAK_ARC_INTERVAL_MS = 40; // Faster for denser cloak
+    private static final long CLOAK_ARC_INTERVAL_MS = 160; // Reduced frequency (was 80)
+    private static final long CLOAK_BURST_ARC_INTERVAL_MS = 20; // Fast interval during activation burst
     
     // Store current arcs for rendering - separate lists
     private static final List<LightningArc> swordArcs = new ArrayList<>();
     private static final List<LightningArc> cloakArcs = new ArrayList<>();
     private static final int MAX_SWORD_ARCS = 15;
     private static final int MAX_CLOAK_ARCS = 40; // Increased for better body coverage
+    private static final int BURST_MAX_CLOAK_ARCS = 80; // More arcs during burst
     
     // NOTE: Kiba sword lightning is now handled by MixinItemRenderer
     // which renders the glow directly on the model using the same UV coordinates.
@@ -153,9 +155,14 @@ public class KibaLightningOverlay {
     private static void renderCloakLightningFirstPerson(PoseStack poseStack, MultiBufferSource buffer, Player player) {
         long currentTime = System.currentTimeMillis();
         
-        if (currentTime - lastCloakArcGenTime > CLOAK_ARC_INTERVAL_MS) {
+        // Check if we're in activation burst mode
+        boolean isBurst = PlayerData.isCloakBurstActive();
+        long interval = isBurst ? CLOAK_BURST_ARC_INTERVAL_MS : CLOAK_ARC_INTERVAL_MS;
+        float thickness = isBurst ? 0.03f : 0.018f; // Thicker bolts during burst
+        
+        if (currentTime - lastCloakArcGenTime > interval) {
             lastCloakArcGenTime = currentTime;
-            generateCloakArcs(currentTime, player);
+            generateCloakArcs(currentTime, player, isBurst);
         }
         
         cloakArcs.removeIf(arc -> currentTime > arc.expireTime);
@@ -168,7 +175,7 @@ public class KibaLightningOverlay {
         for (LightningArc arc : cloakArcs) {
             // Skip arcs that are primarily in upper body/head area
             if (arc.start.y() < maxY && arc.end.y() < maxY) {
-                renderArc(matrix, consumer, arc, currentTime, CLOAK_LIGHTNING_COLOR, 0.018f);
+                renderArc(matrix, consumer, arc, currentTime, CLOAK_LIGHTNING_COLOR, thickness);
             }
         }
     }
@@ -179,9 +186,14 @@ public class KibaLightningOverlay {
     private static void renderCloakLightning(PoseStack poseStack, MultiBufferSource buffer, Player player) {
         long currentTime = System.currentTimeMillis();
         
-        if (currentTime - lastCloakArcGenTime > CLOAK_ARC_INTERVAL_MS) {
+        // Check if we're in activation burst mode
+        boolean isBurst = PlayerData.isCloakBurstActive();
+        long interval = isBurst ? CLOAK_BURST_ARC_INTERVAL_MS : CLOAK_ARC_INTERVAL_MS;
+        float thickness = isBurst ? 0.03f : 0.018f; // Thicker bolts during burst
+        
+        if (currentTime - lastCloakArcGenTime > interval) {
             lastCloakArcGenTime = currentTime;
-            generateCloakArcs(currentTime, player);
+            generateCloakArcs(currentTime, player, isBurst);
         }
         
         cloakArcs.removeIf(arc -> currentTime > arc.expireTime);
@@ -190,12 +202,13 @@ public class KibaLightningOverlay {
         Matrix4f matrix = poseStack.last().pose();
         
         for (LightningArc arc : cloakArcs) {
-            renderArc(matrix, consumer, arc, currentTime, CLOAK_LIGHTNING_COLOR, 0.018f); // Thick bolts for cloak
+            renderArc(matrix, consumer, arc, currentTime, CLOAK_LIGHTNING_COLOR, thickness);
         }
     }
     
-    private static void generateCloakArcs(long currentTime, Player player) {
-        while (cloakArcs.size() >= MAX_CLOAK_ARCS) {
+    private static void generateCloakArcs(long currentTime, Player player, boolean isBurst) {
+        int maxArcs = isBurst ? BURST_MAX_CLOAK_ARCS : MAX_CLOAK_ARCS;
+        while (cloakArcs.size() >= maxArcs) {
             cloakArcs.remove(0);
         }
         
@@ -208,8 +221,12 @@ public class KibaLightningOverlay {
         float hipY = 0.85f;       // Hip level
         float headRadius = 0.22f; // Head radius
         
+        // Burst multiplier for arc counts
+        int burstMult = isBurst ? 4 : 1;
+        int baseDuration = isBurst ? 40 : 100; // Shorter duration during burst for rapid flashing
+        
         // === DIAGONAL BODY ARCS - Chaotic lightning across torso ===
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3 * burstMult; i++) {
             // Random start point on body surface
             float startAngle = random.nextFloat() * (float)(Math.PI * 2);
             float startY = hipY + random.nextFloat() * (shoulderY - hipY);
@@ -232,11 +249,11 @@ public class KibaLightningOverlay {
                 (float)Math.sin(endAngle) * endRadius
             );
             
-            cloakArcs.add(new LightningArc(start, end, currentTime + 100 + random.nextInt(100)));
+            cloakArcs.add(new LightningArc(start, end, currentTime + baseDuration + random.nextInt(baseDuration)));
         }
         
         // === HEAD ARCS - More coverage around the head ===
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2 * burstMult; i++) {
             float startAngle = random.nextFloat() * (float)(Math.PI * 2);
             float endAngle = startAngle + (random.nextFloat() - 0.5f) * (float)(Math.PI);
             
@@ -261,32 +278,37 @@ public class KibaLightningOverlay {
                 (float)Math.sin(endAngle) * r2
             );
             
-            cloakArcs.add(new LightningArc(start, end, currentTime + 70 + random.nextInt(60)));
+            cloakArcs.add(new LightningArc(start, end, currentTime + (int)(baseDuration * 0.7f) + random.nextInt((int)(baseDuration * 0.6f))));
         }
         
         // === HEAD TOP CORONA - Sparks above the head ===
-        if (random.nextFloat() < 0.6f) {
-            float angle1 = random.nextFloat() * (float)(Math.PI * 2);
-            float angle2 = angle1 + (random.nextFloat() - 0.5f) * (float)Math.PI;
-            float r = 0.05f + random.nextFloat() * 0.1f;
-            
-            Vector3f start = new Vector3f(
-                (float)Math.cos(angle1) * r,
-                headY - 0.1f + random.nextFloat() * 0.1f,
-                (float)Math.sin(angle1) * r
-            );
-            Vector3f end = new Vector3f(
-                (float)Math.cos(angle2) * (r + 0.08f),
-                headY + random.nextFloat() * 0.15f,
-                (float)Math.sin(angle2) * (r + 0.08f)
-            );
-            
-            cloakArcs.add(new LightningArc(start, end, currentTime + 50 + random.nextInt(50)));
+        float coronaChance = isBurst ? 1.0f : 0.6f;
+        int coronaCount = isBurst ? 3 : 1;
+        for (int c = 0; c < coronaCount; c++) {
+            if (random.nextFloat() < coronaChance) {
+                float angle1 = random.nextFloat() * (float)(Math.PI * 2);
+                float angle2 = angle1 + (random.nextFloat() - 0.5f) * (float)Math.PI;
+                float r = 0.05f + random.nextFloat() * 0.1f;
+                
+                Vector3f start = new Vector3f(
+                    (float)Math.cos(angle1) * r,
+                    headY - 0.1f + random.nextFloat() * 0.1f,
+                    (float)Math.sin(angle1) * r
+                );
+                Vector3f end = new Vector3f(
+                    (float)Math.cos(angle2) * (r + 0.08f),
+                    headY + random.nextFloat() * 0.15f,
+                    (float)Math.sin(angle2) * (r + 0.08f)
+                );
+                
+                cloakArcs.add(new LightningArc(start, end, currentTime + (int)(baseDuration * 0.5f) + random.nextInt((int)(baseDuration * 0.5f))));
+            }
         }
         
         // === SHOULDER TO HEAD ARCS - Connect body to head ===
+        float shoulderChance = isBurst ? 0.8f : 0.4f;
         for (int side = -1; side <= 1; side += 2) {
-            if (random.nextFloat() < 0.4f) {
+            if (random.nextFloat() < shoulderChance) {
                 float shoulderX = side * bodyWidth * 0.9f;
                 float headX = side * headRadius * 0.5f * (0.5f + random.nextFloat());
                 
@@ -301,12 +323,12 @@ public class KibaLightningOverlay {
                     (random.nextFloat() - 0.5f) * headRadius * 0.5f
                 );
                 
-                cloakArcs.add(new LightningArc(start, end, currentTime + 80 + random.nextInt(70)));
+                cloakArcs.add(new LightningArc(start, end, currentTime + (int)(baseDuration * 0.8f) + random.nextInt((int)(baseDuration * 0.7f))));
             }
         }
         
         // === HORIZONTAL CHAOTIC ARCS - Wrapping with variance ===
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2 * burstMult; i++) {
             float y = hipY + random.nextFloat() * (chestY - hipY);
             float startAngle = random.nextFloat() * (float)(Math.PI * 2);
             float arcSpan = (float)(Math.PI * (0.4 + random.nextFloat() * 0.8));
@@ -327,12 +349,13 @@ public class KibaLightningOverlay {
                 (float)Math.sin(endAngle) * endRadius
             );
             
-            cloakArcs.add(new LightningArc(start, end, currentTime + 90 + random.nextInt(70)));
+            cloakArcs.add(new LightningArc(start, end, currentTime + (int)(baseDuration * 0.9f) + random.nextInt((int)(baseDuration * 0.7f))));
         }
         
         // === ARM ARCS - Along the arms with more randomness ===
+        float armChance = isBurst ? 0.9f : 0.45f;
         for (int side = -1; side <= 1; side += 2) {
-            if (random.nextFloat() < 0.45f) {
+            if (random.nextFloat() < armChance) {
                 float armX = side * (bodyWidth + 0.05f + random.nextFloat() * 0.1f);
                 float armStartY = shoulderY - random.nextFloat() * 0.15f;
                 float armEndY = shoulderY - 0.3f - random.nextFloat() * 0.4f;
@@ -345,13 +368,14 @@ public class KibaLightningOverlay {
                     zWander
                 );
                 
-                cloakArcs.add(new LightningArc(start, end, currentTime + 90 + random.nextInt(80)));
+                cloakArcs.add(new LightningArc(start, end, currentTime + (int)(baseDuration * 0.9f) + random.nextInt((int)(baseDuration * 0.8f))));
             }
         }
         
         // === LEG ARCS - With more organic feel ===
+        float legChance = isBurst ? 0.7f : 0.35f;
         for (int side = -1; side <= 1; side += 2) {
-            if (random.nextFloat() < 0.35f) {
+            if (random.nextFloat() < legChance) {
                 float legX = side * bodyWidth * (0.4f + random.nextFloat() * 0.2f);
                 float startY = hipY - random.nextFloat() * 0.15f;
                 float endY = 0.1f + random.nextFloat() * 0.35f;
@@ -364,12 +388,13 @@ public class KibaLightningOverlay {
                     zOff
                 );
                 
-                cloakArcs.add(new LightningArc(start, end, currentTime + 100 + random.nextInt(90)));
+                cloakArcs.add(new LightningArc(start, end, currentTime + baseDuration + random.nextInt((int)(baseDuration * 0.9f))));
             }
         }
         
         // === RANDOM SURFACE SPARKS - Small chaotic sparks ===
-        for (int i = 0; i < 5; i++) {
+        int sparkCount = isBurst ? 15 : 5;
+        for (int i = 0; i < sparkCount; i++) {
             float y = 0.15f + random.nextFloat() * 1.55f;
             float angle = random.nextFloat() * (float)(Math.PI * 2);
             
@@ -396,7 +421,7 @@ public class KibaLightningOverlay {
                 z + (float)Math.sin(sparkAngle) * sparkLen
             );
             
-            cloakArcs.add(new LightningArc(start, end, currentTime + 40 + random.nextInt(50)));
+            cloakArcs.add(new LightningArc(start, end, currentTime + (int)(baseDuration * 0.4f) + random.nextInt((int)(baseDuration * 0.5f))));
         }
     }
     
