@@ -1,5 +1,7 @@
 package net.narutoxboruto.client;
 
+import net.narutoxboruto.util.RotationUtil;
+
 public class PlayerData {
 
     //INFO
@@ -19,6 +21,9 @@ public class PlayerData {
     private static boolean chakraControlActive = false;
     private static boolean kibaActive = false;
     private static boolean lightningChakraModeActive = false;
+    
+    // Wall running state cache (synced from server)
+    private static RotationUtil.Surface wallRunningSurface = RotationUtil.Surface.GROUND;
     
     // Activation burst timing - tracks when abilities were just activated for flashy effect
     private static long kibaActivationTime = 0;
@@ -332,5 +337,14 @@ public class PlayerData {
    // public static void setSelectedRelease(String release) {
    //     PlayerData.selectedRelease = release;
    // }
+    
+    // Wall running methods
+    public static RotationUtil.Surface getWallRunningSurface() {
+        return wallRunningSurface;
+    }
+    
+    public static void setWallRunningSurface(RotationUtil.Surface surface) {
+        wallRunningSurface = surface;
+    }
 
 }
