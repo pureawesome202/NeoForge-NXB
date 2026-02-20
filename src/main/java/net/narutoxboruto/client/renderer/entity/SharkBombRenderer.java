@@ -1,118 +1,49 @@
 package net.narutoxboruto.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.narutoxboruto.client.model.SharkBombModel;
 import net.narutoxboruto.entities.jutsus.SharkBombEntity;
-import net.narutoxboruto.main.Main;
-import org.joml.Matrix4f;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 /**
- * Placeholder renderer for SharkBomb entity.
- * Uses a simple blue cube until custom model is provided.
+ * GeckoLib renderer for SharkBomb entity.
+ * - Overrides applyRotations to fix GeckoLib ignoring yRot for non-LivingEntity
+ * - Applies dynamic scaling during the charge-up phase
  */
-public class SharkBombRenderer extends EntityRenderer<SharkBombEntity> {
-    
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
-        Main.MOD_ID, "textures/entity/shark_bomb_placeholder.png"
-    );
+public class SharkBombRenderer extends GeoEntityRenderer<SharkBombEntity> {
     
     public SharkBombRenderer(EntityRendererProvider.Context context) {
-        super(context);
+        super(context, new SharkBombModel());
     }
     
     @Override
-    public void render(SharkBombEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, 
-                       MultiBufferSource buffer, int packedLight) {
+    public void render(SharkBombEntity entity, float entityYaw, float partialTick,
+                       PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        float scale = entity.getEntityScale();
         poseStack.pushPose();
-        
-        // Orient the projectile in the direction it's moving
-        float yaw = entity.getYRot();
-        float pitch = entity.getXRot();
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - yaw));
-        poseStack.mulPose(Axis.XP.rotationDegrees(-pitch));
-        
-        // Scale to make it visible (shark-like proportions)
-        poseStack.scale(1.5F, 0.8F, 0.8F);
-        
-        // Render a simple elongated cube (placeholder for shark model)
-        RenderType renderType = RenderType.entityCutoutNoCull(TEXTURE);
-        VertexConsumer vertexConsumer = buffer.getBuffer(renderType);
-        
-        // Draw a simple box shape
-        renderBox(poseStack, vertexConsumer, packedLight);
-        
+        poseStack.scale(scale, scale, scale);
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
         poseStack.popPose();
-        
-        super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
     
     /**
-     * Render a simple box as placeholder.
+     * Override GeckoLib's rotation handling.
+     * GeckoLib passes rotationYaw=0 for non-LivingEntity (Projectile),
+     * so we must apply the entity's actual yRot and xRot ourselves.
      */
-    private void renderBox(PoseStack poseStack, VertexConsumer consumer, int light) {
-        PoseStack.Pose pose = poseStack.last();
-        Matrix4f matrix = pose.pose();
-        
-        // Simple elongated box vertices (shark body shape)
-        float length = 1.0F;
-        float height = 0.4F;
-        float width = 0.4F;
-        
-        // Front face
-        vertex(consumer, matrix, -width, -height, length, 0, 0, light);
-        vertex(consumer, matrix, width, -height, length, 1, 0, light);
-        vertex(consumer, matrix, width, height, length, 1, 1, light);
-        vertex(consumer, matrix, -width, height, length, 0, 1, light);
-        
-        // Back face
-        vertex(consumer, matrix, -width, -height, -length, 0, 0, light);
-        vertex(consumer, matrix, -width, height, -length, 0, 1, light);
-        vertex(consumer, matrix, width, height, -length, 1, 1, light);
-        vertex(consumer, matrix, width, -height, -length, 1, 0, light);
-        
-        // Top face
-        vertex(consumer, matrix, -width, height, -length, 0, 0, light);
-        vertex(consumer, matrix, -width, height, length, 0, 1, light);
-        vertex(consumer, matrix, width, height, length, 1, 1, light);
-        vertex(consumer, matrix, width, height, -length, 1, 0, light);
-        
-        // Bottom face
-        vertex(consumer, matrix, -width, -height, -length, 0, 0, light);
-        vertex(consumer, matrix, width, -height, -length, 1, 0, light);
-        vertex(consumer, matrix, width, -height, length, 1, 1, light);
-        vertex(consumer, matrix, -width, -height, length, 0, 1, light);
-        
-        // Left face
-        vertex(consumer, matrix, -width, -height, -length, 0, 0, light);
-        vertex(consumer, matrix, -width, -height, length, 1, 0, light);
-        vertex(consumer, matrix, -width, height, length, 1, 1, light);
-        vertex(consumer, matrix, -width, height, -length, 0, 1, light);
-        
-        // Right face
-        vertex(consumer, matrix, width, -height, -length, 0, 0, light);
-        vertex(consumer, matrix, width, height, -length, 0, 1, light);
-        vertex(consumer, matrix, width, height, length, 1, 1, light);
-        vertex(consumer, matrix, width, -height, length, 1, 0, light);
-    }
-    
-    private void vertex(VertexConsumer consumer, Matrix4f matrix, float x, float y, float z, float u, float v, int light) {
-        consumer.addVertex(matrix, x, y, z)
-                .setColor(0xFF, 0xFF, 0xFF, 0xFF)
-                .setUv(u, v)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(light)
-                .setNormal(0, 1, 0);
-    }
-    
     @Override
-    public ResourceLocation getTextureLocation(SharkBombEntity entity) {
-        return TEXTURE;
+    protected void applyRotations(SharkBombEntity entity, PoseStack poseStack, 
+                                   float ageInTicks, float rotationYaw, 
+                                   float partialTick, float nativeScale) {
+        // Use the entity's actual interpolated yaw (GeckoLib passes 0 for non-Living)
+        float yaw = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
+        float pitch = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
+        
+        poseStack.mulPose(Axis.YP.rotationDegrees(180f - yaw));
+        poseStack.mulPose(Axis.XP.rotationDegrees(pitch));
     }
 }
