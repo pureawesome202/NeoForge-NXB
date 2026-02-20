@@ -45,6 +45,14 @@ public class WallRunning {
     public boolean isWallRunning() {
         return surface != RotationUtil.Surface.GROUND && surface != RotationUtil.Surface.CEILING;
     }
+
+    /**
+     * True when on ANY non-ground surface (wall or ceiling).
+     * Used by onGround() override to suppress gravity and fall damage.
+     */
+    public boolean isOnSurface() {
+        return surface != RotationUtil.Surface.GROUND;
+    }
     
     public int getTicksOnSurface() {
         return ticksOnSurface;

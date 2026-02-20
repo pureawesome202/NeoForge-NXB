@@ -1,6 +1,7 @@
 package net.narutoxboruto.items.jutsus;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.narutoxboruto.entities.jutsus.SharkBombEntity;
 
@@ -46,5 +47,10 @@ public class SharkBomb extends AbstractJutsuItem {
         SharkBombEntity shark = new SharkBombEntity(level, player);
         level.addFreshEntity(shark);
         return true;
+    }
+    
+    @Override
+    protected void playCastSound(Level level, Player player) {
+        // No cast sound for shark bomb
     }
 }

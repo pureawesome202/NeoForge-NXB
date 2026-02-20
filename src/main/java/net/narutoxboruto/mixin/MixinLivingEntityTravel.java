@@ -4,62 +4,40 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.narutoxboruto.attachments.MainAttachment;
-import net.narutoxboruto.attachments.modes.WallRunning;
-import net.narutoxboruto.util.RotationUtil;
+import net.narutoxboruto.attachments.climber.ClimberComponent;
+import net.narutoxboruto.attachments.climber.ClimberMoveController;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * LivingEntity travel mixin for wall running movement - mirrors Gravity API pattern.
- * 
- * Transforms movement vectors from world space to player-relative space,
- * allowing natural movement controls while wall running.
+ * Travel override mixin for wall-running players using the ClimberComponent architecture.
+ * Intercepts travel() to apply custom climbing movement when needed.
  */
 @Mixin(LivingEntity.class)
 public abstract class MixinLivingEntityTravel {
     
     /**
-     * Transform travel movement vector from world space to player space.
-     * 
-     * Mirrors Gravity API: modify_travel_Vec3d
-     * Converts the travel vector to player-relative coordinates so WASD controls work naturally.
+     * Intercept travel() for players using custom climbing.
+     * If climbing, handle movement via ClimberMoveController and skip vanilla travel.
      */
-    @ModifyVariable(
+    @Inject(
         method = "travel",
-        at = @At(value = "HEAD"),
-        argsOnly = true
+        at = @At("HEAD"),
+        cancellable = true
     )
-    private Vec3 transformTravelVector(Vec3 travelVector) {
+    private void onTravel(Vec3 travelVector, CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
-        if (!(self instanceof Player player)) return travelVector;
-        
-        // Use server attachment on server, client cache on client
-        RotationUtil.Surface surface = player.level().isClientSide
-            ? net.narutoxboruto.client.PlayerData.getWallRunningSurface()
-            : player.getData(MainAttachment.WALL_RUNNING).getSurface();
-        
-        if (surface == RotationUtil.Surface.GROUND) return travelVector;
-        
-        // Debug logging to verify this is being called
-        if (travelVector.lengthSqr() > 0.001 && player.tickCount % 10 == 0) {
-            System.out.println("[MixinTravel] Transforming travel vector!");
-            System.out.println("  Input: " + travelVector);
-            System.out.println("  Surface: " + surface);
+        if (!(self instanceof Player player)) {
+            return;  // Not a player, use vanilla travel
         }
         
-        // Transform the travel input from PLAYER space to WORLD space based on surface
-        // Vanilla expects travel vector in player-space (strafe, vertical, forward).
-        // We rotate it so forward (Z) becomes "up" along the wall.
-        Vec3 transformed = RotationUtil.vecPlayerToWorld(travelVector, surface);
+        ClimberComponent climber = player.getData(MainAttachment.CLIMBER);
         
-        if (travelVector.lengthSqr() > 0.001 && player.tickCount % 10 == 0) {
-            System.out.println("  Output: " + transformed);
+        // Use custom climbing travel if climbing
+        if (ClimberMoveController.handleTravel(player, travelVector, climber)) {
+            ci.cancel();  // Skip vanilla travel
         }
-        
-        return transformed;
     }
 }

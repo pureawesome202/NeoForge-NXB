@@ -1,6 +1,7 @@
 package net.narutoxboruto.items.jutsus;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.narutoxboruto.entities.jutsus.WaterDragonEntity;
 
@@ -50,5 +51,10 @@ public class WaterDragon extends AbstractJutsuItem {
         WaterDragonEntity dragon = new WaterDragonEntity(level, player);
         level.addFreshEntity(dragon);
         return true;
+    }
+    
+    @Override
+    protected void playCastSound(Level level, Player player) {
+        // No cast sound for water dragon
     }
 }

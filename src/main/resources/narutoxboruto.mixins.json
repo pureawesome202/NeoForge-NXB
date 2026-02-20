@@ -4,19 +4,22 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "mixins": [
-    "MixinEntity",
     "MixinLiquidBlock",
     "MixinPlayer"
   ],
   "client": [
-    "MixinCamera",
-    "MixinEntityRenderDispatcher",
     "MixinGameRenderer",
-    "MixinLivingEntityTravel",
     "MixinLocalPlayer",
     "MixinPlayerModel",
     "MixinPlayerRenderer",
     "client.MixinItemRenderer"
+  ],
+  "_disabled_wall_running_mixins": [
+    "MixinEntity",
+    "MixinLivingEntityClimbing",
+    "MixinCamera",
+    "MixinEntityRenderDispatcher",
+    "MixinLivingEntityTravel"
   ],
   "injectors": {
     "defaultRequire": 1

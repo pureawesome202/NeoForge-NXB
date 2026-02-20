@@ -1,32 +1,39 @@
 package net.narutoxboruto.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.narutoxboruto.client.PlayerData;
+import net.narutoxboruto.util.Orientation;
 import net.narutoxboruto.util.RotationUtil;
-import org.joml.Quaternionf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Entity render dispatcher mixin for wall running model rotation - mirrors Gravity API pattern.
+ * Entity render dispatcher mixin for wall running model rotation - EXACT AWCAPI pattern.
  * 
- * Rotates the player model to match their wall orientation.
+ * AWCAPI's ClientClimberHelper.preRenderClimber() does:
+ * 1. translate(attachmentOffset - normal * verticalOffset)
+ * 2. mulPose(Axis.YP.rotationDegrees(yaw))
+ * 3. mulPose(Axis.XP.rotationDegrees(pitch))
+ * 4. mulPose(Axis.YP.rotationDegrees(signum(0.5 - componentY - componentZ - componentX) * yaw))
  */
 @Mixin(EntityRenderDispatcher.class)
 public abstract class MixinEntityRenderDispatcher {
     
+    // Render offset to push player model out of wall (player hitbox is inside wall)
+    // AWCAPI uses attachmentOffset + verticalOffset (0.075f) - we use a fixed offset
+    private static final float WALL_RENDER_OFFSET = 0.075f;  // Match AWCAPI's default verticalOffset
+    
     /**
      * Apply wall running rotation to entity model rendering.
-     * 
-     * Mirrors Gravity API: inject_render
-     * Rotates the entity model so it appears correctly oriented on the wall,
-     * with feet aligned to the surface.
+     * Uses EXACT AWCAPI rendering pattern from ClientClimberHelper.preRenderClimber()
      */
     @Inject(
         method = "render",
@@ -41,19 +48,28 @@ public abstract class MixinEntityRenderDispatcher {
         // Always push pose to maintain stack balance
         poseStack.pushPose();
         
-        // Get the world rotation quaternion for this surface
-        // This rotates the model from player space (standing upright) to world space (on surface)
-        Quaternionf rotation = RotationUtil.getWorldRotationQuaternion(surface);
+        // Get the orientation for this surface
+        Direction direction = surface.getDirection();
+        Orientation orientation = Orientation.fromWallDirection(direction);
         
-        // Translate to center of entity for rotation
-        double centerHeight = entity.getBbHeight() / 2.0;
-        poseStack.translate(0, centerHeight, 0);
+        // === STEP 1: RENDER OFFSET === (AWCAPI pattern)
+        // Push the model AWAY from the wall so it's not clipping
+        // The direction is the wall normal (e.g., SOUTH wall has normal pointing +Z)
+        if (direction != null) {
+            float offsetX = -direction.getStepX() * WALL_RENDER_OFFSET;
+            float offsetY = 0;  // No vertical offset
+            float offsetZ = -direction.getStepZ() * WALL_RENDER_OFFSET;
+            poseStack.translate(offsetX, offsetY, offsetZ);
+        }
         
-        // Apply the surface rotation
-        poseStack.mulPose(rotation);
-        
-        // Translate back
-        poseStack.translate(0, -centerHeight, 0);
+        // === STEP 2-4: APPLY ROTATIONS === (EXACT AWCAPI pattern)
+        // AWCAPI does: mulPose(YP.yaw), mulPose(XP.pitch), mulPose(YP.signum*yaw)
+        poseStack.mulPose(Axis.YP.rotationDegrees(orientation.yaw));
+        poseStack.mulPose(Axis.XP.rotationDegrees(orientation.pitch));
+        poseStack.mulPose(Axis.YP.rotationDegrees(
+            (float) Math.signum(0.5f - orientation.componentY - orientation.componentZ - orientation.componentX) 
+            * orientation.yaw
+        ));
     }
     
     @Inject(

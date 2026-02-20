@@ -70,28 +70,28 @@ public class RotationUtil {
         //   WEST_WALL: +90° around Y to make -Z→+X (wall at -X, need Y→+X)
         
         // NORTH_WALL - Wall at -Z, player's feet point toward -Z
-        // Rotate -90° around X axis (pitch backward) so player lies on back facing +Z
+        // Rotate 90° around X axis so forward becomes up and feet point at wall
         WORLD_ROTATION_QUATERNIONS[1] = new Quaternionf()
             .rotateX((float) Math.toRadians(90));
         CAMERA_ROTATION_QUATERNIONS[1] = new Quaternionf()
             .rotateX((float) Math.toRadians(-90));
         
         // SOUTH_WALL - Wall at +Z, player's feet point toward +Z
-        // Rotate 90° around X axis (pitch forward) so player lies on front facing -Z
+        // Rotate -90° around X axis so forward becomes up and feet point at wall
         WORLD_ROTATION_QUATERNIONS[2] = new Quaternionf()
             .rotateX((float) Math.toRadians(-90));
         CAMERA_ROTATION_QUATERNIONS[2] = new Quaternionf()
             .rotateX((float) Math.toRadians(90));
         
         // EAST_WALL - Wall at +X, player's feet point toward +X
-        // Rotate -90° around Z axis (roll left) so player lies on left side
+        // Rotate 90° around Z axis so forward becomes up and feet point at wall
         WORLD_ROTATION_QUATERNIONS[3] = new Quaternionf()
             .rotateZ((float) Math.toRadians(90));
         CAMERA_ROTATION_QUATERNIONS[3] = new Quaternionf()
             .rotateZ((float) Math.toRadians(-90));
         
         // WEST_WALL - Wall at -X, player's feet point toward -X
-        // Rotate 90° around Z axis (roll right) so player lies on right side
+        // Rotate -90° around Z axis so forward becomes up and feet point at wall
         WORLD_ROTATION_QUATERNIONS[4] = new Quaternionf()
             .rotateZ((float) Math.toRadians(-90));
         CAMERA_ROTATION_QUATERNIONS[4] = new Quaternionf()
